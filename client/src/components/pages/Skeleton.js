@@ -1,46 +1,63 @@
-import React from "react";
+import React, {useState} from "react";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 
 import "../../utilities.css";
 import "./Skeleton.css";
 
+
+Array.prototype.random = function () {
+  return this[Math.floor((Math.random()*this.length))];
+}
+
+const prompts = ([" Nobody believes this_ until I show them the truth.",
+      "I like to make life easier for everyone by___",
+      "At the stroke of midnight my life changed forever when I suddenly ___",
+      "If I could make $1 million dollars fast, I know I would___",
+      "A preschooler proving to jealous fellow students he believed in Santa Claus despite small fingers no softness _.__",
+      "I knew I was in trouble when Aunt Patty caught me ___",
+      "If fantasy could come alive, what would it look like?",
+      "What would really anger an ambulatory species of giant spiders?",
+      "I dare you to ___.",
+      "Funny excuses I gave ?when I got caught ______",
+      "Reduce, reuse, and ___!",
+      "There is something missing in my life, at mystery  that needs to be ____",
+      "What do I need when my phone won't stop vibrating?"
+      ]);
+
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.googleusercontent.com";
 
 const Skeleton = ({ userId, handleLogin, handleLogout }) => {
+  const [prompt, setPrompt] = useState("");
+  const generateNewPrompt = () => {
+      
+      // setPrompt("What");
+    setPrompt(prompts.random());
+  };
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      {userId ? (
-        <button
-          onClick={() => {
-            googleLogout();
-            handleLogout();
-          }}
-        >
-          Logout
-        </button>
-      ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
-      )}
-      <h1>Good luck on your project :)</h1>
-      <h2> What you need to change in this skeleton</h2>
-      <ul>
-        <li>
-          Change the Frontend CLIENT_ID (Skeleton.js) to your team's CLIENT_ID (obtain this at
-          http://weblab.us/clientid)
-        </li>
-        <li>Change the Server CLIENT_ID to the same CLIENT_ID (auth.js)</li>
-        <li>
-          Change the Database SRV (mongoConnectionURL) for Atlas (server.js). You got this in the
-          MongoDB setup.
-        </li>
-        <li>Change the Database Name for MongoDB to whatever you put in the SRV (server.js)</li>
-      </ul>
-      <h2>How to go from this skeleton to our actual app</h2>
-      <a href="https://docs.google.com/document/d/110JdHAn3Wnp3_AyQLkqH2W8h5oby7OVsYIeHYSiUzRs/edit?usp=sharing">
-        Check out this getting started guide
-      </a>
-    </GoogleOAuthProvider>
+    <div>
+      
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        {userId ? (
+          <button
+            onClick={() => {
+              googleLogout();
+              handleLogout();
+            }}
+          >
+            Logout
+          </button>
+        ) : (
+          <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
+        )}
+        
+      </GoogleOAuthProvider>
+      <div className="asdf" onClick={generateNewPrompt}>
+        <h1> Please click me I'm lonely ;-;</h1>
+      </div>
+      <h1>{prompt}</h1>
+    
+    </div>
   );
 };
 
