@@ -3,6 +3,7 @@ import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/goo
 
 import "../../utilities.css";
 import "./Skeleton.css";
+import NavBar from "../modules/NavBar";
 
 
 Array.prototype.random = function () {
