@@ -3,7 +3,6 @@ import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/goo
 
 import "../../utilities.css";
 import "./Skeleton.css";
-import NavBar from "../modules/NavBar";
 
 
 Array.prototype.random = function () {
@@ -38,7 +37,7 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div>
       
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      {/* <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         {userId ? (
           <button
             onClick={() => {
@@ -52,7 +51,7 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
           <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
         )}
         
-      </GoogleOAuthProvider>
+      </GoogleOAuthProvider> */}
       <div className="asdf" onClick={generateNewPrompt}>
         <h1> Please click me I'm lonely ;-;</h1>
       </div>
