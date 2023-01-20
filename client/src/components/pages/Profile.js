@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import CatHappiness from "../modules/CatHappiness.js";
-import { get } from "../../utilities"
+import CatHappiness from "../modules/CatHappiness.js";
+import { get } from "../../utilities";
 
 import "../../utilities.css";
 import "./Profile.css";
@@ -14,20 +14,20 @@ const Profile = (props) => {
     get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
   }, []);
 
-//   const incrementCatHappiness = () => {
-//     setCatHappiness(catHappiness + 1);
-//   };
+  const incrementCatHappiness = () => {
+    setCatHappiness(catHappiness + 1);
+  };
 
   if (!user) {
-    return (<div> Loading! </div>);
+    return <div> Loading! </div>;
   }
   return (
     <>
       <div
         className="Profile-avatarContainer"
-        // onClick={() => {
-        //   incrementCatHappiness();
-        // }}
+        onClick={() => {
+          incrementCatHappiness();
+        }}
       >
         <div className="Profile-avatar" />
       </div>
@@ -42,7 +42,7 @@ const Profile = (props) => {
         </div>
         <div className="Profile-subContainer u-textCenter">
           <h4 className="Profile-subTitle">Cat Happiness</h4>
-          {/* <CatHappiness catHappiness={catHappiness} /> */}
+          <CatHappiness catHappiness={catHappiness} />
         </div>
         <div className="Profile-subContainer u-textCenter">
           <h4 className="Profile-subTitle">My Favorite Type of Cat</h4>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 
 import "../../utilities.css";
-import "./Skeleton.css";
+import "./Landing.css";
 
 
 Array.prototype.random = function () {
@@ -27,7 +27,7 @@ const prompts = ([" Nobody believes this_ until I show them the truth.",
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.googleusercontent.com";
 
-const Skeleton = ({ userId, handleLogin, handleLogout }) => {
+const Landing = ({ userId, handleLogin, handleLogout }) => {
   const [prompt, setPrompt] = useState("");
   const generateNewPrompt = () => {
       
@@ -61,4 +61,4 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
   );
 };
 
-export default Skeleton;
+export default Landing;
