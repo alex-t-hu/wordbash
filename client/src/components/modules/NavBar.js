@@ -25,6 +25,10 @@ const NavBar = (props) => {
             Profile
           </Link>
         )}
+        <Link to="/chat/" className="NavBar-link">
+          Chat
+        </Link>
+        
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         {props.userId ? (
           <button
