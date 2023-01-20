@@ -18,8 +18,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
+  --primary: #9644ee;
+  --primary--dim: #ba7de9;
+  --secondary: #c87341;
+  --secondary--dim: #eac0a7;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
@@ -40,6 +42,12 @@ body {
 
 form {
   flex-grow: 1;
+}
+
+.u-centerPage {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .u-flex {

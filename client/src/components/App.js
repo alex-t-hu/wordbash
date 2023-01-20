@@ -53,7 +53,7 @@ const App = () => {
       />
       <div className="App-container">
         <Router>
-        <Skeleton path="/" userId={userId} />
+          <Skeleton path="/" userId={userId} />
           {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
           <Profile path="/profile/:userId" />
           <NotFound default />
