@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound.js";
 import Skeleton from "./pages/Skeleton.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
-import Chatbook from "./pages/Chatbook.js";
+import Lobby from "./pages/Lobby.js";
 
 
 
@@ -59,7 +59,7 @@ const App = () => {
           <Skeleton path="/" userId={userId} />
           {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
           <Profile path="/profile/:userId" />
-          <Chatbook path="/chat/" userId={userId} />
+          <Lobby path="/lobby/" userId={userId} />
           <NotFound default />
         </Router>
       </div>

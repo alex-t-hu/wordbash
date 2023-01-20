@@ -10,10 +10,10 @@ import "./SingleUser.css";
  * @param {UserObject[]} users to display
  * @param {string} userId id of current logged in user
  */
-const ChatList = (props) => {
+const UserList = (props) => {
   return (
     <>
-      <h3>Open Chats</h3>
+      <h3>Players</h3>
       {props.users
         .map((user, i) => (
           <SingleUser
@@ -27,4 +27,4 @@ const ChatList = (props) => {
   );
 }
 
-export default ChatList;
+export default UserList;

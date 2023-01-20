@@ -5,7 +5,7 @@
 
 .Chatbook-userList {
   flex: 0 0 220px;
-  margin-right: var(--l);
+  /* margin-right: var(--l); */
 }
 
 .Chatbook-chatContainer {
