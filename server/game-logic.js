@@ -97,24 +97,37 @@ const MAX_GAME_ID = 1000000;
 */
 const gameState = {}
 
-/** Create a new game */
-const createGame = () => {
-    const gameID = Math.floor(Math.random() * MAX_GAME_ID);
-    while(gameState[gameID] != undefined) {
-        gameID = Math.floor(Math.random() * MAX_GAME_ID);
-    }
-    gameState[gameID] = {
-        players: {},
-    }
-    return gameID;
-}
+/*
+    Lol this is never necessary.
 
-/** Adds a player to the game state, initialized with a random location */
+    If you want to create a new game, just call spawnPlayer()
+    and it will create a new game if it doesn't exist.
+*/
+// /** Create a new game */
+// const createGame = () => {
+//     const gameID = Math.floor(Math.random() * MAX_GAME_ID);
+//     while(gameState[gameID] != undefined) {
+//         gameID = Math.floor(Math.random() * MAX_GAME_ID);
+//     }
+//     gameState[gameID] = {
+//         players: {},
+//     }
+//     return gameID;
+// }
+
+/** Adds a player to the game state */
 const spawnPlayer = (id, gameID) => {
+    if(gameState[gameID] == undefined) {
+        gameState[gameID] = {
+            players: {},
+        }
+    }
+
+
     gameState[gameID].players[id] = {};
 };
 
-/** Remove a player from the game state if they disconnect or if they get eaten */
+/** Remove a player from the game state if they disconnect */
 const removePlayer = (id) => {
     // find the game that the player is in
     Object.keys(gameState).forEach((gameID) => {

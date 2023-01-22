@@ -5,23 +5,7 @@ import { get } from "../../utilities";
 
 import "./Lobby.css";
 
-// const ALL_CHAT = {
-//   _id: "ALL_CHAT",
-//   name: "ALL CHAT",
-// };
-
-/**
- * Page component to display when at the "/chat" route
- *
- * Proptypes
- * @param {string} userId id of current logged in user
- */
 const Lobby = (props) => {
-  /**
-   * @typedef UserObject
-   * @property {string} _id
-   * @property {string} name
-   */
 
   const [activeUsers, setActiveUsers] = useState([]);
 
@@ -31,9 +15,14 @@ const Lobby = (props) => {
   useEffect(() => {
     document.title = "Lobby";
     // Figure out who I am
-    if (props.userId) {
-      get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-    };
+    // if (props.userId) {
+      console.log("dude what the fuck");
+        get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+
+    //   get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    // }else{
+    //   console.log("dude what the fuck ARGH");
+    // };
   }, []);
 
   useEffect(() => {
@@ -60,18 +49,30 @@ const Lobby = (props) => {
     };
   }, []);
 
-    
   useEffect(() => {
     console.log('activeUsers', activeUsers);
-  }, [activeUsers])
+  }, [activeUsers]);
 
-  if (!props.userId || !user) {
+  
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
+
+  if (!props.userId) {
     return <div>Please Log in</div>;
+  }else{
+    console.log("props.userId", props.userId)
+  }
+  if( !props.gameID ){
+    return <div>Please Create a Game</div>;
+  }
+  if (!user) {
+    return <div>No User</div>;
   }
   return (
     <>
     
-      <h1>Lobby userID = {props.userId} username = {user.name}</h1>
+      <h1>Lobby userID = {props.userId} user = {user.name} gameID = {props.gameID}</h1>
       <div className="u-flex u-relative Chatbook-container">
         
         <div className="Chatbook-userList">

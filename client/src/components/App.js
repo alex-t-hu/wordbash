@@ -7,7 +7,7 @@ import Skeleton from "./pages/Skeleton.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
 import Lobby from "./pages/Lobby.js";
-
+import Landing from "./pages/Landing.js";
 
 
 import "../utilities.css";
@@ -21,6 +21,19 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+
+  
+  const [gameID, setGameID] = useState("a");
+
+  // called whenever the user types in the new post input box
+  // const handleIDChange = (value) => {
+  //   setGameID(value);
+  // };
+  
+  useEffect(() => {
+    console.log(`Game ID set! Game ID = ${gameID}`);
+
+  }, [gameID]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -56,10 +69,10 @@ const App = () => {
       />
       <div className="App-container">
         <Router>
-          <Skeleton path="/" userId={userId} />
+          <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/:userId" userId={userId} />
+          <Lobby path="/lobby/:userId/:gameID" userId={userId} gameID ={gameID}/>
           <NotFound default />
         </Router>
       </div>
