@@ -115,15 +115,18 @@ const spawnPlayer = (id, gameID) => {
 };
 
 /** Remove a player from the game state if they disconnect or if they get eaten */
-const removePlayer = (id, gameID) => {
-    if (gameState[gameID].players[id] != undefined) {
-    delete gameState.players[id];
-    }
+const removePlayer = (id) => {
+    // find the game that the player is in
+    Object.keys(gameState).forEach((gameID) => {
+        if (gameState[gameID].players[id] != undefined) {
+            gameState[gameID].players[id];
+        }
+    });
 };
 
-/** Get the players in a game */
-const getPlayers = (gameID) => {
-    return gameState[gameID].players;
+/** Get a game. */
+const getGame = (gameID) => {
+    return gameState[gameID];
 }
 
 

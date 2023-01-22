@@ -11,7 +11,7 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
 const Skeleton = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div>
-      <Landing />
+      <Landing userId={userId}/>
     </div>
   );
 };
