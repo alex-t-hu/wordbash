@@ -12,6 +12,9 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div>
       <Landing />
+      <h1 className="text-3xl font-bold underline">
+        Tailwind css is working if this is a different style!
+      </h1>
     </div>
   );
 };
