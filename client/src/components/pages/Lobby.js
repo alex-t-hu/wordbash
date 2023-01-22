@@ -25,8 +25,15 @@ const Lobby = (props) => {
 
   const [activeUsers, setActiveUsers] = useState([]);
 
+  // Me
+  const [user, setUser] = useState();
+
   useEffect(() => {
     document.title = "Lobby";
+    // Figure out who I am
+    if (props.userId) {
+      get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    };
   }, []);
 
   useEffect(() => {
@@ -58,13 +65,13 @@ const Lobby = (props) => {
     console.log('activeUsers', activeUsers);
   }, [activeUsers])
 
-  if (!props.userId) {
+  if (!props.userId || !user) {
     return <div>Please Log in</div>;
   }
   return (
     <>
     
-      <h1>Lobby userID = {props.userId}</h1>
+      <h1>Lobby userID = {props.userId} username = {user.name}</h1>
       <div className="u-flex u-relative Chatbook-container">
         
         <div className="Chatbook-userList">

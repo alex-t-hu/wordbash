@@ -25,7 +25,7 @@ const NavBar = (props) => {
             Profile
           </Link>
         )}
-        <Link to="/lobby/" className="NavBar-link">
+        <Link to={`/lobby/${props.userId}`} className="NavBar-link">
           Lobby
         </Link>
         
