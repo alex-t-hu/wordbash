@@ -17,8 +17,8 @@ const Landing = (props) => {
   const handleChange = (event) => {
     console.log(event);
     setValue(event.target.value);
-    console.log(`Game ID set! Game ID = ${value}. The game ID is ${props.gameID}`);
-    props.setGameID(value);
+    // console.log(`Game ID set! Game ID = ${value}. The game ID is ${props.gameID}`);
+    props.setGameID(event.target.value);
   };
 
   // called when the user hits "Submit" for a new post

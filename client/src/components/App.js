@@ -35,6 +35,12 @@ const App = () => {
 
   }, [gameID]);
 
+  
+  useEffect(() => {
+    console.log(`User ID set in App! User ID = ${userId}`);
+
+  }, [userId]);
+
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {

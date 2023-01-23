@@ -15,10 +15,10 @@ const Lobby = (props) => {
   useEffect(() => {
     document.title = "Lobby";
     // Figure out who I am
-    // if (props.userId) {
+    if (props.userId) {
       console.log("dude what the fuck");
         get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-
+    }
     //   get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
     // }else{
     //   console.log("dude what the fuck ARGH");
@@ -53,7 +53,15 @@ const Lobby = (props) => {
     console.log('activeUsers', activeUsers);
   }, [activeUsers]);
 
-  
+  useEffect(() => {
+    console.log('userID', props.userId);
+    if (props.userId) {
+      console.log("dude what the fuck");
+        get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    }
+  }, [props.userId]);
+
+
   useEffect(() => {
     console.log('user', user);
   }, [user]);
