@@ -26,11 +26,9 @@ const NavBar = (props) => {
             Profile
           </Link>
         )}
-        {true && (
-          <Link to="/lobby/" className="NavBar-link">
-            Lobby
-          </Link>
-        )}
+        <Link to="/lobby/" className="NavBar-link">
+          Lobby
+        </Link>
         
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         {props.userId ? (

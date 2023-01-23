@@ -7,7 +7,7 @@ import Skeleton from "./pages/Skeleton.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
 import Lobby from "./pages/Lobby.js";
-
+import Landing from "./pages/Landing.js";
 
 
 import "../utilities.css";
@@ -21,6 +21,28 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+
+  
+  const [gameID, setGameID] = useState("a");
+
+  const [game, setGame] = useState(undefined);
+
+
+  // called whenever the user types in the new post input box
+  // const handleIDChange = (value) => {
+  //   setGameID(value);
+  // };
+  
+  useEffect(() => {
+    console.log(`Game ID set in App! Game ID = ${gameID}`);
+
+  }, [gameID]);
+
+  
+  useEffect(() => {
+    console.log(`User ID set in App! User ID = ${userId}`);
+
+  }, [userId]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -56,10 +78,9 @@ const App = () => {
           userId={userId}
         />
         <Router>
-          <Skeleton path="/" userId={userId} />
-          {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
+          <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/" userId={userId} />
+          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>

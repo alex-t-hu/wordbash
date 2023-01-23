@@ -15,6 +15,8 @@ const express = require("express");
 const User = require("./models/user");
 // const Message = require("./models/message");
 
+const Game = require("./game-logic");
+
 // import authentication library
 const auth = require("./auth");
 
@@ -123,6 +125,41 @@ router.post("/initsocket", (req, res) => {
 
 router.get("/activeUsers", (req, res) => {
   res.send({ activeUsers: socketManager.getAllConnectedUsers() });
+});
+
+
+router.post("/spawn", (req, res) => {
+  if (req.user) {
+    if(req.body.gameID){
+      Game.spawnPlayer(req.user._id, req.body.gameID);
+
+      console.log("spawned player");
+      console.log(Game.gameState);
+    }else{
+      console.log("no gameID provided");
+    }
+  }else{
+    console.log("user not logged in");
+  }
+  res.send({});
+});
+
+router.post("/despawn", (req, res) => {
+  if (req.user) {
+    Game.removePlayer(req.user);
+  }
+  res.send({});
+});
+
+router.get("/game", (req, res) => {
+  // console.log(req.query);
+  if (req.query.gameID) {
+    // console.log("Yay!")
+    res.send(Game.getGame(req.query.gameID));
+  } else {
+    console.log("No gameID provided");
+    res.send({});
+  }
 });
 
 // anything else falls to this "not found" case
