@@ -2,17 +2,62 @@ import React from "react";
 
 import "./Landing.css";
 import "../../utilities.css"
+import { Link } from "@reach/router";
+import { useState } from "react";
 
-/**
- * The navigation bar at the top of all pages. Takes no props.
- */
-const Landing = () => {
+import { get, post } from "../../utilities";
+
+
+
+const Landing = (props) => {
+
+  const [value, setValue] = useState("");
+
+  // called whenever the user types in the new post input box
+  const handleChange = (event) => {
+    console.log(event);
+    setValue(event.target.value);
+    // console.log(`Game ID set! Game ID = ${value}. The game ID is ${props.gameID}`);
+    props.setGameID(event.target.value);
+  };
+
+  // called when the user hits "Submit" for a new post
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    // Spawn then redirect to lobby.
+
+    post("/api/spawn", {gameID: value});
+
+    window.open(`/lobby/${value}`);
+    
+
+    // window.location.href = `/lobby/${value}`;
+  };
+  
+
+
+  if (!props.userId) {
+    return <div>Please Log in</div>;
+  }
   return (
     <div className>
       <div className="Landing-title u-textCenter">wordbash</div>
       <div className="Landing-optionContainer u-centerPage u-flexColumn">
-        <button className="Landing-optionButton u-flex-alignCenter" id="Landing-joinGame">Join Game</button>
-        <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame">Create Game</button>
+          {/* <button className="Landing-optionButton u-flex-alignCenter" id="Landing-joinGame" >
+            <Link to={`/lobby/${props.userId}`} >Join Game</Link>
+            </button> */}
+        <input
+        type="text"
+          placeholder="Enter Game Code"
+          value={value}
+          onChange={handleChange}
+          className="NewPostInput-input"
+        />
+        <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame"
+        onClick = {handleSubmit}>
+          Create Game
+        </button>
       </div>
     </div>
   );
