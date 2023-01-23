@@ -23,7 +23,7 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
 
   
-  const [gameID, setGameID] = useState("a");
+  const [gameID, setGameID] = useState("");
 
   const [game, setGame] = useState(undefined);
 
@@ -80,7 +80,7 @@ const App = () => {
         <Router>
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} setGame = {setGame}/>
+          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>

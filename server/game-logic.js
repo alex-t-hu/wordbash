@@ -1,269 +1,169 @@
 /** constants */
 const MAX_GAME_ID = 1000000;
 
-// const MAP_LENGTH = 500;
-// const INITIAL_RADIUS = 20;
-// const MAX_PLAYER_SIZE = 200;
-// const FOOD_SIZE = 2;
-// const EDIBLE_RANGE_RATIO = 0.9;
-// const EDIBLE_SIZE_RATIO = 0.9;
-// const colors = ["red", "blue", "green", "yellow", "purple", "orange", "silver"]; // colors to use for players
-
-// /** Utils! */
-
-// /** Helper to generate a random integer */
-// const getRandomInt = (min, max) => {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-// };
-
-// /** Helper to generate a random position on the map */
-// const getRandomPosition = () => {
-//   return {
-//     x: getRandomInt(0, MAP_LENGTH),
-//     y: getRandomInt(0, MAP_LENGTH),
-//   };
-// };
-
-// let playersEaten = []; // A list of ids of any players that have just been eaten!
-
-// /** Helper to compute when player 1 tries to eat player 2 */
-// const playerAttemptEatPlayer = (pid1, pid2) => {
-//   const player1Position = gameState.players[pid1].position;
-//   const player2Position = gameState.players[pid2].position;
-//   const x1 = player1Position.x;
-//   const y1 = player1Position.y;
-//   const x2 = player2Position.x;
-//   const y2 = player2Position.y;
-//   const dist = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-//   if (dist < gameState.players[pid1].radius * EDIBLE_RANGE_RATIO) {
-//     // player 2 is within player 1's eat range
-//     if (gameState.players[pid1].radius * EDIBLE_SIZE_RATIO > gameState.players[pid2].radius) {
-//       // player 1 is big enough to eat player 2
-//       gameState.players[pid1].radius += gameState.players[pid2].radius;
-//       playersEaten.push(pid2);
-//     }
-//   }
-// };
-
-// /** Attempts all pairwise eating between players */
-// const computePlayersEatPlayers = () => {
-//   if (Object.keys(gameState.players).length >= 2) {
-//     Object.keys(gameState.players).forEach((pid1) => {
-//       Object.keys(gameState.players).forEach((pid2) => {
-//         playerAttemptEatPlayer(pid1, pid2);
-//       });
-//     });
-//   }
-//   // Remove players who have been eaten
-//   playersEaten.forEach((playerid) => {
-//     removePlayer(playerid);
-//   });
-//   playersEaten = []; // Reset players that have just been eaten
-// };
-
-// /** Helper to check a player eating a piece of food */
-// const playerAttemptEatFood = (pid1, f) => {
-//   const player1Position = gameState.players[pid1].position;
-//   const foodPosition = f.position;
-//   const x1 = player1Position.x;
-//   const y1 = player1Position.y;
-//   const x2 = foodPosition.x;
-//   const y2 = foodPosition.y;
-//   const dist = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-//   if (dist < gameState.players[pid1].radius - FOOD_SIZE) {
-//     // food is within player 1's eat range
-//     if (gameState.players[pid1].radius > FOOD_SIZE) {
-//       // player 1 is big enough to eat food
-//       gameState.players[pid1].radius += FOOD_SIZE;
-//       removeFood(f);
-//     }
-//   }
-// };
-
-// /** Attempts all pairwise eating between each player and all foods */
-// const computePlayersEatFoods = () => {
-//   Object.keys(gameState.players).forEach((pid1) => {
-//     gameState.food.forEach((f) => {
-//       playerAttemptEatFood(pid1, f);
-//     });
-//   });
-// };
-
 /** Game state
  * The game state is a dictionary of games, where each game is a dictionary of players
  * 
 */
 const gameState = {}
-
 /*
-    Lol this is never necessary.
 
-    If you want to create a new game, just call spawnPlayer()
-    and it will create a new game if it doesn't exist.
-*/
-// /** Create a new game */
-// const createGame = () => {
-//     const gameID = Math.floor(Math.random() * MAX_GAME_ID);
-//     while(gameState[gameID] != undefined) {
-//         gameID = Math.floor(Math.random() * MAX_GAME_ID);
-//     }
-//     gameState[gameID] = {
-//         players: {},
-//     }
-//     return gameID;
-// }
+    gameState = {
+        gameID: {
+            num_Players: a number
+            game_Started: a boolean
+            prompts: {
+                id (a number from 0 to N-1):{
+                    timestamp for round start (TODO)
+
+                    content
+                    // players id and id +1 will answer this, everyone else will vote.
+                    
+                    Response 0: a string (corresponds to id)
+                    Response 1: a string (corresponds to id + 1)
+                    response_0_vote:{
+                        player_ids...
+                    }
+                    response_1_vote:{
+                        player_ids...
+                    }
+                    
+                }
+            }
+            players: {
+                player_id:{
+                    id (actual hex id)
+                    score
+                }
+                
+            }
+
+        }
+    }
+
+/** Create a new game */
+const createGame = (gameID) => {
+    // const gameID = Math.floor(Math.random() * MAX_GAME_ID);
+    // while(gameState[gameID] != undefined) {
+    //     gameID = Math.floor(Math.random() * MAX_GAME_ID);
+    // }
+    gameState[gameID] = {
+        num_players: 0,
+        game_started: false,
+        players: {},
+        prompts: {}
+    }
+    console.log("Created game " + gameID);
+    
+    return gameID;
+}
 
 /** Adds a player to the game state */
 const spawnPlayer = (id, gameID) => {
     if(!gameState[gameID]) {
-        gameState[gameID] = {
-            players: {},
+        // ur bad
+        console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
+    }else{
+        
+        console.log("Spawning player " + id + " in game " + gameID);
+
+        const newPlayer = {
+            id: id,
+            score : 0
+        }
+        
+        gameState[gameID]["players"][gameState[gameID]["num_Players"]] = newPlayer;
+
+        gameState[gameID]["num_Players"] += 1;
+
+    }
+};
+
+const Prompts = [
+    "Nobody believes this_ until I show them the truth.",
+    "I like to make life easier for everyone by___",
+    "At the stroke of midnight my life changed forever when I suddenly ___",
+    "If I could make $1 million dollars fast, I know I would___",
+    "A preschooler proving to jealous fellow students he believed in Santa Claus despite small fingers no softness _.__",
+    "I knew I was in trouble when Aunt Patty caught me ___"
+]
+
+const startGame = (gameID) => {
+    gameState[gameID]["game_started"] = true;
+    // Generate Prompts
+    for(let i = 0; i < gameState[gameID][num_players]; i++) {
+        gameState[gameID]["prompts"][i] = {
+            content: Prompts[i],
+            response_0_answer: "",
+            response_1_answer: "",
+            response_0_vote: [],
+            response_1_vote: []
         }
     }
-    console.log("Spawning player " + id + " in game " + gameID);
+}
 
-    gameState[gameID]["players"][id] = {};
-};
+const submitResponse = (gameID, promptID, playerID, response) => {
+    if(promptID === playerID ){
+        gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
+    }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerID){
+        gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
+    }else{
+        console.log("You can't answer this prompt!");
+    }
+}
 
-/** Remove a player from the game state if they disconnect */
-const removePlayer = (id) => {
-    // find the game that the player is in
-    Object.keys(gameState).forEach((gameID) => {
-        if (gameState[gameID].players[id] != undefined) {
-            gameState[gameID].players[id];
-        }
-    });
-};
-
-/** Get a game. */
-const getGame = (gameID) => {
-    return gameState[gameID];
+const submitVote = (gameID, promptID, playerID, response) => {
+    if(response === 0){
+        gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
+    }else if(response === 1){
+        gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
+    }else{
+        console.log("You can't vote for this response!");
+    }
 }
 
 
 
+//TODO: implment removing players
 
-// /** Game logic */
-
-
-// /** Adds a food to the game state, initialized with a random location */
-// const spawnFood = () => {
-//   gameState.food.push({
-//     position: getRandomPosition(),
-//     radius: FOOD_SIZE,
-//     color: colors[Math.floor(Math.random() * colors.length)],
-//   });
-// };
-
-// /** Moves a player based off the sent data from the "move" socket msg */
-// const movePlayer = (id, dir) => {
-//   // Unbounded moves
-//   // if (dir === "up") {
-//   //   gameState.players[id].position.y += 10;
-//   // } else if (dir === "down") {
-//   //   gameState.players[id].position.y -= 10;
-//   // } else if (dir === "left") {
-//   //   gameState.players[id].position.x -= 10;
-//   // } else if (dir === "right") {
-//   //   gameState.players[id].position.x += 10;
-//   // }
-
-//   // If player doesn't exist, don't move anything
-//   if (gameState.players[id] == undefined) {
-//     return;
-//   }
-
-//   // Initialize a desired position to move to
-//   const desiredPosition = {
-//     x: gameState.players[id].position.x,
-//     y: gameState.players[id].position.y,
-//   };
-
-//   // Calculate desired position
-//   if (dir === "up") {
-//     desiredPosition.y += 10;
-//   } else if (dir === "down") {
-//     desiredPosition.y -= 10;
-//   } else if (dir === "left") {
-//     desiredPosition.x -= 10;
-//   } else if (dir === "right") {
-//     desiredPosition.x += 10;
-//   }
-
-//   // Keep player in bounds
-//   if (desiredPosition.x > MAP_LENGTH) {
-//     desiredPosition.x = MAP_LENGTH;
-//   }
-//   if (desiredPosition.x < 0) {
-//     desiredPosition.x = 0;
-//   }
-//   if (desiredPosition.y > MAP_LENGTH) {
-//     desiredPosition.y = MAP_LENGTH;
-//   }
-//   if (desiredPosition.y < 0) {
-//     desiredPosition.y = 0;
-//   }
-
-//   // Move player
-//   gameState.players[id].position = desiredPosition;
-// };
-
-// /** Spawn a food if there are less than 10 foods */
-// const checkEnoughFoods = () => {
-//   if (gameState.food.length < 10) {
-//     spawnFood();
-//   }
-// };
-
-// /** Check win condition */
-// const checkWin = () => {
-//   const winners = Object.keys(gameState.players).filter((key) => {
-//     // check if player is sufficiently large
-//     const player = gameState.players[key];
-//     if (player.radius > MAX_PLAYER_SIZE) {
-//       return true;
-//     }
-//   });
-
-//   // WARNING: race condition here; if players' radii become >200 at the same time, game will keep going
-//   if (winners.length === 1) {
-//     gameState.winner = winners[0];
-//     Object.keys(gameState.players).forEach((key) => {
-//       // remove all players from the game (effectively resetting the game)
-//       removePlayer(key);
+// /** Remove a player from the game state if they disconnect */
+// const removePlayer = (id) => {
+//     // find the game that the player is in
+//     Object.keys(gameState).forEach((gameID) => {
+//         if (gameState[gameID].players[id] != undefined) {
+//             gameState[gameID].players[id];
+//         }
 //     });
-//   }
 // };
 
-// /** Update the game state. This function is called once per server tick. */
-// const updateGameState = () => {
-//   checkWin();
-//   computePlayersEatPlayers();
-//   computePlayersEatFoods();
-//   checkEnoughFoods();
-// };
+/** Get a game. */
+const getGame = (gameID) => {
+    if(!(gameID in gameState)) {
+        // ur bad
+        console.log("Game " + gameID + " does not exist. (Inside getGame)");
+        return {};
+    }else{
+        return gameState[gameID];
+    }
+}
 
 
-// /** Remove a food from the game state if it gets eaten, given reference to food object */
-// const removeFood = (f) => {
-//   let ix = gameState.food.indexOf(f);
-//   if (ix !== -1) {
-//     gameState.food.splice(ix, 1);
-//   }
-// };
+/** Get a game. */
+const gameExists = (gameID) => {
+    return (gameID in gameState);
+}
 
-// const resetWinner = () => {
-//   gameState.winner = null;
-// };
+
 
 module.exports = {
   gameState,
   spawnPlayer,
   getGame,
-//   movePlayer,
-  removePlayer,
-//   updateGameState,
-//   resetWinner,
+    createGame,
+    startGame,
+    submitResponse,
+    submitVote,
+    gameExists,
+    // 
+//   removePlayer,
 };

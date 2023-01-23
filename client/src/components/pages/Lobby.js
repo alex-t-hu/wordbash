@@ -32,7 +32,7 @@ const Lobby = (props) => {
   useEffect(() => {
     if(props.userId && user && props.gameID){
       get("/api/game", {gameID: props.gameID}).then((data) => {
-        console.log("data", data);
+        // console.log("data", data);
         if (props.setGame) {
           props.setGame(data);
         };
@@ -68,14 +68,19 @@ const Lobby = (props) => {
 
   if (!props.userId) {
     return <div>Please Log in</div>;
-  }else{
-    console.log("props.userId", props.userId)
   }
+  // else{
+  //   console.log("props.userId", props.userId)
+  // }
   if( !props.gameID ){
     return <div>Please Create a Game</div>;
   }
   if (!user) {
     return <div>No User</div>;
+  }
+  
+  if (!props.game || !props.game.players) {
+    return <div>No Game</div>;
   }
   return (
     <>
@@ -85,7 +90,7 @@ const Lobby = (props) => {
         <div className="Chatbook-userList">
           <UserList
             userId={props.userId}
-            users={activeUsers}
+            users={props.game.players}
           />
         </div>
       </div>

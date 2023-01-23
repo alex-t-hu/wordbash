@@ -24,10 +24,27 @@ const Landing = (props) => {
   // called when the user hits "Submit" for a new post
   const handleSubmit = (event) => {
     event.preventDefault();
+
     
     // Spawn then redirect to lobby.
+    get("/api/gameExists", {gameID: value}).then((game) => {
+      console.log("Game is: ", game.gameExists);
+      if(!game.gameExists){
+        console.log("Game does not exist (inside Landing.js)");
 
-    post("/api/spawn", {gameID: value});
+
+        post("/api/createGame", {gameID: value}).then((g) => {
+          console.log("Game created because ");
+          post("/api/spawn", {gameID: value});
+        });
+
+
+      }else{
+        console.log("Game exists (inside Landing.js)");
+        post("/api/spawn", {gameID: value});
+      }
+    });
+
 
     window.open(`/lobby/${value}`);
     
