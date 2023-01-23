@@ -31,7 +31,7 @@ const App = () => {
   // };
   
   useEffect(() => {
-    console.log(`Game ID set! Game ID = ${gameID}`);
+    console.log(`Game ID set in App! Game ID = ${gameID}`);
 
   }, [gameID]);
 
@@ -72,7 +72,7 @@ const App = () => {
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/:userId/:gameID" userId={userId} gameID ={gameID}/>
+          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID}/>
           <NotFound default />
         </Router>
       </div>

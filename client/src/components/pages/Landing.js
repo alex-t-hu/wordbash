@@ -15,7 +15,10 @@ const Landing = (props) => {
 
   // called whenever the user types in the new post input box
   const handleChange = (event) => {
+    console.log(event);
     setValue(event.target.value);
+    console.log(`Game ID set! Game ID = ${value}. The game ID is ${props.gameID}`);
+    props.setGameID(value);
   };
 
   // called when the user hits "Submit" for a new post
@@ -28,10 +31,9 @@ const Landing = (props) => {
         gameId: value,
       }
     });
-    props.setGameID(value)
     
-    console.log(`Game created successfully! Game code = ${value}`);
-     window.open(`/lobby/${props.userId}/${value}`);
+    window.open(`/lobby/${value}`);
+
     // window.location.href = `/lobby/${value}`;
   };
   
