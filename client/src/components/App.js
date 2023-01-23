@@ -49,12 +49,12 @@ const App = () => {
 
   return (
     <>
-      <NavBar
-        handleLogin={handleLogin}
-        handleLogout={handleLogout}
-        userId={userId}
-      />
       <div className="App-container">
+        <NavBar
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          userId={userId}
+        />
         <Router>
           <Skeleton path="/" userId={userId} />
           {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}

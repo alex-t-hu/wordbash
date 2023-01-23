@@ -1,11 +1,22 @@
 .NavBar-container {
   padding: var(--s) var(--m);
   background-color: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.NavBar-title {
+.NavBar-title,
+.NavBar-title:visited {
   color: var(--white);
-  font-size: 20px;
+  font-size: 25px;
+  opacity: 1;
+  text-shadow: 0px 3px 5px #000000;
+  text-decoration: none;
+}
+
+.NavBar-title:hover {
+  color: rgb(227, 215, 215);
 }
 
 .NavBar-linkContainer {
@@ -25,6 +36,12 @@
 
 .NavBar-link.NavBar-login {
   opacity: 1;
+  color: red;
+}
+
+.NavBar-link.NavBar-logout {
+  opacity: 1;
+  color: black;
 }
 
 .NavBar-link + .NavBar-link {
