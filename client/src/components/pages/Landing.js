@@ -25,14 +25,12 @@ const Landing = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    post("/api/spawn", {
-      userId: props.userId,
-      body: {
-        gameId: value,
-      }
-    });
-    
+    // Spawn then redirect to lobby.
+
+    post("/api/spawn", {gameID: value});
+
     window.open(`/lobby/${value}`);
+    
 
     // window.location.href = `/lobby/${value}`;
   };

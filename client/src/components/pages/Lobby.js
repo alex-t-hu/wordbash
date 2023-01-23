@@ -12,20 +12,12 @@ const Lobby = (props) => {
   // Me
   const [user, setUser] = useState();
 
-  useEffect(() => {
-    document.title = "Lobby";
-    // Figure out who I am
-    if (props.userId) {
-      console.log("dude what the fuck");
-        get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-    }
-    //   get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-    // }else{
-    //   console.log("dude what the fuck ARGH");
-    // };
-  }, []);
+  /**
+   * This effect is run when the component mounts.
+   */
 
   useEffect(() => {
+    document.title = "Lobby";
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);
@@ -33,16 +25,25 @@ const Lobby = (props) => {
     });
   }, []);
 
+  /**
+   * This effect is run every time any state variable changes.
+   */
+  
+  useEffect(() => {
+    if(props.userId && user && props.gameID){
+      get("/api/game", {gameID: props.gameID}).then((data) => {
+        console.log("data", data);
+        if (props.setGame) {
+          props.setGame(data);
+        };
+      });
+    }
+  });
+  
   useEffect(() => {
     const callback = (data) => {
-      
-      // console.log("activeUsers", activeUsers);
       setActiveUsers(data.activeUsers);
-      // console.log("activeUsers", data.activeUsers);
-      
-      // console.log("activeUsers", activeUsers);
     };
-
     socket.on("activeUsers", callback);
     return () => {
       socket.off("activeUsers", callback);
@@ -54,16 +55,15 @@ const Lobby = (props) => {
   }, [activeUsers]);
 
   useEffect(() => {
-    console.log('userID', props.userId);
+    console.log('userID effect: userID is', props.userId);
     if (props.userId) {
-      console.log("dude what the fuck");
-        get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+      get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
     }
   }, [props.userId]);
 
 
   useEffect(() => {
-    console.log('user', user);
+    console.log('user effect: user is', user);
   }, [user]);
 
   if (!props.userId) {
@@ -79,7 +79,6 @@ const Lobby = (props) => {
   }
   return (
     <>
-    
       <h1>Lobby userID = {props.userId} user = {user.name} gameID = {props.gameID}</h1>
       <div className="u-flex u-relative Chatbook-container">
         

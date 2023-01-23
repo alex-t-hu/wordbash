@@ -117,14 +117,14 @@ const gameState = {}
 
 /** Adds a player to the game state */
 const spawnPlayer = (id, gameID) => {
-    if(gameState[gameID] == undefined) {
+    if(!gameState[gameID]) {
         gameState[gameID] = {
             players: {},
         }
     }
+    console.log("Spawning player " + id + " in game " + gameID);
 
-
-    gameState[gameID].players[id] = {};
+    gameState[gameID]["players"][id] = {};
 };
 
 /** Remove a player from the game state if they disconnect */
@@ -261,6 +261,7 @@ const getGame = (gameID) => {
 module.exports = {
   gameState,
   spawnPlayer,
+  getGame,
 //   movePlayer,
   removePlayer,
 //   updateGameState,

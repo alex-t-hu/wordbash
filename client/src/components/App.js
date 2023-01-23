@@ -25,6 +25,9 @@ const App = () => {
   
   const [gameID, setGameID] = useState("a");
 
+  const [game, setGame] = useState(undefined);
+
+
   // called whenever the user types in the new post input box
   // const handleIDChange = (value) => {
   //   setGameID(value);
@@ -76,9 +79,8 @@ const App = () => {
       <div className="App-container">
         <Router>
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
-          {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID}/>
+          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>

@@ -131,7 +131,10 @@ router.get("/activeUsers", (req, res) => {
 router.post("/spawn", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      Game.spawnPlayer(req.user, req.body.gameID);
+      Game.spawnPlayer(req.user._id, req.body.gameID);
+
+      console.log("spawned player");
+      console.log(Game.gameState);
     }else{
       console.log("no gameID provided");
     }
@@ -149,7 +152,9 @@ router.post("/despawn", (req, res) => {
 });
 
 router.get("/game", (req, res) => {
+  // console.log(req.query);
   if (req.query.gameID) {
+    // console.log("Yay!")
     res.send(Game.getGame(req.query.gameID));
   } else {
     console.log("No gameID provided");
