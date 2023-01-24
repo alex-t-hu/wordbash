@@ -5,6 +5,7 @@ import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/goo
 // import {GoogleOAuthProvider, GoogleLogin,  GoogleLogout } from "react-google-login";
 
 import "./NavBar.css";
+import "../pages/Skeleton.css"
 
 // This identifies your web application to Google's authentication service
 const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.googleusercontent.com";
@@ -14,7 +15,7 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
  */
 const NavBar = (props) => {
   return (
-    <nav className="NavBar-container">
+    <nav className="NavBar-container bg-teal-500">
       <div className="u-inlineBlock">
         <Link to="/" className="NavBar-title">
           wordbash

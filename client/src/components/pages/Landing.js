@@ -65,6 +65,10 @@ const Landing = (props) => {
           onChange={handleChange}
           className="NewPostInput-input"
         />
+        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="Landing-joinGame"
+        onClick = {handleSubmit}>
+          Join Game
+        </button>
         <button className="rounded bg-purple-500 u-flex-alignCenter" id="Landing-makeGame"
         onClick = {handleSubmit}>
           Create Game
