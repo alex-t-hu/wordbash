@@ -23,9 +23,9 @@ import { get, post } from "../utilities";
  * Define the "App" component
  */
 const App = () => {
-  const [userId, setUserId] = useState(undefined);
-  const [gameID, setGameID] = useState(undefined);
-  const [game, setGame] = useState(undefined);
+  const [userId, setUserId] = useState("");
+  const [gameID, setGameID] = useState("");
+  const [game, setGame] = useState({});
   
   // useEffect(() => {
   //   console.log(`Game ID set in App! Game ID = ${gameID}`);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import "./Landing.css";
-import "../../utilities.css"
+import "../../utilities.css";
 import { useState } from "react";
 
 import { get, post } from "../../utilities";
