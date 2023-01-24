@@ -1,0 +1,35 @@
+.Prompt-container {
+    height: calc(100vh - 120px);
+    width: 100%;
+}
+.Prompt-prompt {
+    flex: 0 0 220px;
+    /* margin-right: var(--l); */
+}
+.Prompt-response {
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+.Prompt-textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-size: 1.5rem;
+    font-family: var(--font);
+    color: var(--text);
+    background-color: var(--background);
+}
+.Prompt-button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-size: 1.5rem;
+    font-family: var(--font);
+    color: var(--text);
+    background-color: var(--background);
+}
