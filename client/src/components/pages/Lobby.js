@@ -1,42 +1,21 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../modules/UserList.js";
 import { socket } from "../../client-socket.js";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 
 import "./Lobby.css";
 
-// const ALL_CHAT = {
-//   _id: "ALL_CHAT",
-//   name: "ALL CHAT",
-// };
-
-/**
- * Page component to display when at the "/chat" route
- *
- * Proptypes
- * @param {string} userId id of current logged in user
- */
 const Lobby = (props) => {
-  /**
-   * @typedef UserObject
-   * @property {string} _id
-   * @property {string} name
-   */
 
   const [activeUsers, setActiveUsers] = useState([]);
+  const [user, setUser] = useState(); // My name
 
-  // Me
-  const [user, setUser] = useState();
+  /**
+   * This effect is run when the component mounts.
+   */
 
   useEffect(() => {
     document.title = "Lobby";
-    // Figure out who I am
-    if (props.userId) {
-      get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-    };
-  }, []);
-
-  useEffect(() => {
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);
@@ -44,43 +23,104 @@ const Lobby = (props) => {
     });
   }, []);
 
+  /**
+   * This effect is run every time any state variable changes.
+   */
+  
+  useEffect(() => {
+    if(props.userId && user && props.gameID){
+      get("/api/game", {gameID: props.gameID}).then((data) => {
+        // console.log("data", data);
+        if (props.setGame) {
+          props.setGame(data);
+        };
+      });
+    }
+  });
+  
   useEffect(() => {
     const callback = (data) => {
-      
-      // console.log("activeUsers", activeUsers);
       setActiveUsers(data.activeUsers);
-      // console.log("activeUsers", data.activeUsers);
-      
-      // console.log("activeUsers", activeUsers);
     };
-
     socket.on("activeUsers", callback);
     return () => {
       socket.off("activeUsers", callback);
     };
   }, []);
 
-    
   useEffect(() => {
     console.log('activeUsers', activeUsers);
-  }, [activeUsers])
+  }, [activeUsers]);
 
-  if (!props.userId || !user) {
+  useEffect(() => {
+    console.log('userID effect: userID is', props.userId);
+    if (props.userId) {
+      get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    }
+  }, [props.userId]);
+
+
+  useEffect(() => {
+    console.log('user effect: user is', user);
+  }, [user]);
+
+  
+  // called when the user hits "Submit" 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    post("/api/startGame", {gameID: props.gameID}).then((g) => {
+      console.log("Game created ");
+    });
+  };
+
+  /**
+   * We need to constantly check if the game has been started yet.
+   * If the game has been started, redirected to the game page.
+   */
+  useEffect(() => {
+    if (props.game && props.game.started) {
+      window.location.href = `/prompt/${props.gameID}`;
+    }
+  }, [props.game]);
+
+
+  
+
+  if (!props.userId) {
     return <div>Please Log in</div>;
+  }
+  // else{
+  //   console.log("props.userId", props.userId)
+  // }
+  if( !props.gameID ){
+    return <div>Please Create a Game</div>;
+  }
+  if (!user) {
+    return <div>No User</div>;
+  }
+  
+  if (!props.game || !props.game.players) {
+    return <div>No Game</div>;
   }
   return (
     <>
-    
-      <h1>Lobby userID = {props.userId} username = {user.name}</h1>
+      <h1>Lobby userID = {props.userId} user = {user.name} gameID = {props.gameID}</h1>
       <div className="u-flex u-relative Chatbook-container">
         
         <div className="Chatbook-userList">
           <UserList
             userId={props.userId}
-            users={activeUsers}
+            users={props.game.players}
           />
         </div>
+        <div className="Chatbook-chatContainer">
+          <button onClick = {handleSubmit}>
+              Start Game
+            </button>
+          </div>
       </div>
+
     </>
   );
 }
