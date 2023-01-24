@@ -50,7 +50,7 @@ const createGame = (gameID) => {
     //     gameID = Math.floor(Math.random() * MAX_GAME_ID);
     // }
     gameState[gameID] = {
-        num_players: 0,
+        num_Players: 0,
         game_started: false,
         players: {},
         prompts: {}
@@ -66,15 +66,23 @@ const spawnPlayer = (id, gameID) => {
         // ur bad
         console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
     }else{
+
+        // Check if player is already in game
+        for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+            if(gameState[gameID]["players"][i]["id"] === id) {
+                console.log("Player " + id + " is already in game " + gameID);
+                return;
+            }
+        }
         
         console.log("Spawning player " + id + " in game " + gameID);
         
-        gameState[gameID]["players"][gameState[gameID]["num_players"]] = {
+        gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
             score : 0
         };
 
-        gameState[gameID]["num_players"] += 1;
+        gameState[gameID]["num_Players"] += 1;
 
     }
 };
@@ -91,7 +99,7 @@ const Prompts = [
 const startGame = (gameID) => {
     gameState[gameID]["started"] = true;
     // Generate Prompts
-    for(let i = 0; i < gameState[gameID][num_players]; i++) {
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
         gameState[gameID]["prompts"][i] = {
             content: Prompts[i],
             response_0_answer: "",
@@ -103,12 +111,21 @@ const startGame = (gameID) => {
 }
 
 const submitResponse = (playerID, gameID, promptID, response) => {
-    if(promptID === playerID ){
+    
+    let playerIdx = -1;
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
+        if(gameState[gameID]["players"][i]['id'] === playerID){
+            playerIdx = i;
+            break;
+        }
+    }
+
+    if(promptID === playerIdx ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
-    }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerID){
+    }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerIdx){
         gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
     }else{
-        console.log("You can't answer this prompt!");
+        console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
     }
     // Check if all responses are in
     let allResponsesIn = true;

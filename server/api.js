@@ -75,7 +75,13 @@ router.post("/startGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.startGame(req.body.gameID);
+      console.log("started game");
+      console.log(Game.gameState);
+    }else{
+      console.log("no gameID provided");
     }
+  }else{
+    console.log("user not logged in");
   }
   res.send({});
 });

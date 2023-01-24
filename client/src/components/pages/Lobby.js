@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../modules/UserList.js";
 import { socket } from "../../client-socket.js";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 
 import "./Lobby.css";
 
@@ -71,7 +71,7 @@ const Lobby = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    post("/api/startGame", {gameID: value}).then((g) => {
+    post("/api/startGame", {gameID: props.gameID}).then((g) => {
       console.log("Game created ");
     });
   };
@@ -116,7 +116,13 @@ const Lobby = (props) => {
             users={props.game.players}
           />
         </div>
+        <div className="Chatbook-chatContainer">
+          <button onClick = {handleSubmit}>
+              Start Game
+            </button>
+          </div>
       </div>
+
     </>
   );
 }
