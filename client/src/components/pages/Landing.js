@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./Landing.css";
+import './Skeleton.css';
 import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
@@ -54,6 +55,7 @@ const Landing = (props) => {
   }
   return (
     <div className>
+      <div></div>
       <div className="Landing-title u-textCenter">wordbash</div>
       <div className="Landing-optionContainer u-centerPage u-flexColumn">
         <input
@@ -63,7 +65,7 @@ const Landing = (props) => {
           onChange={handleChange}
           className="NewPostInput-input"
         />
-        <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame"
+        <button className="rounded bg-purple-500 u-flex-alignCenter" id="Landing-makeGame"
         onClick = {handleSubmit}>
           Create Game
         </button>

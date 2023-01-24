@@ -532,6 +532,15 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.rounded{
+  border-radius: 0.25rem;
+}
+
+.bg-purple-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+}
+
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
