@@ -26,7 +26,7 @@ const VotingResults = (props) => {
     }
     useEffect(() => {
         if(props.game.votingResultsFinished) {
-            window.location.href = `/finalresults/`; 
+            window.location.href = `/finalresults/${props.gameID}}`; 
         }
     },[props.game.votingResultsFinished]);
 

@@ -12,7 +12,7 @@ const Voting = (props) => {
     const [voted, setVoted] = useState(false); // true if user has voted
     useEffect(() => {
         if(props.game.votingFinished) {
-            window.location.href = `/votingresults/`;
+            window.location.href = `/votingresults/${props.gameID}`;
         }
     }, [props.game.votingFinished]); // see game-logic.js for the structure of game
     // called when the user hits "Submit" for a new post

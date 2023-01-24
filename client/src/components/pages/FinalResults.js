@@ -35,12 +35,12 @@ const FinalResults = (props) => {
     return (
         <div>
             <h3>Results</h3>
-            {playerList.map((playerId, playerInfo) => (
+            {playerList.map((playerId, playerInfo) => {(
                 <div>
                     <p>{playerId}</p>
                     <p>{playerInfo["score"]}</p>
                 </div>
-            ))}
+            )})}
             {props.game.hostPlayer===props.userId && <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame" onClick = {handleSubmit}>
                 Play Again?
             </button>}
