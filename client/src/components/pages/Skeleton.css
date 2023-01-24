@@ -569,6 +569,10 @@ video {
   flex-direction: row;
 }
 
+.items-center{
+  align-items: center;
+}
+
 .rounded{
   border-radius: 0.25rem;
 }
@@ -615,6 +619,10 @@ video {
 .bg-teal-500{
   --tw-bg-opacity: 1;
   background-color: rgb(20 184 166 / var(--tw-bg-opacity));
+}
+
+.fill-white{
+  fill: #fff;
 }
 
 .py-2{

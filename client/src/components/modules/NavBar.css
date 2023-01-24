@@ -26,12 +26,12 @@
 .NavBar-link,
 .NavBar-link:visited {
   color: var(--white);
-  opacity: 0.6;
+  opacity: 0.8;
   text-decoration: none;
 }
 
 .NavBar-link:hover {
-  opacity: 0.8;
+  opacity: 0.95;
 }
 
 .NavBar-link.NavBar-login {

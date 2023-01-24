@@ -16,12 +16,12 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
 const NavBar = (props) => {
   return (
     <nav className="NavBar-container bg-teal-500">
-      <div className="u-inlineBlock">
+      <div className="">
         <Link to="/" className="NavBar-title ">
           wordbash
         </Link>
       </div>
-      <div className="NavBar-linkContainer">
+      <div className="flex items-center NavBar-linkContainer">
         {props.userId && (
           <Link to={`/profile/${props.userId}`} className="NavBar-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -29,34 +29,32 @@ const NavBar = (props) => {
             </svg>
           </Link>
         )}
-        <Link to="/lobby/" className="NavBar-link">
-          Lobby
-        </Link>
         
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        {props.userId ? (
-          <button
-            onClick={() => {
-              googleLogout();
-              props.handleLogout();
-            }}
-            className="NavBar-link NavBar-logout"
-          >
-            Logout
-          </button>
+          {props.userId ? (
+            <button
+              onClick={() => {
+                googleLogout();
+                props.handleLogout();
+              }}
+              className="NavBar-link"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>
+
+            </button>
           ) : (
-            
-          <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={props.handleLogin}
-          onFailure={(err) => console.log(err)}
-          className="NavBar-link NavBar-login"
-        />
-        
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={props.handleLogin}
+              onFailure={(err) => console.log(err)}
+              className="NavBar-link NavBar-login"
+            />
+          )}
+        </GoogleOAuthProvider> 
           
-        )}
-          </GoogleOAuthProvider> 
       </div>
     </nav>
   );
