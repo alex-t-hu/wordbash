@@ -5,7 +5,6 @@
 }
 
 .Landing-optionContainer{
-    background-color: var(--white);
     position: absolute;
     width: 300px;
 }

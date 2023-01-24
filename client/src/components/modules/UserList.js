@@ -12,7 +12,7 @@ import "./SingleUser.css";
  */
 const UserList = (props) => {
   return (
-    <>
+    <div className="w-full flex flex-col text-center bg-gray-50">
       {Object.keys(props.users)
         .map((key, i) => (
           <SingleUser
@@ -22,7 +22,7 @@ const UserList = (props) => {
             // active={user === props.active}
           />
         ))}
-    </>
+    </div>
   );
 }
 

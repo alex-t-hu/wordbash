@@ -80,8 +80,7 @@ const Landing = (props) => {
   }
   return (
     <div className>
-      <div></div>
-      <div className="Landing-optionContainer u-centerPage u-flexColumn">
+      <div className="Landing-optionContainer u-centerPage u-flexColumn bg-gray-50">
         <div className="flex flex-row m-8">
           <input
           type="text"
@@ -96,6 +95,11 @@ const Landing = (props) => {
             {'>'}
           </button>
         </div>
+        
+        <div>
+          <h1 className="text-center">or</h1>
+        </div>
+
         <div className="m-8">
           <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick = {handleSubmitCreate}>

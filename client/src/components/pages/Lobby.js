@@ -104,31 +104,36 @@ const Lobby = (props) => {
     return <div>No Game</div>;
   }
   return (
-    <div className="flex flex-row justify-center border p-8">
-      <div className="p-16 flex flex-col items-center mx-4 border-4 border-teal-500 rounded-md">
-        {/*<h1 className="">Lobby userID = {props.userId}</h1>*/}
-        {/*<h1 className=""> user = {user.name}</h1>*/}
-        <h1 className="text-lg">Game Code:</h1>
-        <input className="text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
-      </div>
-      
-      <div className="bg-gray-50 flex flex-col">
-        <div className="w-full text-center bg-teal-500 text-white p-4">
-          <h3>PLAYERS</h3>
+    <div className="flex flex-col items-center mx-60 my-16 bg-white">
+      <div className="w-full flex flex-row justify-center">
+        <div className="w-full bg-gray-50 flex flex-col mr-2">
+          <div className="w-full text-center bg-teal-500 text-white py-2">
+            <h3>Players ({props.game.num_Players})</h3>
+          </div>
+
+          <div className="flex items-center m-4">
+            <UserList
+              userId={props.userId}
+              users={props.game.players}
+            />
+          </div>
         </div>
-        <div className="flex items-center mx-4 border border-gray-400">
-          <UserList
-            userId={props.userId}
-            users={props.game.players}
-          />
+
+        <div className="bg-gray-50 p-4 flex flex-col items-center ml-2 rounded-md">
+          {/*<h1 className="">Lobby userID = {props.userId}</h1>*/}
+          {/*<h1 className=""> user = {user.name}</h1>*/}
+          <h1 className="">Game Code:</h1>
+          <input className="text-3xl text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
         </div>
-        <div className="">
-          <button onClick = {handleSubmit}>
-            Start Game
-          </button>
-        </div>
+
       </div>
 
+      <div className="w-full mt-4">
+        <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        onClick = {(props.game.num_Players > 1) ? handleSubmit: null}>
+          START GAME
+        </button>
+      </div>
     </div>
   );
 }
