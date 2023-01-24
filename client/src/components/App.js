@@ -3,11 +3,11 @@ import { Router } from "@reach/router";
 import jwt_decode from "jwt-decode";
 
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
 import Lobby from "./pages/Lobby.js";
 import Landing from "./pages/Landing.js";
+import Voting from "./pages/Voting.js";
 
 
 import "../utilities.css";
@@ -81,6 +81,7 @@ const App = () => {
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           <Profile path="/profile/:userId" />
           <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>

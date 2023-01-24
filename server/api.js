@@ -104,6 +104,18 @@ router.post("/despawn", (req, res) => {
 });
 
 
+router.post("/submitResponse", (req, res) => {
+  // playerID, gameID, promptID, response
+  if (req.user) {
+    if(req.body.gameID){
+      Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.response);
+    }
+  }
+  res.send({});
+});
+
+
+
 router.get("/gameExists", (req, res) => {
   // console.log(req.query);
   if (req.query.gameID) {

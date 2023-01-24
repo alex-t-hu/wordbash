@@ -100,7 +100,7 @@ const startGame = (gameID) => {
     }
 }
 
-const submitResponse = (gameID, promptID, playerID, response) => {
+const submitResponse = (playerID, gameID, promptID, response) => {
     if(promptID === playerID ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
     }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerID){
@@ -110,7 +110,7 @@ const submitResponse = (gameID, promptID, playerID, response) => {
     }
 }
 
-const submitVote = (gameID, promptID, playerID, response) => {
+const submitVote = (playerID, gameID, promptID, response) => {
     if(response === 0){
         gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
     }else if(response === 1){
@@ -119,6 +119,8 @@ const submitVote = (gameID, promptID, playerID, response) => {
         console.log("You can't vote for this response!");
     }
 }
+
+
 
 
 
