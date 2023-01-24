@@ -13,7 +13,6 @@ import "./SingleUser.css";
 const UserList = (props) => {
   return (
     <>
-      <h3>Players</h3>
       {Object.keys(props.users)
         .map((key, i) => (
           <SingleUser

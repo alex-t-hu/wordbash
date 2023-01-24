@@ -104,24 +104,32 @@ const Lobby = (props) => {
     return <div>No Game</div>;
   }
   return (
-    <>
-      <h1>Lobby userID = {props.userId} user = {user.name} gameID = {props.gameID}</h1>
-      <div className="u-flex u-relative Chatbook-container">
-        
-        <div className="Chatbook-userList">
+    <div className="flex flex-row justify-center border p-8">
+      <div className="p-16 flex flex-col items-center mx-4 border-4 border-teal-500 rounded-md">
+        {/*<h1 className="">Lobby userID = {props.userId}</h1>*/}
+        {/*<h1 className=""> user = {user.name}</h1>*/}
+        <h1 className="text-lg">Game Code:</h1>
+        <input className="text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
+      </div>
+      
+      <div className="bg-gray-50 flex flex-col">
+        <div className="w-full text-center bg-teal-500 text-white p-4">
+          <h3>PLAYERS</h3>
+        </div>
+        <div className="flex items-center mx-4 border border-gray-400">
           <UserList
             userId={props.userId}
             users={props.game.players}
           />
         </div>
-        <div className="Chatbook-chatContainer">
+        <div className="">
           <button onClick = {handleSubmit}>
-              Start Game
-            </button>
-          </div>
+            Start Game
+          </button>
+        </div>
       </div>
 
-    </>
+    </div>
   );
 }
 
