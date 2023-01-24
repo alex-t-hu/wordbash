@@ -8,9 +8,7 @@ import "./Lobby.css";
 const Lobby = (props) => {
 
   const [activeUsers, setActiveUsers] = useState([]);
-
-  // Me
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(); // My name
 
   /**
    * This effect is run when the component mounts.

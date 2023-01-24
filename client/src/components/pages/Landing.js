@@ -17,7 +17,6 @@ const Landing = (props) => {
   const handleChange = (event) => {
     console.log(event);
     setValue(event.target.value);
-    // console.log(`Game ID set! Game ID = ${value}. The game ID is ${props.gameID}`);
     props.setGameID(event.target.value);
   };
 
@@ -31,19 +30,13 @@ const Landing = (props) => {
       console.log("Game is: ", game.gameExists);
       if(!game.gameExists){
         console.log("Game does not exist (inside Landing.js)");
-
-
         post("/api/createGame", {gameID: value}).then((g) => {
           console.log("Game created because ");
           post("/api/spawn", {gameID: value}).then((g) => {
             console.log("Spawned");
             window.location.href = `/lobby/${value}`;
-
-            // window.open(`/lobby/${value}`);
           });
         });
-
-
       }else{
         console.log("Game exists (inside Landing.js)");
         post("/api/spawn", {gameID: value}).then((g) => {
@@ -52,10 +45,7 @@ const Landing = (props) => {
         });
       }
     });
-    
-
-    // = `/lobby/${value}`;
-  };
+      };
   
 
 
@@ -66,9 +56,6 @@ const Landing = (props) => {
     <div className>
       <div className="Landing-title u-textCenter">wordbash</div>
       <div className="Landing-optionContainer u-centerPage u-flexColumn">
-          {/* <button className="Landing-optionButton u-flex-alignCenter" id="Landing-joinGame" >
-            <Link to={`/lobby/${props.userId}`} >Join Game</Link>
-            </button> */}
         <input
         type="text"
           placeholder="Enter Game Code"

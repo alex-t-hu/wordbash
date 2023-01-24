@@ -15,8 +15,6 @@ const Prompt = (props) => {
     // whether the user has finished answering all the prompts
     const [finishedAnswering, setFinishedAnswering] = useState(false);
 
-
-
   /**
    * This effect is run every time any state variable changes.
    */

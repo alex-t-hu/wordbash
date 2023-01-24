@@ -22,27 +22,15 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
-
-  
   const [gameID, setGameID] = useState(undefined);
-
   const [game, setGame] = useState(undefined);
-
-
-  // called whenever the user types in the new post input box
-  // const handleIDChange = (value) => {
-  //   setGameID(value);
-  // };
   
   useEffect(() => {
     console.log(`Game ID set in App! Game ID = ${gameID}`);
-
   }, [gameID]);
-
   
   useEffect(() => {
     console.log(`User ID set in App! User ID = ${userId}`);
-
   }, [userId]);
 
   useEffect(() => {
