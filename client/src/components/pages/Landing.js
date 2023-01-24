@@ -30,7 +30,7 @@ const Landing = (props) => {
       console.log("Game is: ", game.gameExists);
       if(!game.gameExists){
         console.log("Game does not exist (inside Landing.js)");
-        post("/api/createGame", {gameID: value}).then((g) => {
+        post("/api/createGame", {gameID: value, userID: props.userId}).then((g) => {
           console.log("Game created because ");
           post("/api/spawn", {gameID: value}).then((g) => {
             console.log("Spawned");

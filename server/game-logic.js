@@ -46,7 +46,7 @@ const gameState = {}
     }
 
 /** Create a new game */
-const createGame = (gameID) => {
+const createGame = (gameID, userID) => {
     // const gameID = Math.floor(Math.random() * MAX_GAME_ID);
     // while(gameState[gameID] != undefined) {
     //     gameID = Math.floor(Math.random() * MAX_GAME_ID);
@@ -57,6 +57,7 @@ const createGame = (gameID) => {
         promptsFinished: false,
         votingFinished: false,
         votingResultsFinished: false,
+        hostPlayer: userID, 
         votingRound: 0,
         players: {},
         prompts: {}

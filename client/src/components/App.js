@@ -27,13 +27,13 @@ const App = () => {
   const [gameID, setGameID] = useState(undefined);
   const [game, setGame] = useState(undefined);
   
-  useEffect(() => {
-    console.log(`Game ID set in App! Game ID = ${gameID}`);
-  }, [gameID]);
+  // useEffect(() => {
+  //   console.log(`Game ID set in App! Game ID = ${gameID}`);
+  // }, [gameID]);
   
-  useEffect(() => {
-    console.log(`User ID set in App! User ID = ${userId}`);
-  }, [userId]);
+  // useEffect(() => {
+  //   console.log(`User ID set in App! User ID = ${userId}`);
+  // }, [userId]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -73,9 +73,9 @@ const App = () => {
           <Profile path="/profile/:userId" />
           <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
-          <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <VotingResults path="/votingresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <FinalResults path="/finalresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>

@@ -58,7 +58,7 @@ router.get("/activeUsers", (req, res) => {
 router.post("/createGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      Game.createGame(req.body.gameID);
+      Game.createGame(req.body.gameID, req.body.userID);
 
       console.log("created new Game with gameID: " + req.body.gameID);
       console.log(Game.gameState);

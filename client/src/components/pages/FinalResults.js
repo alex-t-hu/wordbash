@@ -10,6 +10,10 @@ import { PromiseProvider } from "mongoose";
 
 const FinalResults = (props) => {
     const [playerList, setPlayerList] = useState([]);
+    if (!props.userId) {
+        return <div>Please Log in</div>;
+    }
+    
     useEffect(() => {
         // setPlayerList(props.game.players);
         // sort props.game.players by score and set it to playerList
@@ -21,9 +25,7 @@ const FinalResults = (props) => {
         console.log("sortedPlayers ", sortedPlayers);
         setPlayerList(sortedPlayers);
     }, []); // see game-logic.js for the structure of game
-    if (!props.userId) {
-        return <div>Please Log in</div>;
-    }
+    
     function handleSubmit() {   
         // post("/api/playAgain", {gameID: props.gameID, userId: props.userId}).then((g) => {
         //     console.log("Play Again Successfully");
