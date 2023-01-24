@@ -14,6 +14,8 @@ const gameState = {}
             started: a boolean
             promptsFinished: a boolean
             votingFinished: a boolean
+            votingResutlsFinished: a boolean
+            votingRound: a number
             prompts: {
                 id (a number from 0 to N-1):{
                     timestamp for round start (TODO)
