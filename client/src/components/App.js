@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
 import Lobby from "./pages/Lobby.js";
+import Profile from "./pages/Profile.js";
 import Landing from "./pages/Landing.js";
 import Voting from "./pages/Voting.js";
 
@@ -81,6 +82,7 @@ const App = () => {
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           <Profile path="/profile/:userId" />
           <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>

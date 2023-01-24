@@ -12,6 +12,8 @@ const gameState = {}
         gameID: {
             num_Players: a number
             started: a boolean
+            promptsFinished: a boolean
+            votingFinished: a boolean
             prompts: {
                 id (a number from 0 to N-1):{
                     timestamp for round start (TODO)
@@ -108,6 +110,17 @@ const submitResponse = (playerID, gameID, promptID, response) => {
     }else{
         console.log("You can't answer this prompt!");
     }
+    // Check if all responses are in
+    let allResponsesIn = true;
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+        if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
+            allResponsesIn = false;
+            break;
+        }
+    }
+    if(allResponsesIn){
+        gameState[gameID]["promptsFinished"] = true;
+    }
 }
 
 const submitVote = (playerID, gameID, promptID, response) => {
@@ -117,6 +130,19 @@ const submitVote = (playerID, gameID, promptID, response) => {
         gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
     }else{
         console.log("You can't vote for this response!");
+    }
+    // Check if all votes are in
+    let allVotesIn = true;
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+        if(gameState[gameID]["prompts"][i]["response_0_vote"].length
+        + gameState[gameID]["prompts"][i]["response_1_vote"].length
+        < gameState[gameID]["num_Players"] - 2){
+            allVotesIn = false;
+            break;
+        }
+    }
+    if(allVotesIn){
+        gameState[gameID]["votingFinished"] = true;
     }
 }
 
