@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js"
 import Profile from "./pages/Profile.js";
 import Lobby from "./pages/Lobby.js";
-import Profile from "./pages/Profile.js";
+import Prompt from "./pages/Prompt.js";
 import Landing from "./pages/Landing.js";
 import Voting from "./pages/Voting.js";
 
@@ -24,7 +24,7 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
 
   
-  const [gameID, setGameID] = useState("");
+  const [gameID, setGameID] = useState(undefined);
 
   const [game, setGame] = useState(undefined);
 
