@@ -54,6 +54,10 @@ const createGame = (gameID) => {
     gameState[gameID] = {
         num_Players: 0,
         game_started: false,
+        promptsFinished: false,
+        votingFinished: false,
+        votingResultsFinished: false,
+        votingRound: 0,
         players: {},
         prompts: {}
     }

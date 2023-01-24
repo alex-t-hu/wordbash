@@ -9,11 +9,10 @@ import { get, post } from "../../utilities";
 
 
 const Voting = (props) => {
-
     const [voted, setVoted] = useState(false); // true if user has voted
     useEffect(() => {
         if(props.game.votingFinished) {
-            window.location.href = `/results/`;
+            window.location.href = `/votingresults/`;
         }
     }, [props.game.votingFinished]); // see game-logic.js for the structure of game
     // called when the user hits "Submit" for a new post
@@ -38,9 +37,10 @@ const Voting = (props) => {
         return <div>You have voted</div>;
     }else{
         return (
-            <div className>
+            <div>
+
                 <button onClick = {handleVote0}>
-                Vote 0
+                    Vote 0      
                 </button>
                 <button onClick = {handleVote1}>
                     Vote 1
