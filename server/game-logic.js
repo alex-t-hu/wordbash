@@ -13,8 +13,13 @@ const gameState = {}
             num_Players: a number
             started: a boolean
             promptsFinished: a boolean
-            votingFinished: a boolean
-            votingResultsFinished: a boolean
+            votingFinished: a boolean // This describes whether we are done voting on ALL prompts.
+
+            votingResults: a boolean // This is the important one.
+            // It gets toggled to true when all responses are in.
+            // It gets toggled to false when the host starts the next round of voting.
+            // If true, the clients are currently staring at the voting results boi.
+
             votingRound: a number
             prompts: {
                 id (a number from 0 to N-1):{
@@ -53,10 +58,10 @@ const createGame = (gameID, userID) => {
     // }
     gameState[gameID] = {
         num_Players: 0,
-        game_started: false,
+        started: false,
         promptsFinished: false,
         votingFinished: false,
-        votingResultsFinished: false,
+        votingResults: false,
         hostPlayer: userID, 
         votingRound: 0,
         players: {},
@@ -173,15 +178,26 @@ const submitVote = (playerID, gameID, promptID, response) => {
         
         console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
         updateScore(gameID);
-        gameState[gameID]["votingRound"] += 1;
+        gameState[gameID]["votingResults"] = true;
+        // Don't update voting round yet!!
+        // The voting round will get updated when the client sends a doneVoting message.
+
     }
     // Check if all votes are in for all prompts.
+    
+}
+
+const doneVoting = (gameID) => {
+    gameState[gameID]["votingResults"] = false;
+    gameState[gameID]["votingRound"] += 1;
+    console.log("We are done voting.");
     
     if(gameState[gameID]["votingRound"] >= gameState[gameID]["num_Players"]){
         gameState[gameID]["votingFinished"] = true;
     }
-
 }
+
+
 
 const updateScore = (gameID) => {
     // Update score for the current voting round.
@@ -192,8 +208,6 @@ const updateScore = (gameID) => {
     gameState[gameID]["players"][
         (rd + 1) % gameState[gameID]["num_Players"]
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length;
-
-
 }
 
 //TODO: implment removing players
@@ -228,14 +242,15 @@ const gameExists = (gameID) => {
 
 
 module.exports = {
-  gameState,
-  spawnPlayer,
-  getGame,
+    gameState,
+    spawnPlayer,
+    getGame,
     createGame,
     startGame,
     submitResponse,
     submitVote,
     gameExists,
+    doneVoting,
     // 
 //   removePlayer,
 };

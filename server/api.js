@@ -109,7 +109,7 @@ router.post("/despawn", (req, res) => {
   res.send({});
 });
 
-
+// Corresponds to submitResponse in game-logic.js
 router.post("/submitResponse", (req, res) => {
   // playerID, gameID, promptID, response
   if (req.user) {
@@ -120,6 +120,7 @@ router.post("/submitResponse", (req, res) => {
   res.send({});
 });
 
+// Corresponds to submitVote in game-logic.js
 router.post("/submitVote", (req, res) => {
   // playerID, gameID, promptID, response
   if (req.user) {
@@ -130,6 +131,21 @@ router.post("/submitVote", (req, res) => {
   res.send({});
 });
 
+// Corresponds to doneVoting in game-logic.js
+router.post("/doneVoting", (req, res) => {
+  if (req.user) {
+    if(req.body.gameID){
+      // console.log("We are done voting inside api.");
+
+      Game.doneVoting(req.body.gameID);
+    }else{
+      console.log("Problem 1.");
+    }
+  }else{
+    console.log("Problem 2.");
+  }
+  res.send({});
+});
 
 
 router.get("/gameExists", (req, res) => {

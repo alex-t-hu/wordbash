@@ -9,7 +9,6 @@ import Lobby from "./pages/Lobby.js";
 import Prompt from "./pages/Prompt.js";
 import Landing from "./pages/Landing.js";
 import Voting from "./pages/Voting.js";
-import VotingResults from "./pages/VotingResults.js";
 import FinalResults from "./pages/FinalResults.js";
 
 import "../utilities.css";
@@ -73,8 +72,10 @@ const App = () => {
           <Profile path="/profile/:userId" />
           <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
-          <VotingResults path="/votingresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
-          <FinalResults path="/finalresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          {/* <VotingResults path="/votingresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/> */}
+          <FinalResults path="/results/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          {/* <FinalResults path="/finalresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/> */}
+
           <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>
