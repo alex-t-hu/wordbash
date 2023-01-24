@@ -25,19 +25,28 @@ const SortedPlayerList = (props) => {
         }
         
     }, [props.players]); // see game-logic.js for the structure of game
-    
+    const determinePlace = (place) => {
+        place += 1;
+        if (place === 1) {
+            return "1st";
+        } else if (place === 2) {
+            return "2nd";
+        } else if (place === 3) {
+            return "3rd";
+        } else {
+            return place + "th";
+        }
+    }
     return (
         <div>
-            {playerList.map(x => (
+            {playerList.map( (x, idx) => (
                 <div>
-                    <p>{x[0]} place: </p>
+                    <p>{determinePlace(idx)} place: </p>
                     <p>{x[1]["id"]} with {x[1]["score"]} points</p>
                 </div>
             ))}
         </div>
     );
-    
-
 };
 
 export default SortedPlayerList;
