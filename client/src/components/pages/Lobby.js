@@ -24,6 +24,21 @@ const Lobby = (props) => {
       };
     });
   }, []);
+
+  /**
+   * This effect is run every time any state variable changes.
+   */
+  
+  useEffect(() => {
+    if(props.userId && user && props.gameID){
+      get("/api/game", {gameID: props.gameID}).then((data) => {
+        // console.log("data", data);
+        if (props.setGame) {
+          props.setGame(data);
+        };
+      });
+    }
+  });
   
   useEffect(() => {
     const callback = (data) => {
