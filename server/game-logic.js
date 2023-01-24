@@ -14,7 +14,7 @@ const gameState = {}
             started: a boolean
             promptsFinished: a boolean
             votingFinished: a boolean
-            votingResutlsFinished: a boolean
+            votingResultsFinished: a boolean
             votingRound: a number
             prompts: {
                 id (a number from 0 to N-1):{
@@ -148,31 +148,53 @@ const submitResponse = (playerID, gameID, promptID, response) => {
 }
 
 const submitVote = (playerID, gameID, promptID, response) => {
+    // Check if player has already voted.
+    console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
+    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) || gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
+        console.log("You have already voted for this prompt!");
+        return;
+    }
+
     if(response === 0){
         gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
     }else if(response === 1){
         gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
     }else{
-        console.log("You can't vote for this response!");
+        console.log("You can't vote for this response! ( response " + response + " )");
     }
-    // Check if all votes are in
-    let allVotesIn = true;
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
-        if(gameState[gameID]["prompts"][i]["response_0_vote"].length
-        + gameState[gameID]["prompts"][i]["response_1_vote"].length
-        < gameState[gameID]["num_Players"] - 2){
-            allVotesIn = false;
-            break;
-        }
+    // Check if all votes are in for the current prompt.
+    if(gameState[gameID]["prompts"][
+        gameState[gameID]["votingRound"]
+    ]["response_0_vote"].length
+    + gameState[gameID]["prompts"][
+        gameState[gameID]["votingRound"]
+    ]["response_1_vote"].length
+    >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
+        
+        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        updateScore(gameID);
+        gameState[gameID]["votingRound"] += 1;
     }
-    if(allVotesIn){
+    // Check if all votes are in for all prompts.
+    
+    if(gameState[gameID]["votingRound"] >= gameState[gameID]["num_Players"]){
         gameState[gameID]["votingFinished"] = true;
     }
+
 }
 
+const updateScore = (gameID) => {
+    // Update score for the current voting round.
+    let rd = gameState[gameID]["votingRound"];
+    gameState[gameID]["players"][rd]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length;
 
 
+    gameState[gameID]["players"][
+        (rd + 1) % gameState[gameID]["num_Players"]
+    ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length;
 
+
+}
 
 //TODO: implment removing players
 

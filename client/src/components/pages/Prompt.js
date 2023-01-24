@@ -57,8 +57,9 @@ const Prompt = (props) => {
         });
         setPromptNumber(promptNumber + 1);
     }
+    
     useEffect(() => {
-        if(props.game){
+        if(props.game && props.game["started"]){
             let playerIdx = -1;
             for(let i = 0; i < props.game["num_Players"]; i++){
                 if(props.game["players"][i]['id'] === props.userId){
@@ -66,7 +67,10 @@ const Prompt = (props) => {
                     break;
                 }
             }
-            let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"]
+            let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"];
+            // console.log("promptIdx", promptIdx);
+            // console.log("promptNumber", promptNumber);
+            // console.log("props.game", props.game);
             if (promptNumber === 0) {
                 setCurrentPrompt(props.game["prompts"][promptIdx]["content"]);
             } else if (promptNumber === 1) {
