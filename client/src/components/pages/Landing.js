@@ -35,18 +35,21 @@ const Landing = (props) => {
 
         post("/api/createGame", {gameID: value}).then((g) => {
           console.log("Game created because ");
-          post("/api/spawn", {gameID: value});
+          post("/api/spawn", {gameID: value}).then((g) => {
+            console.log("Spawned");
+            window.open(`/lobby/${value}`);
+          });
         });
 
 
       }else{
         console.log("Game exists (inside Landing.js)");
-        post("/api/spawn", {gameID: value});
+        post("/api/spawn", {gameID: value}).then((g) => {
+          console.log("Spawned");
+          window.open(`/lobby/${value}`);
+        });
       }
     });
-
-
-    window.open(`/lobby/${value}`);
     
 
     // window.location.href = `/lobby/${value}`;

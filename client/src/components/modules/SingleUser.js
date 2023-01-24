@@ -19,7 +19,7 @@ const SingleUser = (props) => {
       //   props.setActiveUser(props.user);
       // }}
     >
-      {props.user.name}
+      {props.user}
     </div>
   );
 }

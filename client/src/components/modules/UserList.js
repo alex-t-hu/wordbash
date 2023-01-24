@@ -14,12 +14,12 @@ const UserList = (props) => {
   return (
     <>
       <h3>Players</h3>
-      {props.users
-        .map((user, i) => (
+      {Object.keys(props.users)
+        .map((key, i) => (
           <SingleUser
             key={i}
             // setActiveUser={props.setActiveUser}
-            user={user.userId}
+            user={props.users[key].id}
             // active={user === props.active}
           />
         ))}

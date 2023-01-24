@@ -66,15 +66,13 @@ const spawnPlayer = (id, gameID) => {
     }else{
         
         console.log("Spawning player " + id + " in game " + gameID);
-
-        const newPlayer = {
+        
+        gameState[gameID]["players"][gameState[gameID]["num_players"]] = {
             id: id,
             score : 0
-        }
-        
-        gameState[gameID]["players"][gameState[gameID]["num_Players"]] = newPlayer;
+        };
 
-        gameState[gameID]["num_Players"] += 1;
+        gameState[gameID]["num_players"] += 1;
 
     }
 };

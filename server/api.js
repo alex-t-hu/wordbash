@@ -99,10 +99,9 @@ router.get("/gameExists", (req, res) => {
   // console.log(req.query);
   if (req.query.gameID) {
     if(Game.gameExists(req.query.gameID)){
-      res.send({gameExists: false});}
-      
+      res.send({gameExists: true});}
     else{
-      res.send({gameExists: true});
+      res.send({gameExists: false});
     }
   }else{
     res.send({gameExists: false});
