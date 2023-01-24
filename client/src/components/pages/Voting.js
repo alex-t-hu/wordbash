@@ -7,7 +7,6 @@ import { useState } from "react";
 import { get, post } from "../../utilities";
 
 
-
 const Voting = (props) => {
 
     const [voted, setVoted] = useState(false); // true if user has voted

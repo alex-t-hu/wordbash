@@ -33,6 +33,21 @@ const App = () => {
   // const handleIDChange = (value) => {
   //   setGameID(value);
   // };
+
+
+  /**
+   * This effect is run every time any state variable changes.
+   */
+  
+  useEffect(() => {
+    if(userId && gameID){
+      get("/api/game", {gameID: gameID}).then((data) => {
+        // console.log("data", data);
+        setGame(data);
+      });
+    }
+  });
+
   
   useEffect(() => {
     console.log(`Game ID set in App! Game ID = ${gameID}`);
@@ -81,9 +96,9 @@ const App = () => {
         <Router>
           <Landing path="/" userId={userId} gameID ={gameID} setGameID = {setGameID}/>
           <Profile path="/profile/:userId" />
-          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
-          <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
-          <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game}/>
+          <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game}/>
+          <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game}/>
           <NotFound default />
         </Router>
       </div>
