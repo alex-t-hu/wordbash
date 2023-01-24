@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Landing.css";
 import "../../utilities.css"
@@ -10,7 +10,11 @@ import { get, post } from "../../utilities";
 const Voting = (props) => {
 
     const [voted, setVoted] = useState(false); // true if user has voted
-
+    useEffect(() => {
+        if(props.game.votingFinished) {
+            window.location.href = `/results/`;
+        }
+    }, [props.game.votingFinished]); // see game-logic.js for the structure of game
     // called when the user hits "Submit" for a new post
     const handleVote0 = (event) => {
         event.preventDefault();
