@@ -36,7 +36,7 @@ const SortedPlayerList = (props) => {
         } else {
             return place + "th";
         }
-    }
+    };
     return (
         <div>
             {playerList.map( (x, idx) => (
