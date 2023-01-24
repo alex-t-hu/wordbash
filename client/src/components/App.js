@@ -81,21 +81,4 @@ const App = () => {
     </>
   );
 };
-// return (
-//   <>
-//     <NavBar
-//       handleLogin={handleLogin}
-//       handleLogout={handleLogout}
-//       userId={userId}
-//     />
-//     <div className="App-container">
-//       <Router>
-//         <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-//         <Profile path="/profile/:userId" />
-//         <NotFound default />
-//       </Router>
-//     </div>
-//   </>
-// );
-
 export default App;
