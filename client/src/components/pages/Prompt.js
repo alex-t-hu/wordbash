@@ -38,7 +38,8 @@ const Prompt = (props) => {
   const [secondPrompt, setSecondPrompt] = useState("");
   const [firstResponse, setFirstResponse] = useState("");
   const [secondResponse, setSecondResponse] = useState("");
-    const [hasAnsweredFirst, setHasAnsweredFirst] = useState(false);
+  const [hasAnsweredFirst, setHasAnsweredFirst] = useState(false);
+  const [finishedAnswering, setFinishedAnswering] = useState(false);
     useEffect(() => {
         get("/api/getGame", { gameID: props.gameID }).then((game) => {
             setUserGameId(game["players"][props.userId]["id"]);
@@ -46,8 +47,22 @@ const Prompt = (props) => {
             secondPrompt = game["prompts"][(userGameId -1+game["num_players"])% game["num_players"]]["prompt_1"];
         });
     }, []);
+    useEffect(() => {
+        if (finishedAnswering && props.game.promptsFinished) {
+            return <div>Everyone's finished answering</div>
+        }
+    });
 
-if (hasAnsweredFirst) {
+if (finishedAnswering) {
+    return (
+        <div className="Prompt-container">
+            <div className="Prompt-prompt">
+                <h1>Waiting for other players to finish...</h1>
+            </div>
+        </div>
+    );
+}
+else if (hasAnsweredFirst) {
     return (
         <div className="Prompt-container">
             <div className="Prompt-prompt">
@@ -75,13 +90,7 @@ if (hasAnsweredFirst) {
                             playerID: userGameId,
                             response: secondResponse,
                         });
-                        props.setGame({
-                            ...props.game,
-                            responses: {
-                                ...props.game.responses,
-                                [userGameId]: secondResponse,
-                            },
-                        });
+                        setFinishedAnswering(true);
                     }}
                 >
                     Submit
@@ -116,13 +125,6 @@ if (hasAnsweredFirst) {
                             gameID: props.gameID,
                             playerID: userGameId,
                             response: firstResponse,
-                        });
-                        props.setGame({
-                            ...props.game,
-                            responses: {
-                                ...props.game.responses,
-                                [userGameId]: firstResponse,
-                            },
                         });
                     }}
                 >
