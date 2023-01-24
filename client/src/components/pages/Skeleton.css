@@ -532,6 +532,43 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.m-8{
+  margin: 2rem;
+}
+
+.my-8{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.flex{
+  display: flex;
+}
+
+.h-6{
+  height: 1.5rem;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.w-6{
+  width: 1.5rem;
+}
+
+.flex-1{
+  flex: 1 1 0%;
+}
+
+.flex-grow{
+  flex-grow: 1;
+}
+
+.flex-row{
+  flex-direction: row;
+}
+
 .rounded{
   border-radius: 0.25rem;
 }

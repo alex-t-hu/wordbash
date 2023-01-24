@@ -22,10 +22,35 @@ const Landing = (props) => {
   };
 
   // called when the user hits "Submit" for a new post
-  const handleSubmit = (event) => {
+  const handleSubmitJoin = (event) => {
     event.preventDefault();
 
     
+    // Spawn then redirect to lobby.
+    get("/api/gameExists", {gameID: value}).then((game) => {
+      console.log("Game is: ", game.gameExists);
+      if(!game.gameExists){
+        console.log("Game does not exist (inside Landing.js)");
+        post("/api/createGame", {gameID: value, userID: props.userId}).then((g) => {
+          console.log("Game created because ");
+          post("/api/spawn", {gameID: value}).then((g) => {
+            console.log("Spawned");
+            window.location.href = `/lobby/${value}`;
+          });
+        });
+      }else{
+        console.log("Game exists (inside Landing.js)");
+        post("/api/spawn", {gameID: value}).then((g) => {
+          console.log("Spawned");
+          window.location.href = `/lobby/${value}`;
+        });
+      }
+    });
+      };
+
+  const handleSubmitCreate = (event) => {
+    event.preventDefault();
+
     // Spawn then redirect to lobby.
     get("/api/gameExists", {gameID: value}).then((game) => {
       console.log("Game is: ", game.gameExists);
@@ -56,23 +81,27 @@ const Landing = (props) => {
   return (
     <div className>
       <div></div>
-      <div className="Landing-title u-textCenter">wordbash</div>
       <div className="Landing-optionContainer u-centerPage u-flexColumn">
-        <input
-        type="text"
-          placeholder="Enter Game Code"
-          value={value}
-          onChange={handleChange}
-          className="NewPostInput-input"
-        />
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="Landing-joinGame"
-        onClick = {handleSubmit}>
-          Join Game
-        </button>
-        <button className="rounded bg-purple-500 u-flex-alignCenter" id="Landing-makeGame"
-        onClick = {handleSubmit}>
-          Create Game
-        </button>
+        <div className="flex flex-row m-8">
+          <input
+          type="text"
+            placeholder="Enter Game Code"
+            value={value}
+            onChange={handleChange}
+            className="NewPostInput-input w-full border border-gray-400 rounded px-4 py-2"
+          />
+          
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          onClick = {handleSubmitJoin}>
+            {'>'}
+          </button>
+        </div>
+        <div className="m-8">
+          <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          onClick = {handleSubmitCreate}>
+            Create Game
+          </button>
+        </div>
       </div>
     </div>
   );
