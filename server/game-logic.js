@@ -1,6 +1,6 @@
 /** constants */
 const MAX_GAME_ID = 1000000;
-
+const SCORE_MULTIPLIER = 50;
 /** Game state
  * The game state is a dictionary of games, where each game is a dictionary of players
  * 
@@ -202,12 +202,12 @@ const doneVoting = (gameID) => {
 const updateScore = (gameID) => {
     // Update score for the current voting round.
     let rd = gameState[gameID]["votingRound"];
-    gameState[gameID]["players"][rd]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length;
+    gameState[gameID]["players"][rd]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length * SCORE_MULTIPLIER;
 
 
     gameState[gameID]["players"][
         (rd + 1) % gameState[gameID]["num_Players"]
-    ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length;
+    ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
 }
 
 //TODO: implment removing players

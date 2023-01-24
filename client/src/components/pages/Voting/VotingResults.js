@@ -14,13 +14,30 @@ const VotingResults = (props) => {
         return <div>Game not found</div>;
     }
     return (
-        <div>
-            <h3>Results</h3>
-            <SortedPlayerList players={props.players}/>
-            <button className="Landing-optionButton u-flex-alignCenter"
+        <div className="flex flex-col items-center w-full space-x-8">
+            <div className="text-5xl md-3">{props.promptText}</div>
+            <div className="flex-row">
+                <div className="flex flex-col">
+                    <div className="text-gray-800 font-semibold text-2xl">Response 0: {props.currentResponse0}</div>
+                    {
+                        props.playersWhoVoted0.map((player) => {
+                            return <div>{player}</div>
+                        })
+                    }
+                </div>
+                <div className="flex flex-col">
+                    <div className="text-gray-800 font-semibold text-2xl">Response 1: {props.currentResponse1}</div>
+                    {
+                        props.playersWhoVoted1.map((player) => {
+                            return <div>{player}</div>
+                        })
+                    } 
+                </div> 
+            </div>
+            <button className="Landing-optionButton justify-right"
             id="Landing-makeGame"
             onClick = {props.handleDoneVoting}>
-                Play Again?
+                Continue to next round!
             </button>
         </div>
     );
