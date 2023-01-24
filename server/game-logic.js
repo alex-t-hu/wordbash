@@ -11,7 +11,7 @@ const gameState = {}
     gameState = {
         gameID: {
             num_Players: a number
-            game_Started: a boolean
+            started: a boolean
             prompts: {
                 id (a number from 0 to N-1):{
                     timestamp for round start (TODO)
@@ -87,7 +87,7 @@ const Prompts = [
 ]
 
 const startGame = (gameID) => {
-    gameState[gameID]["game_started"] = true;
+    gameState[gameID]["started"] = true;
     // Generate Prompts
     for(let i = 0; i < gameState[gameID][num_players]; i++) {
         gameState[gameID]["prompts"][i] = {

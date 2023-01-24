@@ -37,7 +37,9 @@ const Landing = (props) => {
           console.log("Game created because ");
           post("/api/spawn", {gameID: value}).then((g) => {
             console.log("Spawned");
-            window.open(`/lobby/${value}`);
+            window.location.href = `/lobby/${value}`;
+
+            // window.open(`/lobby/${value}`);
           });
         });
 
@@ -46,13 +48,13 @@ const Landing = (props) => {
         console.log("Game exists (inside Landing.js)");
         post("/api/spawn", {gameID: value}).then((g) => {
           console.log("Spawned");
-          window.open(`/lobby/${value}`);
+          window.location.href = `/lobby/${value}`;
         });
       }
     });
     
 
-    // window.location.href = `/lobby/${value}`;
+    // = `/lobby/${value}`;
   };
   
 

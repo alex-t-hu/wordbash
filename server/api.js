@@ -71,6 +71,15 @@ router.post("/createGame", (req, res) => {
   res.send({});
 });
 
+router.post("/startGame", (req, res) => {
+  if (req.user) {
+    if(req.body.gameID){
+      Game.startGame(req.body.gameID);
+    }
+  }
+  res.send({});
+});
+
 router.post("/spawn", (req, res) => {
   if (req.user) {
     if(req.body.gameID){

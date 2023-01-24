@@ -66,6 +66,29 @@ const Lobby = (props) => {
     console.log('user effect: user is', user);
   }, [user]);
 
+  
+  // called when the user hits "Submit" 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    post("/api/startGame", {gameID: value}).then((g) => {
+      console.log("Game created ");
+    });
+  };
+
+  /**
+   * We need to constantly check if the game has been started yet.
+   * If the game has been started, redirected to the game page.
+   */
+  useEffect(() => {
+    if (props.game && props.game.started) {
+      window.location.href = `/prompt/${props.gameID}`;
+    }
+  }, [props.game]);
+
+
+  
+
   if (!props.userId) {
     return <div>Please Log in</div>;
   }
