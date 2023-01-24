@@ -16,6 +16,7 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import FinalResults from "./pages/FinalResults.js";
 
 /**
  * Define the "App" component
@@ -72,6 +73,8 @@ const App = () => {
           <Lobby path="/lobby/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <Prompt path="/prompt/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <Voting path="/voting/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <VotingResults path="/votingresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
+          <FinalResults path="/finalresults/:gameID" userId={userId} gameID ={gameID} game = {game} setGame = {setGame}/>
           <NotFound default />
         </Router>
       </div>
