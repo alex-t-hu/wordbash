@@ -52,7 +52,7 @@ const Voting = (props) => {
         get("/api/game", {gameID: props.gameID}).then((data) => {
             // console.log("data", data);
             if (props.setGame) {
-            props.setGame(data);
+                props.setGame(data);
             };
         });
         }

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 // import "./Landing.css";
 import "../../utilities.css";
 import { useState } from "react";
+import {get} from "../../utilities";
 
 /**
  * 
@@ -11,6 +12,11 @@ import { useState } from "react";
  */
 const SortedPlayerList = (props) => {
     const [playerList, setPlayerList] = useState([]);
+    const getName = (id) => {
+        let name;
+        get("/api/user", {userid: id}).then((userObj) => {name=userObj.name});
+        return name;
+    };
     useEffect(() => {
         // setPlayerList(props.game.players);
         // sort props.game.players by score and set it to playerList
@@ -19,9 +25,15 @@ const SortedPlayerList = (props) => {
             let sortedPlayers = Object.keys(props.players).map((key) => {
                 return [key, props.players[key]];
             });
-            sortedPlayers.sort((a, b) => {return a[1]['score'] - b[1]['score']});
+            sortedPlayers.sort((a, b) => {return b[1]['score']-a[1]['score']});
             // console.log("sortedPlayers ", sortedPlayers);
-            setPlayerList(sortedPlayers);
+            let playersInfo = [];
+            for (let i = 0; i < sortedPlayers.length;i++){
+                get("/api/user", {userid: sortedPlayers[i][1]['id']}).then((userObj) => {
+                    playersInfo.push([userObj.name, sortedPlayers[i][1]['score']]);
+                }); 
+            }
+            setPlayerList(playersInfo);
         }
         
     }, [props.players]); // see game-logic.js for the structure of game
@@ -37,12 +49,13 @@ const SortedPlayerList = (props) => {
             return place + "th";
         }
     };
+    
     return (
         <div>
             {playerList.map( (x, idx) => (
                 <div>
                     <p>{determinePlace(idx)} place: </p>
-                    <p>{x[1]["id"]} with {x[1]["score"]} points</p>
+                    <p>{x[0]} with {x[1]} points</p>
                 </div>
             ))}
         </div>
