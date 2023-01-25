@@ -45,7 +45,7 @@ const Landing = (props) => {
         props.setGameID(value);
         post("/api/spawn", {gameID: value}).then((g) => {
           console.log("Spawned");
-          window.location.href = `/lobby/${value}`;
+          window.location.href = `/game/${value}/lobby`;
         });
       }
     });
@@ -66,7 +66,7 @@ const Landing = (props) => {
           console.log("Game created because ");
           post("/api/spawn", {gameID: randomCode}).then((g) => {
             console.log("Spawned");
-            window.location.href = `/lobby/${randomCode}`;
+            window.location.href = `/game/${randomCode}/lobby`;
           });
         });
       } else {

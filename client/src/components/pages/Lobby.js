@@ -100,7 +100,7 @@ const Lobby = (props) => {
    */
   useEffect(() => {
     if (props.game && props.game.started) {
-      window.location.href = `/prompt/${props.gameID}`;
+      window.location.href = `/game/${props.gameID}/prompt`;
     }
   }, [props.game.started]);
 

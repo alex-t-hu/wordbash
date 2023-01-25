@@ -88,7 +88,7 @@ const Prompt = (props) => {
     useEffect(() => {
         if(props.game){
             if(props.game.promptsFinished){
-                window.location.href = `/voting/${props.gameID}`;
+                window.location.href = `/game/${props.gameID}/voting`;
             }
         }
     }, [props.game]);
