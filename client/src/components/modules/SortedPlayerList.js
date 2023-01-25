@@ -18,6 +18,8 @@ const SortedPlayerList = (props) => {
     //     return name;
     // };
     useEffect(() => {
+        
+        console.log("Players ", props.players);
         // setPlayerList(props.game.players);
         // sort props.game.players by score and set it to playerList
         // change props.game.players from dictionary to list of players
@@ -26,6 +28,7 @@ const SortedPlayerList = (props) => {
                 return [key, props.players[key]];
             });
             sortedPlayers.sort((a, b) => {return b[1]['score']-a[1]['score']});
+            setPlayerList(sortedPlayers);
             // console.log("sortedPlayers ", sortedPlayers);
             // let playersInfo = [];
             // for (let i = 0; i < sortedPlayers.length;i++){
@@ -38,6 +41,7 @@ const SortedPlayerList = (props) => {
         }
         
     }, [props.players]); // see game-logic.js for the structure of game
+
     const determinePlace = (place) => {
         place += 1;
         if (place === 1) {
@@ -56,7 +60,7 @@ const SortedPlayerList = (props) => {
             {playerList.map( (x, idx) => (
                 <div>
                     <p>{determinePlace(idx)} place: </p>
-                    <p>{x[1].name} with {x[1]} points</p>
+                    <p>{x[1].name} with {x[1]['score']} points</p>
                 </div>
             ))}
         </div>

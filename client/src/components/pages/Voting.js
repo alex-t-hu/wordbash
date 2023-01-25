@@ -154,12 +154,7 @@ const Voting = (props) => {
             <VotingResults
                 handleDoneVoting = {handleDoneVoting}
                 continueToNextPrompt = {props.continueToNextVoting}
-                players = {props.game.players}
-                promptText = {currentPrompt}
-                currentResponse0 = {currentResponse0}
-                playersWhoVoted0 = {props.game["prompts"][props.game.votingRound]["response_0_vote"]}
-                currentResponse1 = {currentResponse1}
-                playersWhoVoted1 = {props.game["prompts"][props.game.votingRound]["response_1_vote"]}
+                prompt = {props.game["prompts"][promptNumber]}
                 userId = {props.userId}
                 />
             </div>);
