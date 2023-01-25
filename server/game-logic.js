@@ -67,7 +67,6 @@ const createGame = (gameID, userID) => {
         promptsFinished: false,
         votingFinished: false,
         votingResults: false,
-        hostPlayer: userID, 
         votingRound: 0,
         players: [],
         prompts: []

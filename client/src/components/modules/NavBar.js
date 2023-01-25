@@ -17,8 +17,9 @@ const NavBar = (props) => {
   return (
     <nav className="NavBar-container bg-teal-500">
       <div className="">
-        <Link to="/" className="NavBar-title ">
-          wordbash
+        <Link to="/" className="NavBar-title">
+          <span id="NavBar-title-word">word</span>
+          <span id="NavBar-title-bash">bash</span>
         </Link>
       </div>
       <div className="flex items-center NavBar-linkContainer">
