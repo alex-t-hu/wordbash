@@ -20,7 +20,7 @@ const Game = (props) => {
         <Router>
             <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
             <Prompt path=":gameID/prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-            <FinalResults path=":gameID/results/:gameID" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
+            <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
             <Voting path=":gameID/voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
         </Router>
       </div>
