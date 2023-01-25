@@ -12,8 +12,8 @@ import "./SingleUser.css";
  * @param {boolean} active
  */
 const SingleUser = (props) => {
-  console.log(props.user);
-  console.log(props.index);
+  // console.log(props.user);
+  // console.log(props.index);
   return (props.index != 0) ? (
     <div
       className={`SingleUser-container u-pointer`}
