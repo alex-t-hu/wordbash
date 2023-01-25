@@ -104,7 +104,7 @@ const Voting = (props) => {
 
     useEffect(() => {
         if(props.game.votingFinished) {
-            window.location.href = `/results/${props.gameID}`;
+            window.location.href = `/game/${props.gameID}/results`;
         }
     }, [props.game]);
 
