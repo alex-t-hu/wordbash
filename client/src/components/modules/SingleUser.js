@@ -12,7 +12,9 @@ import "./SingleUser.css";
  * @param {boolean} active
  */
 const SingleUser = (props) => {
-  return (
+  console.log(props.user);
+  console.log(props.index);
+  return (props.index != 0) ? (
     <div
       className={`SingleUser-container u-pointer`}
       // onClick={() => {
@@ -20,6 +22,15 @@ const SingleUser = (props) => {
       // }}
     >
       {props.user}
+    </div>
+  ) : (
+    <div
+      className={`SingleUser-container u-pointer`}
+      // onClick={() => {
+      //   props.setActiveUser(props.user);
+      // }}
+    >
+      {props.user} (host)
     </div>
   );
 }

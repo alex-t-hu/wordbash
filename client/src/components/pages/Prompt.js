@@ -56,8 +56,9 @@ const Prompt = (props) => {
             response: value,
         });
         setPromptNumber(promptNumber + 1);
+        setValue("");
     }
-    
+
     useEffect(() => {
         if(props.game && props.game["started"]){
             let playerIdx = -1;
@@ -111,8 +112,8 @@ const Prompt = (props) => {
     }
 
     return (
-        <div className="Prompt-container">
-            <div className="Prompt-prompt">
+        <div className="Prompt-container bg-gradient-to-r from-indigo-300 via-blue-300 to-indigo-300 p-8">
+            <div className="Prompt-prompt mb-4">
                 <h1>{currentPrompt}</h1>
             </div>
             <div className="Prompt-response">
@@ -124,14 +125,12 @@ const Prompt = (props) => {
                     onChange={handleChange}
                 />
             </div>
-            <div className="Prompt-button">
-                <button
-                    className="Prompt-button"
-                    type="submit"
-                    value="Submit"
-                    onClick={handleSubmit}
-                >
-                    Submit
+            <div className="float-right">
+                <button className="m-8 align-right bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                type="submit"
+                value="Submit"
+                onClick = {handleSubmit}>
+                    {promptNumber == 1 ? "Submit" : "Next"}
                 </button>
             </div>
         </div>

@@ -16,7 +16,7 @@ const UserList = (props) => {
       {Object.keys(props.users)
         .map((key, i) => (
           <SingleUser
-            key={i}
+            index={i}
             // setActiveUser={props.setActiveUser}
             user={props.users[key].name}
             // active={user === props.active}
