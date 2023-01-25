@@ -25,6 +25,10 @@ const router = express.Router();
 
 const socketManager = require("./server-socket");
 
+/**
+ * -------------------- User routes --------------------
+ */
+
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -43,6 +47,18 @@ router.get("/user", (req, res) => {
   });
 });
 
+router.post("/updateUserName", (req, res) => {
+  if (req.user) {
+    // Update the user in the MongoDB database
+    User.findById(req.user._id).then((user) => {
+      user.name = req.body.name;
+      user.save();
+    });
+  }
+  res.send({});
+});
+
+
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
   if (req.user)
@@ -53,6 +69,12 @@ router.post("/initsocket", (req, res) => {
 router.get("/activeUsers", (req, res) => {
   res.send({ activeUsers: socketManager.getAllConnectedUsers() });
 });
+
+
+/**
+ * -------------------- Game routes --------------------
+ */
+
 
 
 router.post("/createGame", (req, res) => {
