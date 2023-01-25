@@ -1,5 +1,8 @@
 const ParentNamespace = require("socket.io/lib/parent-namespace");
 
+const User = require("./models/user");
+
+
 /** constants */
 const SCORE_MULTIPLIER = 50;
 /** Game state

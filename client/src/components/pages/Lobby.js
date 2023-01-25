@@ -19,6 +19,7 @@ const Lobby = (props) => {
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);
+        console.log("active users", data.activeUsers);
       };
     });
   }, []);

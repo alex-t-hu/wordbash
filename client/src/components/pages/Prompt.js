@@ -53,7 +53,7 @@ const Prompt = (props) => {
         post("/api/submitResponse", {
             gameID: props.gameID,
             promptID: promptIdx,
-            response: value,
+            response: value == "" ? "(blank)" : value,
         });
         setPromptNumber(promptNumber + 1);
         setValue("");
