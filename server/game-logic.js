@@ -1,7 +1,6 @@
 const ParentNamespace = require("socket.io/lib/parent-namespace");
 
 /** constants */
-const MAX_GAME_ID = 1000000;
 const SCORE_MULTIPLIER = 50;
 /** Game state
  * The game state is a dictionary of games, where each game is a dictionary of players
@@ -249,7 +248,51 @@ const doneVoting = (gameID) => {
     
     if(gameState[gameID]["votingRound"] >= gameState[gameID]["num_Players"]){
         gameState[gameID]["votingFinished"] = true;
+        uploadResults(gameID);
     }
+}
+
+const uploadResults = (gameID) => {
+    // Find the player with the highest score.
+    let maxScore = 0;
+    let maxScorePlayer = -1;
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
+        if(gameState[gameID]["players"][i]["score"] > maxScore){
+            maxScore = gameState[gameID]["players"][i]["score"];
+            maxScorePlayer = i;
+        }
+    }
+    
+    // Update database with the results of the game.
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+        let player = gameState[gameID]["players"][i];
+        let score = player["score"];
+        let id = player["id"];
+        
+        // Update the user in the MongoDB database
+        User.findById(id).then((user) => {
+            if(score > user.high_score){
+                user.high_score = score;
+            }
+            user.games_played += 1;
+            if(i === maxScorePlayer){
+                user.games_won += 1;
+            }
+            user.save();
+        });
+    }
+
+
+    if (req.user && req.body.games_played && req.body.games_won && req.body.high_score) {
+        // Update the user in the MongoDB database
+        User.findById(req.user._id).then((user) => {
+          user.games_played = req.body.games_played;
+          user.games_won = req.body.games_won;
+          user.high_score = req.body.high_score;
+          user.save();
+        });
+      }
+      res.send({});
 }
 
 
