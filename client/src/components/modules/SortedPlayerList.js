@@ -34,6 +34,7 @@ const SortedPlayerList = (props) => {
                 }); 
             }
             setPlayerList(playersInfo);
+            console.log(playersInfo);
         }
         
     }, [props.players]); // see game-logic.js for the structure of game
