@@ -19,18 +19,21 @@ const FinalResults = (props) => {
             get("/api/game", {gameID: props.gameID}).then((data) => {
                 // console.log("data", data);
                 if (props.setGame) {
-                props.setGame(data);
+                    props.setGame(data);
                 };
             });
         }
-    }, []);
+        console.log("game is ", props.game);
+    });
+
+    
     const onSubmit = ()=> {
         window.location.href = `/`;
     }
     return (
         <div>
             <h3>Final Results</h3>
-            {props.game ? <SortedPlayerList players={props.game.players}/> : <div>Loading...</div>} 
+            {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} 
             <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame" onClick = {onSubmit}>
                 What you egg
             </button>

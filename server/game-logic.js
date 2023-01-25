@@ -32,6 +32,8 @@ const gameState = {}
                     
                     Response 0: a string (corresponds to id)
                     Response 1: a string (corresponds to id + 1)
+                    response_0_vote_names: a list of strings
+                    response_1_vote_names: a list of strings
                     response_0_vote:{
                         player_ids...
                     }
@@ -68,7 +70,7 @@ const createGame = (gameID, userID) => {
         hostPlayer: userID, 
         votingRound: 0,
         players: [],
-        prompts: {}
+        prompts: []
     }
     console.log("Created game " + gameID);
     
@@ -151,6 +153,8 @@ const startGame = (gameID) => {
             content: Prompts[i],
             response_0_answer: "",
             response_1_answer: "",
+            response_0_vote_names: [],
+            response_1_vote_names: [],
             response_0_vote: [],
             response_1_vote: []
         }
@@ -170,7 +174,7 @@ const IDtoPlayerName = (id, gameID) => {
     return gameState[gameID]["players"][IDtoPlayerID(id, gameID)]['name'];
 }
 
-const PlayerIDtoPlayerName = (id, gameID) => {
+const playerIDtoPlayerName = (id, gameID) => {
     return gameState[gameID]["players"][id]['name'];
 }
 
@@ -199,6 +203,7 @@ const submitResponse = (id, gameID, promptID, response) => {
 
 const submitVote = (id, gameID, promptID, response) => {
     playerID = IDtoPlayerID(id, gameID);
+    playerName = playerIDtoPlayerName(playerID, gameID);
 
     // Check if player has already voted.
     // I want the playerID not the like google ID.
@@ -211,8 +216,10 @@ const submitVote = (id, gameID, promptID, response) => {
 
     if(response === 0){
         gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
+        gameState[gameID]["prompts"][promptID]["response_0_vote_names"].push(playerName);
     }else if(response === 1){
         gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
+        gameState[gameID]["prompts"][promptID]["response_1_vote_names"].push(playerName);
     }else{
         console.log("You can't vote for this response! ( response " + response + " )");
     }
