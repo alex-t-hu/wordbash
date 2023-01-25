@@ -1,3 +1,5 @@
+const ParentNamespace = require("socket.io/lib/parent-namespace");
+
 /** constants */
 const MAX_GAME_ID = 1000000;
 const SCORE_MULTIPLIER = 50;
@@ -40,7 +42,8 @@ const gameState = {}
                 }
             }
             players: {
-                player_id:{
+                player_id:{ (a number from 0 to N-1)
+                    name (actual name)
                     id (actual hex id)
                     score
                 }
@@ -64,7 +67,7 @@ const createGame = (gameID, userID) => {
         votingResults: false,
         hostPlayer: userID, 
         votingRound: 0,
-        players: {},
+        players: [],
         prompts: {}
     }
     console.log("Created game " + gameID);
@@ -72,26 +75,52 @@ const createGame = (gameID, userID) => {
     return gameID;
 }
 
+const deletePlayerFromGame = (playerID, gameID) => {
+    if(!gameState[gameID]) {
+        console.log("Game " + gameID + " does not exist. (I'm inside deletePlayerFromGame)");
+        return;
+    }
+    gameState[gameID]["players"].splice(playerID, 1);
+    gameState[gameID]["num_Players"] -= 1;
+
+    // TODO: Currently we ignore this for debug purposes.
+    // if(gameState[gameID]["num_Players"] <= 2){
+    //     console.log("Game " + gameID + " now has less than or equal to 2 players. It will be deleted.");
+    //     delete gameState[gameID];
+    // }
+}
+
 /** Adds a player to the game state */
-const spawnPlayer = (id, gameID) => {
+const spawnPlayer = (id, name, gameID) => {
     if(!gameState[gameID]) {
         // ur bad
         console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
     }else{
 
-        // Check if player is already in game
-        for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
-            if(gameState[gameID]["players"][i]["id"] === id) {
-                console.log("Player " + id + " is already in game " + gameID);
-                return;
+        // Check if a player is in any game. If they are, remove them.
+        for(let game in gameState) {
+            for(let i = 0; i < gameState[game]["num_Players"]; i++) {
+                if(gameState[game]["players"][i]["id"] === id) {
+                    console.log("Player " + id + " is already in game " + game);
+                    if(game === gameID){
+                        console.log("They are already in the game they are trying to join. Nothing will happen.");
+                        return;
+                    }else{
+                        console.log("They are in a different game. They will be removed from that game.");
+                        deletePlayerFromGame(i, game);
+                    }
+                }
             }
         }
+        
+        
         
         console.log("Spawning player " + id + " in game " + gameID);
         
         gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
-            score : 0
+            score : 0,
+            name : name
         };
 
         gameState[gameID]["num_Players"] += 1;
@@ -109,6 +138,12 @@ const Prompts = [
 ]
 
 const startGame = (gameID) => {
+    // // Check if the game has at least 3 players.
+    // if(gameState[gameID]["num_Players"] < 3) {
+    //     console.log("Game " + gameID + " does not have enough players to start.");
+    //     return;
+    // }
+
     gameState[gameID]["started"] = true;
     // Generate Prompts
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
@@ -122,16 +157,26 @@ const startGame = (gameID) => {
     }
 }
 
-const submitResponse = (playerID, gameID, promptID, response) => {
-    
-    let playerIdx = -1;
+const IDtoPlayerID = (id, gameID) => {
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
-        if(gameState[gameID]["players"][i]['id'] === playerID){
-            playerIdx = i;
-            break;
+        if(gameState[gameID]["players"][i]['id'] === id){
+            return i;
         }
     }
+    return -1;
+}
 
+const IDtoPlayerName = (id, gameID) => {
+    return gameState[gameID]["players"][IDtoPlayerID(id, gameID)]['name'];
+}
+
+const PlayerIDtoPlayerName = (id, gameID) => {
+    return gameState[gameID]["players"][id]['name'];
+}
+
+
+const submitResponse = (id, gameID, promptID, response) => {
+    playerIdx = IDtoPlayerID(id, gameID);
     if(promptID === playerIdx ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
     }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerIdx){
@@ -152,10 +197,14 @@ const submitResponse = (playerID, gameID, promptID, response) => {
     }
 }
 
-const submitVote = (playerID, gameID, promptID, response) => {
+const submitVote = (id, gameID, promptID, response) => {
+    playerID = IDtoPlayerID(id, gameID);
+
     // Check if player has already voted.
+    // I want the playerID not the like google ID.
     console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
-    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) || gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
+    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
+    gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
         console.log("You have already voted for this prompt!");
         return;
     }

@@ -10,10 +10,10 @@
 const express = require("express");
 
 // import models so we can interact with the database
-// const Story = require("./models/story");
-// const Comment = require("./models/comment");
 const User = require("./models/user");
-// const Message = require("./models/message");
+
+
+const Utils = require("./utils");
 
 const Game = require("./game-logic");
 
@@ -89,10 +89,12 @@ router.post("/startGame", (req, res) => {
 router.post("/spawn", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      Game.spawnPlayer(req.user._id, req.body.gameID);
+      console.log(req.user);
+      
+      Game.spawnPlayer(req.user._id, req.user.name, req.body.gameID);
+        console.log("Spawned player. Here are the players:");
+        console.log(Game.gameState[req.body.gameID]["players"]);
 
-      console.log("spawned player");
-      console.log(Game.gameState);
     }else{
       console.log("no gameID provided");
     }

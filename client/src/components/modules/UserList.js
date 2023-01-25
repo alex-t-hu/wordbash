@@ -18,7 +18,7 @@ const UserList = (props) => {
           <SingleUser
             key={i}
             // setActiveUser={props.setActiveUser}
-            user={props.users[key].id}
+            user={props.users[key].name}
             // active={user === props.active}
           />
         ))}
