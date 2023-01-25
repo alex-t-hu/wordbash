@@ -32,15 +32,16 @@ const Profile = (props) => {
       event.preventDefault();
       post("/api/updateUserName", {
         name: value
-      }).then( () => {
-        get(`/api/user`, { userid: props.userId }).then(
-          (userObj) => {
-            setUser(userObj);
-            setValue(userObj.name);
-          }
-          );
-        console.log("Changed name to ", value);
       });
+      // .then( () => {
+      //   get(`/api/user`, { userid: props.userId }).then(
+      //       (userObj) => {
+      //         setUser(userObj);
+
+      //       }
+      //     );
+      //   console.log("Changed name to ", value);
+      // });
 
       setEditing(false);
       
@@ -48,7 +49,7 @@ const Profile = (props) => {
 
 
 
-  if (!user) {
+  if (!value) {
     return (<div> Loading! </div>);
   }
   return (
@@ -61,7 +62,7 @@ const Profile = (props) => {
       {(editing ? (
       <div>
         <input type="text"
-          value={value}
+          placeholder={value}
           onChange={handleChange}
           // placeholder={value}
         />
