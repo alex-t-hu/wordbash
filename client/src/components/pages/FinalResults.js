@@ -23,14 +23,14 @@ const FinalResults = (props) => {
                 };
             });
         }
-    });
+    }, []);
     const onSubmit = ()=> {
         window.location.href = `/`;
     }
     return (
         <div>
             <h3>Final Results</h3>
-            <SortedPlayerList players={props.game.players}/>
+            {props.game ? <SortedPlayerList players={props.game.players}/> : <div>Loading...</div>} 
             <button className="Landing-optionButton u-flex-alignCenter" id="Landing-makeGame" onClick = {onSubmit}>
                 What you egg
             </button>

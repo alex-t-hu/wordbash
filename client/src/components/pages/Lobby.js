@@ -27,16 +27,26 @@ const Lobby = (props) => {
    * This effect is run every time any state variable changes.
    */
   
-  useEffect(() => {
-    if(props.userId && user && props.gameID){
-      get("/api/game", {gameID: props.gameID}).then((data) => {
-        // console.log("data", data);
-        if (props.setGame) {
-          props.setGame(data);
-        };
-      });
-    }
-  });
+  // useEffect(() => {
+  //   console.log("game effect is ");
+  //   if(props.userId && user && props.gameID){
+  //     get("/api/game", {gameID: props.gameID}).then((data) => {
+  //       // console.log("data", data);
+  //       if (props.setGame) {
+  //         props.setGame(data);
+  //       };
+  //     });
+  //   }
+    
+  // }, []);
+  if(props.userId && user && props.gameID){
+    get("/api/game", {gameID: props.gameID}).then((data) => {
+      // console.log("data", data);
+      if (props.setGame) {
+        props.setGame(data);
+      };
+    });
+  }
   
   useEffect(() => {
     const callback = (data) => {
@@ -47,7 +57,17 @@ const Lobby = (props) => {
       socket.off("activeUsers", callback);
     };
   }, []);
-
+  // useEffect(() => {
+  //   const callback = (data) => {
+  //     if (data.gameID === props.gameID) {
+  //       window.location.href = `/prompt/${props.gameID}`;
+  //     }
+  //   };
+  //   socket.on("game", callback);
+  //   // return () => {
+  //   //   socket.off("game", callback);
+  //   // };
+  // }, []);
   useEffect(() => {
     console.log('activeUsers', activeUsers);
   }, [activeUsers]);
@@ -82,7 +102,7 @@ const Lobby = (props) => {
     if (props.game && props.game.started) {
       window.location.href = `/prompt/${props.gameID}`;
     }
-  }, [props.game]);
+  }, [props.game.started]);
 
 
   

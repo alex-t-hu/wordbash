@@ -77,8 +77,6 @@ const Voting = (props) => {
     }, [promptNumber, props.game]);
 
 
-
-
     /**
      * Update promptNumber if the voting round has changed
      * This is the only place promptNumber is updated
@@ -111,7 +109,6 @@ const Voting = (props) => {
     }, [props.game]);
 
 
-
     /**
      * Functions and JSX
      */
@@ -136,7 +133,6 @@ const Voting = (props) => {
             setVoted(true)
         );
     };
-
     
     const handleDoneVoting = (event) => {
         console.log("Hello");
@@ -144,9 +140,10 @@ const Voting = (props) => {
         post("/api/doneVoting", {
                 gameID: props.gameID,
             }
-        ).then(
-            setVoted(false)
-        );
+        ).then(() => {
+            setVoted(false);
+            setAllVoted(false);
+        });
     };
 
     if (!props.userId) {

@@ -42,6 +42,7 @@ const Landing = (props) => {
         console.log("Game does not exist (inside Landing.js)");
       }else{
         console.log("Game exists (inside Landing.js)");
+        props.setGameID(value);
         post("/api/spawn", {gameID: value}).then((g) => {
           console.log("Spawned");
           window.location.href = `/lobby/${value}`;
@@ -59,6 +60,7 @@ const Landing = (props) => {
 
     get("/api/gameExists", {gameID: randomCode}).then((game) => {
       if(!game.gameExists){
+        props.setGameID(randomCode);
         console.log("Game does not exist (inside Landing.js)");
         post("/api/createGame", {gameID: randomCode, userID: props.userId}).then((g) => {
           console.log("Game created because ");
