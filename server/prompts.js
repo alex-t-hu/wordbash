@@ -1,5 +1,5 @@
 
-const Prompts = [
+const AllPrompts = [
     [], // 0
     [], // 1
     [], // 2
@@ -25,9 +25,9 @@ const Prompts = [
 
 for(let i = 0; i < 20; i++) {
     for(let j = 0; j < 5; j++){
-        Prompts[i].push("Prompt " + i + " " + j);
+        AllPrompts[i].push("Prompt " + i + " " + j);
     }
 }
 
 
-export default Prompts;
+module.exports = {AllPrompts};

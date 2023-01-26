@@ -4,8 +4,7 @@ const User = require("./models/user");
 
 const _ = require("lodash");
 
-import { Prompts } from "./prompts";
-
+const Prompts = require("./prompts");
 
 
 /** constants */
@@ -168,7 +167,7 @@ const startGame = (gameID, temperature) => {
     // Generate Prompts
     // TODO
 
-    let subset = _.sampleSize(Prompts, gameState[gameID]["num_Players"]);
+    let subset = _.sampleSize(Prompts.AllPrompts[gameState[gameID]["temperature"]], gameState[gameID]["num_Players"]);
 
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
         gameState[gameID]["prompts"][i] = {
