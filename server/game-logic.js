@@ -157,7 +157,8 @@ const startGame = (gameID) => {
             response_0_vote_names: [],
             response_1_vote_names: [],
             response_0_vote: [],
-            response_1_vote: []
+            response_1_vote: [],
+            numNoVote: 0
         }
     }
 }
@@ -180,7 +181,7 @@ const playerIDtoPlayerName = (id, gameID) => {
 }
 
 
-const submitResponse = (id, gameID, promptID, response) => {
+const submitResponse = (id, gameID, promptID, timedOut, response) => {
     console.log("just submitted response");
     playerIdx = IDtoPlayerID(id, gameID);
     if(promptID === playerIdx ){
@@ -195,44 +196,60 @@ const submitResponse = (id, gameID, promptID, response) => {
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
         console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
         if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
+            if (timedOut) {
+                console.log("Timed out. Submitting empty responses.");
+                if (gameState[gameID]["prompts"][i]["response_0_answer"] === "") {
+                    gameState[gameID]["prompts"][i]["response_0_answer"] = "(blank)"; // change hre if want to do smth funny for timeout
+                }
+                if (gameState[gameID]["prompts"][i]["response_1_answer"] === "") {
+                    gameState[gameID]["prompts"][i]["response_1_answer"] = "(blank)";
+                }
+            }
             allResponsesIn = false;
-            break;
         }
     }
-    if(allResponsesIn){
+    if(allResponsesIn || timedOut){
         gameState[gameID]["promptsFinished"] = true;
     }
 }
 
-const submitVote = (id, gameID, promptID, response) => {
+const submitVote = (id, gameID, promptID, timedOut, response) => {
     playerID = IDtoPlayerID(id, gameID);
     playerName = playerIDtoPlayerName(playerID, gameID);
 
     // Check if player has already voted.
     // I want the playerID not the like google ID.
-    console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
-    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
-    gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
-        console.log("You have already voted for this prompt!");
-        return;
-    }
+    if (timedOut) {
+        console.log("Player " + playerID + " timed out. Submitting no vote.");
+        gameState[gameID]["prompts"][promptID]["numNoVote"] += 1;
+    } else {
+        console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
+        if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
+            gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
+            console.log("You have already voted for this prompt!");
+            return;
+        }
 
-    if(response === 0){
-        gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
-        gameState[gameID]["prompts"][promptID]["response_0_vote_names"].push(playerName);
-    }else if(response === 1){
-        gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
-        gameState[gameID]["prompts"][promptID]["response_1_vote_names"].push(playerName);
-    }else{
-        console.log("You can't vote for this response! ( response " + response + " )");
+        if(response === 0){
+            gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
+            gameState[gameID]["prompts"][promptID]["response_0_vote_names"].push(playerName);
+        }else if(response === 1){
+            gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
+            gameState[gameID]["prompts"][promptID]["response_1_vote_names"].push(playerName);
+        }else{
+            console.log("You can't vote for this response! ( response " + response + " )");
+        }
     }
+    
+   console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
+   console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
     // Check if all votes are in for the current prompt.
     if(gameState[gameID]["prompts"][
         gameState[gameID]["votingRound"]
     ]["response_0_vote"].length
     + gameState[gameID]["prompts"][
         gameState[gameID]["votingRound"]
-    ]["response_1_vote"].length
+    ]["response_1_vote"].length + gameState[gameID]["prompts"][gameState[gameID]["votingRound"]]["numNoVote"]
     >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
         
         console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
@@ -240,7 +257,6 @@ const submitVote = (id, gameID, promptID, response) => {
         gameState[gameID]["votingResults"] = true;
         // Don't update voting round yet!!
         // The voting round will get updated when the client sends a doneVoting message.
-
     }
     // Check if all votes are in for all prompts.
     
