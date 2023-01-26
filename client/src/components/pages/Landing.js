@@ -6,6 +6,8 @@ import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
 
+import Login from "./Login.js"
+
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
 
@@ -81,17 +83,7 @@ const Landing = (props) => {
 
   if (!props.userId) {
     return (
-      <div className="flex items-center justify-center flex-col h-screen">
-        <h1 className="">
-          Welcome to
-        </h1>
-        <h1>
-          WORDBASH
-        </h1>
-        <h1>
-          Please log in.
-        </h1>
-      </div>
+      <Login handleLogin={props.handleLogin}/>
     );
   }
   return (
@@ -99,7 +91,7 @@ const Landing = (props) => {
       <div className="Landing-optionContainer rounded-3xl u-centerPage u-flexColumn bg-gray-50">
         <div className="flex flex-row m-8">
           <input
-          type="text"
+            type="text"
             placeholder="Enter Game Code"
             value={value}
             onChange={handleChange}

@@ -4,6 +4,8 @@ import { Link } from "@reach/router";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 // import {GoogleOAuthProvider, GoogleLogin,  GoogleLogout } from "react-google-login";
 
+import {get} from "../../utilities";
+
 import "./NavBar.css";
 import "../pages/Skeleton.css"
 
@@ -23,6 +25,13 @@ const NavBar = (props) => {
         </Link>
       </div>
       <div className="flex items-center NavBar-linkContainer">
+        {props.userId && (
+          <h1>
+            {
+              "hi"
+            }
+          </h1>
+        )}
         {props.userId && (
           <Link to={`/profile/${props.userId}`} className="NavBar-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -47,13 +56,7 @@ const NavBar = (props) => {
 
             </button>
           ) : (
-            <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              onSuccess={props.handleLogin}
-              onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
-            />
+            <></>
           )}
         </GoogleOAuthProvider> 
           

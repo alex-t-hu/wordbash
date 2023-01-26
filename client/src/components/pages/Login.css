@@ -1,0 +1,39 @@
+.Login-title{
+    font-size: 40px;
+    padding: 100px;
+    color: var(--primary)
+}
+
+.Login-optionContainer{
+    position: absolute;
+}
+
+.Login-optionButton{
+    background-color: var(--secondary--dim);
+    color: var(--black);
+
+    margin: var(--m);
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    border-radius: 50px;
+
+    transition-duration: 0.4s;
+
+    flex-grow: 1;
+}
+
+.Login-optionButton:hover {
+    background-color: var(--secondary);
+    color: white;
+    cursor: pointer;
+}
+
+#Login-joinGame {
+    /* color: var(--primary);*/
+    flex-grow: 1;
+}
