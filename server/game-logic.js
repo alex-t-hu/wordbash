@@ -286,18 +286,6 @@ const uploadResults = (gameID) => {
             user.save();
         });
     }
-
-
-    if (req.user && req.body.games_played && req.body.games_won && req.body.high_score) {
-        // Update the user in the MongoDB database
-        User.findById(req.user._id).then((user) => {
-          user.games_played = req.body.games_played;
-          user.games_won = req.body.games_won;
-          user.high_score = req.body.high_score;
-          user.save();
-        });
-      }
-      res.send({});
 }
 
 
