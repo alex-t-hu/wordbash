@@ -1,12 +1,5 @@
 const Prompt = require("./models/prompt");
 
-const logAllPrompts = () => {
-    Prompt.find({}, (err, prompts) => {
-        console.log(prompts);
-    });
-};
-
-
 const getPromptSubset = (temperature, n) => {
     // Count the number of prompts with the given temperature
     const numPrompts = Prompt.countDocuments({}).where('temperature').equals(temperature).exec();
@@ -21,5 +14,4 @@ const getPromptSubset = (temperature, n) => {
 
 module.exports = {
     getPromptSubset,
-    logAllPrompts,
 };
