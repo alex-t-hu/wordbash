@@ -38,15 +38,3 @@
     /* color: var(--primary);*/
     flex-grow: 1;
 }
-
-#Landing-joinGame:hover {
-    /* color: var(--primary);*/
-}
-
-#Landing-makeGame {
-    /* color: #000; */
-}
-
-#Landing-makeGame:hover {
-    /* color: #000; */
-}
