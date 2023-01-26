@@ -80,7 +80,19 @@ const Landing = (props) => {
 
 
   if (!props.userId) {
-    return <div>Please Log in</div>;
+    return (
+      <div className="flex items-center justify-center flex-col h-screen">
+        <h1 className="">
+          Welcome to
+        </h1>
+        <h1>
+          WORDBASH
+        </h1>
+        <h1>
+          Please log in.
+        </h1>
+      </div>
+    );
   }
   return (
     <div>
