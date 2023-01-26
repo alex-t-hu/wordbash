@@ -5,11 +5,8 @@
 }
 
 .Landing-optionContainer{
-    background-color: var(--white);
     position: absolute;
     width: 300px;
-    height: 200px;
-    justify-content: space-between;
 }
 
 .Landing-optionButton{
@@ -27,6 +24,8 @@
     border-radius: 50px;
 
     transition-duration: 0.4s;
+
+    flex-grow: 1;
 }
 
 .Landing-optionButton:hover {
@@ -37,6 +36,7 @@
 
 #Landing-joinGame {
     /* color: var(--primary);*/
+    flex-grow: 1;
 }
 
 #Landing-joinGame:hover {

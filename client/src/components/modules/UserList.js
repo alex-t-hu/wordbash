@@ -12,18 +12,17 @@ import "./SingleUser.css";
  */
 const UserList = (props) => {
   return (
-    <>
-      <h3>Players</h3>
-      {props.users
-        .map((user, i) => (
+    <div className="w-full flex flex-col text-center bg-gray-50">
+      {Object.keys(props.users)
+        .map((key, i) => (
           <SingleUser
-            key={i}
+            index={i}
             // setActiveUser={props.setActiveUser}
-            user={user}
+            user={props.users[key].name}
             // active={user === props.active}
           />
         ))}
-    </>
+    </div>
   );
 }
 

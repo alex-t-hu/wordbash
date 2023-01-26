@@ -1,5 +1,5 @@
 let io;
-
+const Game = require("./game-logic");
 const userToSocketMap = {}; // maps user ID to socket object
 const socketToUserMap = {}; // maps socket ID to user object
 
@@ -7,7 +7,19 @@ const getAllConnectedUsers = () => Object.values(socketToUserMap);
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
-
+const gameJustChanged = (gameID) => {
+  console.log("gameJustChanged");
+  const game = Game.getGame(gameID);
+  if (game) {
+    const sockets = game.players.map((player) => getSocketFromUserID(player.id));
+    sockets.forEach((socket) => {
+      if (socket) {
+        console.log("emitting gameUpdate", game["promptsFinished"]);
+        socket.emit("gameUpdate", { game: game });
+      }
+    });
+  }
+};
 const addUser = (user, socket) => {
   const oldSocket = userToSocketMap[user._id];
 
@@ -50,5 +62,6 @@ module.exports = {
   getUserFromSocketID: getUserFromSocketID,
   getSocketFromSocketID: getSocketFromSocketID,
   getAllConnectedUsers: getAllConnectedUsers,
+  gameJustChanged: gameJustChanged, 
   getIo: () => io,
 };
