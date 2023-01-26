@@ -105,3 +105,66 @@ socketManager.init(server);
 server.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
+
+// // Temporary code to test the server
+
+// const Prompt = require("./models/prompt");
+// const PromptLoader = require("./prompt-loader");
+
+
+// const logAllPrompts = () => {
+//   Prompt.find({}, (err, prompts) => {
+//       console.log(prompts);
+//   });
+// };
+
+// const deleteAllPrompts = () => {
+//   Prompt.deleteMany({}, (err) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Successfully deleted all prompts");
+//     }
+//   });
+// };
+
+
+/**
+ * This code is used to populate the database with temporary prompts.
+ */
+// const addTmpPrompts = () => {
+//   deleteAllPrompts();
+//   for(let i = 5; i <= 21; i++) {
+//     for(let j = 0; j < 10; j++) {
+//       const prompt = new Prompt({
+//         prompt: `Temporary Prompt ${i} - ${j}`,
+//         temperature: i,
+//         index: j,
+//       });
+//       prompt.save();
+//     }
+//   }
+// };
+
+
+
+/**
+ * Alternatively, you can use this code to input the real prompts from text files.
+ */
+
+// const Data = require("./data.json");
+
+// for(let i = 5; i <= 21; i++) {
+//   for(let j = 0; j <= 9; j++) {
+//     const prompt = new Prompt({
+//       prompt: Data[i][j],
+//       temperature: i,
+//       index: j,
+//     });
+//     prompt.save();
+//   }
+// }
+
+// addTmpPrompts();
+
+// logAllPrompts();

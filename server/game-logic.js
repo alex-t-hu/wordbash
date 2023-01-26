@@ -2,9 +2,8 @@ const ParentNamespace = require("socket.io/lib/parent-namespace");
 
 const User = require("./models/user");
 
-const _ = require("lodash");
 
-const Prompts = require("./prompts");
+const PromptLoader = require("./prompt-loader");
 
 
 /** constants */
@@ -167,8 +166,7 @@ const startGame = (gameID, temperature) => {
     // Generate Prompts
     // TODO
 
-    let subset = _.sampleSize(Prompts.AllPrompts[gameState[gameID]["temperature"]], gameState[gameID]["num_Players"]);
-
+    let subset = PromptLoader.getPromptSubset(temperature, gameState[gameID]["num_Players"]);
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
         gameState[gameID]["prompts"][i] = {
             content: subset[i],
