@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../modules/UserList.js";
+import TemperatureSlider from "../modules/TemperatureSlider.js";
 import { socket } from "../../client-socket.js";
 import { get, post } from "../../utilities";
 import {navigate} from "@reach/router";
@@ -9,6 +10,7 @@ const Lobby = (props) => {
 
   const [activeUsers, setActiveUsers] = useState([]);
   const [user, setUser] = useState(); // My name
+  const [temperature, setTemperature] = useState(15);
 
   /**
    * This effect is run when the component mounts.
@@ -23,6 +25,8 @@ const Lobby = (props) => {
       };
     });
   }, []);
+
+
 
   /**
    * This effect is run every time any state variable changes.
@@ -90,7 +94,7 @@ const Lobby = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    post("/api/startGame", {gameID: props.gameID}).then((g) => {
+    post("/api/startGame", {gameID: props.gameID, temperature: temperature}).then((g) => {
       console.log("Game created ");
     });
   };
@@ -145,6 +149,7 @@ const Lobby = (props) => {
           {/*<h1 className=""> user = {user.name}</h1>*/}
           <h1 className="">Game Code:</h1>
           <input className="text-3xl text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
+          <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
         </div>
 
       </div>

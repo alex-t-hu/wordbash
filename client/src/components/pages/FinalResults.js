@@ -28,7 +28,12 @@ const FinalResults = (props) => {
 
     
     const onSubmit = ()=> {
-        window.location.href = `/`;
+        if(props.userId && props.gameID){
+            post("/api/despawn", {gameID: props.gameID});
+        }
+
+        navigate(`/`);
+        
     }
     return (
         <div>

@@ -2,6 +2,11 @@ const ParentNamespace = require("socket.io/lib/parent-namespace");
 
 const User = require("./models/user");
 
+const _ = require("lodash");
+
+import { Prompts } from "./prompts";
+
+
 
 /** constants */
 const SCORE_MULTIPLIER = 50;
@@ -16,8 +21,12 @@ const gameState = {}
         gameID: {
             num_Players: a number
             started: a boolean
+            temperature: a number from 5 to 20. Divide by 10 for the actual temperature.
             promptsFinished: a boolean
             votingFinished: a boolean // This describes whether we are done voting on ALL prompts.
+            terminated: a boolean   // This describes whether the game
+                                    // has been terminated due to a player leaving.
+
 
             votingResults: a boolean // This is the important one.
             // It gets toggled to true when all responses are in.
@@ -58,14 +67,11 @@ const gameState = {}
     }
 
 /** Create a new game */
-const createGame = (gameID, userID) => {
-    // const gameID = Math.floor(Math.random() * MAX_GAME_ID);
-    // while(gameState[gameID] != undefined) {
-    //     gameID = Math.floor(Math.random() * MAX_GAME_ID);
-    // }
+const createGame = (gameID) => {
     gameState[gameID] = {
         num_Players: 0,
         started: false,
+        temperature: 15,
         promptsFinished: false,
         votingFinished: false,
         votingResults: false,
@@ -78,6 +84,19 @@ const createGame = (gameID, userID) => {
     return gameID;
 }
 
+const removePlayer = (playerID) => {
+    // Remove player from all games.
+    for(let game in gameState) {
+        for(let i = 0; i < gameState[game]["players"].length; i++) {
+            if(gameState[game]["players"][i]["id"] === playerID) {
+                deletePlayerFromGame(i, game);
+            }
+        }
+    }
+}
+
+    
+
 const deletePlayerFromGame = (playerID, gameID) => {
     if(!gameState[gameID]) {
         console.log("Game " + gameID + " does not exist. (I'm inside deletePlayerFromGame)");
@@ -86,11 +105,16 @@ const deletePlayerFromGame = (playerID, gameID) => {
     gameState[gameID]["players"].splice(playerID, 1);
     gameState[gameID]["num_Players"] -= 1;
 
+    // TODO: More graceful handling of player removal?
+    console.log("Player " + playerID + " has been removed from game " + gameID);
+    gameState[gameID]["termianted"] = true;
+    console.log("Game " + gameID + " has been terminated.");
+
     // TODO: Currently we ignore this for debug purposes.
-    // if(gameState[gameID]["num_Players"] <= 2){
-    //     console.log("Game " + gameID + " now has less than or equal to 2 players. It will be deleted.");
-    //     delete gameState[gameID];
-    // }
+    if(gameState[gameID]["num_Players"] <= 0){
+        console.log("Game " + gameID + " now has no players. It will be deleted.");
+        delete gameState[gameID];
+    }
 }
 
 /** Adds a player to the game state */
@@ -109,8 +133,8 @@ const spawnPlayer = (id, name, gameID) => {
                         console.log("They are already in the game they are trying to join. Nothing will happen.");
                         return;
                     }else{
-                        console.log("They are in a different game. They will be removed from that game.");
-                        deletePlayerFromGame(i, game);
+                        console.log("They are in a different game. However, we are not handling this yet.");
+                        // deletePlayerFromGame(i, game);
                     }
                 }
             }
@@ -131,16 +155,8 @@ const spawnPlayer = (id, name, gameID) => {
     }
 };
 
-const Prompts = [
-    "Nobody believes this_ until I show them the truth.",
-    "I like to make life easier for everyone by___",
-    "At the stroke of midnight my life changed forever when I suddenly ___",
-    "If I could make $1 million dollars fast, I know I would___",
-    "A preschooler proving to jealous fellow students he believed in Santa Claus despite small fingers no softness _.__",
-    "I knew I was in trouble when Aunt Patty caught me ___"
-]
 
-const startGame = (gameID) => {
+const startGame = (gameID, temperature) => {
     // // Check if the game has at least 3 players.
     // if(gameState[gameID]["num_Players"] < 3) {
     //     console.log("Game " + gameID + " does not have enough players to start.");
@@ -148,10 +164,15 @@ const startGame = (gameID) => {
     // }
 
     gameState[gameID]["started"] = true;
+    gameState[gameID]["temperature"] = temperature;
     // Generate Prompts
+    // TODO
+
+    let subset = _.sampleSize(Prompts, gameState[gameID]["num_Players"]);
+
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
         gameState[gameID]["prompts"][i] = {
-            content: Prompts[i],
+            content: subset[i],
             response_0_answer: "",
             response_1_answer: "",
             response_0_vote_names: [],
@@ -301,17 +322,6 @@ const updateScore = (gameID) => {
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
 }
 
-//TODO: implment removing players
-
-// /** Remove a player from the game state if they disconnect */
-// const removePlayer = (id) => {
-//     // find the game that the player is in
-//     Object.keys(gameState).forEach((gameID) => {
-//         if (gameState[gameID].players[id] != undefined) {
-//             gameState[gameID].players[id];
-//         }
-//     });
-// };
 
 /** Get a game. */
 const getGame = (gameID) => {
@@ -335,6 +345,8 @@ const gameExists = (gameID) => {
 module.exports = {
     gameState,
     spawnPlayer,
+    removePlayer,
+    deletePlayerFromGame,
     getGame,
     createGame,
     startGame,
@@ -342,6 +354,4 @@ module.exports = {
     submitVote,
     gameExists,
     doneVoting,
-    // 
-//   removePlayer,
 };

@@ -80,7 +80,7 @@ router.get("/activeUsers", (req, res) => {
 router.post("/createGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      Game.createGame(req.body.gameID, req.body.userID);
+      Game.createGame(req.body.gameID);
 
       console.log("created new Game with gameID: " + req.body.gameID);
       console.log(Game.gameState);
@@ -95,13 +95,13 @@ router.post("/createGame", (req, res) => {
 
 router.post("/startGame", (req, res) => {
   if (req.user) {
-    if(req.body.gameID){
-      Game.startGame(req.body.gameID);
+    if(req.body.gameID && req.body.temperature){
+      Game.startGame(req.body.gameID, req.body.temperature);
       console.log("started game");
       console.log(Game.gameState);
       socketManager.gameJustChanged(req.body.gameID);
     }else{
-      console.log("no gameID provided");
+      console.log("huh something borked.");
     }
   }else{
     console.log("user not logged in");
@@ -129,7 +129,10 @@ router.post("/spawn", (req, res) => {
 
 router.post("/despawn", (req, res) => {
   if (req.user) {
-    Game.removePlayer(req.user);
+    if(req.body.gameID){
+      Game.deletePlayerFromGame(req.user, req.body.gameID); // Removes from specific game
+      socketManager.gameJustChanged(req.body.gameID);
+    }
   }
   res.send({});
 });
@@ -166,11 +169,12 @@ router.post("/doneVoting", (req, res) => {
 
       Game.doneVoting(req.body.gameID);
       socketManager.gameJustChanged(req.body.gameID);
-    }else{
-      console.log("Problem 1.");
     }
-  }else{
-    console.log("Problem 2.");
+  //   else{
+  //     console.log("Problem 1.");
+  //   }
+  // }else{
+  //   console.log("Problem 2.");
   }
   res.send({});
 });
