@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import "../../utilities.css";
 
 import { get, post } from "../../utilities";
-
+import {socket} from "../../client-socket.js";
+import { navigate } from "@reach/router";
 /**
  * Define the "Prompt" component
  */
@@ -14,23 +15,45 @@ const Prompt = (props) => {
     const [value , setValue] = useState(""); // the current value of the input box
     // whether the user has finished answering all the prompts
     const [finishedAnswering, setFinishedAnswering] = useState(false);
-
+    const [allFinishedAnswering, setAllFinishedAnswering] = useState(false);
   /**
    * This effect is run every time any state variable changes.
    */
   
   useEffect(() => {
     if(props.userId && props.gameID){
+        console.log("blah");
       get("/api/game", {gameID: props.gameID}).then((data) => {
         // console.log("data", data);
         if (props.setGame) {
           props.setGame(data);
+          console.log("l;kasdjf;lkasdf", data['promptsFinished']);
+          setAllFinishedAnswering(data['promptsFinished']);
         };
       });
     }
-  });
-
-
+  },[props.userId, props.gameID, props.setGame]);
+    useEffect(() => {
+        const callback = (stuff) => {
+            console.log("gah");
+            console.log(props.userId, "GAH!", props.gameID);
+            if(props.userId && props.gameID){
+                props.setGame(stuff.game);
+                setAllFinishedAnswering(stuff.game['promptsFinished']);
+            // get("/api/game", {gameID: props.gameID}).then((data) => {
+            //   // console.log("data", data);
+            //   if (props.setGame) {
+            //     props.setGame(data);
+            //     console.log("blah", data['promptsFinished']);
+            //     setAllFinishedAnswering(data['promptsFinished']);
+            //   };
+            // });
+        }};
+        socket.on("gameUpdate", callback);
+        return () => {
+            socket.off("gameUpdate", callback);
+        };
+    },[]); 
     // called whenever the user types in the input box
     const handleChange = (event) => {
         console.log(event);
@@ -88,10 +111,10 @@ const Prompt = (props) => {
     useEffect(() => {
         if(props.game){
             if(props.game.promptsFinished){
-                window.location.href = `/game/${props.gameID}/voting`;
+                navigate(`/game/${props.gameID}/voting`);
             }
         }
-    }, [props.game]);
+    }, [allFinishedAnswering]);
 
 
     if(!props.game){

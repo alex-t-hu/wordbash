@@ -7,6 +7,7 @@ import { Link } from "@reach/router";
 import { useState } from "react";
 
 import { get, post } from "../../utilities";
+import { navigate } from "@reach/router";
 
 
 
@@ -45,7 +46,7 @@ const Landing = (props) => {
         props.setGameID(value);
         post("/api/spawn", {gameID: value}).then((g) => {
           console.log("Spawned");
-          window.location.href = `/game/${value}/lobby`;
+          navigate(`/game/${value}/lobby`);
         });
       }
     });

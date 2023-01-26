@@ -14,6 +14,7 @@ import "../../utilities.css";
  * Define the "App" component
  */
 const Game = (props) => {
+  console.log("GAMEEE",props.userId);
   return (
     <>
       <div className="">

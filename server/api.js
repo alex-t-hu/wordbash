@@ -99,6 +99,7 @@ router.post("/startGame", (req, res) => {
       Game.startGame(req.body.gameID);
       console.log("started game");
       console.log(Game.gameState);
+      socketManager.gameJustChanged(req.body.gameID);
     }else{
       console.log("no gameID provided");
     }
@@ -139,6 +140,7 @@ router.post("/submitResponse", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.response);
+      socketManager.gameJustChanged(req.body.gameID);
     }
   }
   res.send({});
@@ -150,6 +152,7 @@ router.post("/submitVote", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.submitVote(req.user._id, req.body.gameID, req.body.promptID, req.body.response);
+      socketManager.gameJustChanged(req.body.gameID);
     }
   }
   res.send({});
@@ -162,6 +165,7 @@ router.post("/doneVoting", (req, res) => {
       // console.log("We are done voting inside api.");
 
       Game.doneVoting(req.body.gameID);
+      socketManager.gameJustChanged(req.body.gameID);
     }else{
       console.log("Problem 1.");
     }

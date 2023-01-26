@@ -9,7 +9,8 @@ import { useState } from "react";
 import { get, post } from "../../utilities";
 import VotingSelection from "./Voting/VotingSelection";
 import VotingResults from "./Voting/VotingResults";
-
+import {socket} from "../../client-socket.js";
+import { navigate } from "@reach/router";
 
 const Voting = (props) => {
     /**
@@ -47,17 +48,48 @@ const Voting = (props) => {
    * This effect is run every time any state variable changes.
    */
   
+    // useEffect(() => {
+    //     if(props.userId && props.gameID){
+    //     get("/api/game", {gameID: props.gameID}).then((data) => {
+    //         // console.log("data", data);
+    //         if (props.setGame) {
+    //             props.setGame(data);
+    //         };
+    //     });
+    //     }
+    // });
     useEffect(() => {
         if(props.userId && props.gameID){
-        get("/api/game", {gameID: props.gameID}).then((data) => {
+            console.log("blah voting");
+          get("/api/game", {gameID: props.gameID}).then((data) => {
             // console.log("data", data);
             if (props.setGame) {
-                props.setGame(data);
+              props.setGame(data);
+              console.log("l;kasdjf;lkasdf", data['promptsFinished']);
+              setAllFinishedAnswering(data['promptsFinished']);
             };
-        });
+          });
         }
-    });
-
+      },[props.userId, props.gameID, props.setGame]);
+        useEffect(() => {
+            const callback = (stuff) => {
+                console.log("gah voting");
+                if(props.userId && props.gameID){
+    
+                get("/api/game", {gameID: props.gameID}).then((data) => {
+                  // console.log("data", data);
+                  if (props.setGame) {
+                    props.setGame(data);
+                    console.log("blah", data['promptsFinished']);
+              setAllFinishedAnswering(data['promptsFinished']);
+                  };
+                });
+            }};
+            socket.on("gameUpdate", callback);
+            return () => {
+                socket.off("gameUpdate", callback);
+            };
+            },[]);
     /**
      * Grab a new prompt
      */
@@ -104,7 +136,7 @@ const Voting = (props) => {
 
     useEffect(() => {
         if(props.game.votingFinished) {
-            window.location.href = `/game/${props.gameID}/results`;
+            navigate(`/game/${props.gameID}/results`);
         }
     }, [props.game]);
 

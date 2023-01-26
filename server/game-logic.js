@@ -181,6 +181,7 @@ const playerIDtoPlayerName = (id, gameID) => {
 
 
 const submitResponse = (id, gameID, promptID, response) => {
+    console.log("just submitted response");
     playerIdx = IDtoPlayerID(id, gameID);
     if(promptID === playerIdx ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
@@ -192,6 +193,7 @@ const submitResponse = (id, gameID, promptID, response) => {
     // Check if all responses are in
     let allResponsesIn = true;
     for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+        console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
         if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
             allResponsesIn = false;
             break;

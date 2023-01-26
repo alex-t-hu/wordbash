@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserList from "../modules/UserList.js";
 import { socket } from "../../client-socket.js";
 import { get, post } from "../../utilities";
-
+import {navigate} from "@reach/router";
 import "./Lobby.css";
 
 const Lobby = (props) => {
@@ -101,7 +101,7 @@ const Lobby = (props) => {
    */
   useEffect(() => {
     if (props.game && props.game.started) {
-      window.location.href = `/game/${props.gameID}/prompt`;
+      navigate(`/game/${props.gameID}/prompt`);
     }
   }, [props.game.started]);
 
