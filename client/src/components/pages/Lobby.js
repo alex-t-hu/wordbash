@@ -11,6 +11,7 @@ const Lobby = (props) => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [user, setUser] = useState(); // My name
   const [temperature, setTemperature] = useState(15);
+  const [numRounds, setNumRounds] = useState(3);
 
   /**
    * This effect is run when the component mounts.
@@ -94,7 +95,11 @@ const Lobby = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    post("/api/startGame", {gameID: props.gameID, temperature: temperature}).then((g) => {
+    post("/api/startGame", {
+      gameID: props.gameID,
+      temperature: temperature,
+      numRounds: numRounds,
+    }).then((g) => {
       console.log("Game created ");
     });
   };
@@ -150,6 +155,7 @@ const Lobby = (props) => {
           <h1 className="">Game Code:</h1>
           <input className="text-3xl text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
           <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
+          <RoundSlider numRounds = {numRounds} setNumRounds = {setNumRounds} numPlayers = {props.game['num_Players']}/>
         </div>
 
       </div>

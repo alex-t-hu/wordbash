@@ -13,11 +13,13 @@ const SCORE_MULTIPLIER = 50;
  * 
 */
 const gameState = {}
-/*
+/**
 
     gameState = {
         gameID: {
             num_Players: a number
+            numRounds: a number
+            numPrompts: num_Players * numRounds
             started: a boolean
             temperature: a number from 5 to 20. Divide by 10 for the actual temperature.
             promptsFinished: a boolean
@@ -64,10 +66,41 @@ const gameState = {}
         }
     }
 
+*/
+
+/*
+-------------------------------- Helper functions --------------------------------
+*/
+
+
+const IDtoPlayerID = (id, gameID) => {
+    for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
+        if(gameState[gameID]["players"][i]['id'] === id){
+            return i;
+        }
+    }
+    return -1;
+}
+
+const IDtoPlayerName = (id, gameID) => {
+    return gameState[gameID]["players"][IDtoPlayerID(id, gameID)]['name'];
+}
+
+const playerIDtoPlayerName = (id, gameID) => {
+    return gameState[gameID]["players"][id]['name'];
+}
+
+/*
+-------------------------------- Initialization --------------------------------
+*/
+
+
 /** Create a new game */
 const createGame = (gameID) => {
     gameState[gameID] = {
         num_Players: 0,
+        numRounds: 0,
+        numPrompts: 0,
         started: false,
         temperature: 15,
         promptsFinished: false,
@@ -154,7 +187,7 @@ const spawnPlayer = (id, name, gameID) => {
 };
 
 
-const startGame = (gameID, temperature) => {
+const startGame = (gameID, temperature, numRounds) => {
     // // Check if the game has at least 3 players.
     // if(gameState[gameID]["num_Players"] < 3) {
     //     console.log("Game " + gameID + " does not have enough players to start.");
@@ -163,11 +196,14 @@ const startGame = (gameID, temperature) => {
 
     gameState[gameID]["started"] = true;
     gameState[gameID]["temperature"] = temperature;
-    // Generate Prompts
-    // TODO
+    
+    gameState[gameID]["numRounds"] = numRounds;
+    gameState[gameID]["numPrompts"] = numRounds * gameState[gameID]["num_Players"];
 
-    let subset = PromptLoader.getPromptSubset(temperature, gameState[gameID]["num_Players"]);
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+
+    // Generate Prompts.
+    let subset = PromptLoader.getPromptSubset(temperature, gameState[gameID]["numPrompts"]);
+    for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
         gameState[gameID]["prompts"][i] = {
             content: subset[i],
             response_0_answer: "",
@@ -180,37 +216,26 @@ const startGame = (gameID, temperature) => {
     }
 }
 
-const IDtoPlayerID = (id, gameID) => {
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
-        if(gameState[gameID]["players"][i]['id'] === id){
-            return i;
-        }
-    }
-    return -1;
-}
-
-const IDtoPlayerName = (id, gameID) => {
-    return gameState[gameID]["players"][IDtoPlayerID(id, gameID)]['name'];
-}
-
-const playerIDtoPlayerName = (id, gameID) => {
-    return gameState[gameID]["players"][id]['name'];
-}
+/*
+-------------------------------- Game Logic --------------------------------
+*/
 
 
 const submitResponse = (id, gameID, promptID, response) => {
     console.log("just submitted response");
-    playerIdx = IDtoPlayerID(id, gameID);
-    if(promptID === playerIdx ){
+    const playerIdx = IDtoPlayerID(id, gameID);
+    const numPlayers = gameState[gameID]["num_Players"];
+    // const numPrompts = gameState[gameID]["numPrompts"];
+    if(promptID % numPlayers === playerIdx ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
-    }else if((promptID + 1) % gameState[gameID]["num_Players"] === playerIdx){
+    }else if((promptID + 1) % numPlayers === playerIdx){
         gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
     }else{
         console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
     }
     // Check if all responses are in
     let allResponsesIn = true;
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+    for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
         console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
         if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
             allResponsesIn = false;
@@ -221,7 +246,14 @@ const submitResponse = (id, gameID, promptID, response) => {
         gameState[gameID]["promptsFinished"] = true;
     }
 }
-
+/**
+ * TODO: I don't think we need to pass the promptID; it's always the roundNumber. Whatever.
+ * @param {*} id 
+ * @param {*} gameID 
+ * @param {*} promptID 
+ * @param {*} response 
+ * @returns 
+ */
 const submitVote = (id, gameID, promptID, response) => {
     playerID = IDtoPlayerID(id, gameID);
     playerName = playerIDtoPlayerName(playerID, gameID);
@@ -245,12 +277,8 @@ const submitVote = (id, gameID, promptID, response) => {
         console.log("You can't vote for this response! ( response " + response + " )");
     }
     // Check if all votes are in for the current prompt.
-    if(gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_0_vote"].length
-    + gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_1_vote"].length
+    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].length
+    + gameState[gameID]["prompts"][promptID]["response_1_vote"].length
     >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
         
         console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
@@ -259,9 +287,7 @@ const submitVote = (id, gameID, promptID, response) => {
         // Don't update voting round yet!!
         // The voting round will get updated when the client sends a doneVoting message.
 
-    }
-    // Check if all votes are in for all prompts.
-    
+    }    
 }
 
 const doneVoting = (gameID) => {
@@ -269,7 +295,7 @@ const doneVoting = (gameID) => {
     gameState[gameID]["votingRound"] += 1;
     console.log("We are done voting.");
     
-    if(gameState[gameID]["votingRound"] >= gameState[gameID]["num_Players"]){
+    if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
         gameState[gameID]["votingFinished"] = true;
         uploadResults(gameID);
     }
@@ -310,12 +336,13 @@ const uploadResults = (gameID) => {
 
 const updateScore = (gameID) => {
     // Update score for the current voting round.
+    const numPlayers = gameState[gameID]["num_Players"];
     let rd = gameState[gameID]["votingRound"];
-    gameState[gameID]["players"][rd]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length * SCORE_MULTIPLIER;
+    gameState[gameID]["players"][rd % numPlayers]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length * SCORE_MULTIPLIER;
 
 
     gameState[gameID]["players"][
-        (rd + 1) % gameState[gameID]["num_Players"]
+        (rd + 1) % numPlayers
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
 }
 
