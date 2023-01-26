@@ -96,7 +96,7 @@ const Voting = (props) => {
 
     useEffect(() => {
         if(props.game && props.game["promptsFinished"]){
-            if(props.game.votingRound < props.game["num_Players"]){
+            if(props.game.votingRound < props.game["numPrompts"]){
                 setCurrentPrompt(props.game["prompts"][props.game.votingRound]["content"]);
                 setCurrentResponse0(props.game["prompts"][props.game.votingRound]["response_0_answer"]);
                 setCurrentResponse1(props.game["prompts"][props.game.votingRound]["response_1_answer"]);
