@@ -1,0 +1,49 @@
+.GameBar-container {
+    padding: var(--s) var(--m);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .GameBar-title,
+  .GameBar-title:visited {
+    color: var(--white);
+    font-size: 25px;
+    opacity: 1;
+    text-decoration: none;
+  }
+  
+  .GameBar-title:hover {
+    color: rgb(227, 215, 215);
+  }
+  
+  .GameBar-linkContainer {
+    margin-left: var(--l);
+  }
+  
+  .GameBar-link,
+  .GameBar-link:visited {
+    color: var(--white);
+    opacity: 0.8;
+    text-decoration: none;
+  }
+  
+  .GameBar-link:hover {
+    opacity: 0.95;
+  }
+  
+  .GameBar-link.GameBar-login {
+    opacity: 1;
+    color: red;
+  }
+  
+  .GameBar-link.GameBar-logout {
+    opacity: 1;
+    color: black;
+  }
+  
+  .GameBar-link + .GameBar-link {
+    margin-left: var(--m);
+  }
+  

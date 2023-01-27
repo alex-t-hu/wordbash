@@ -133,19 +133,23 @@ const deletePlayerFromGame = (playerID, gameID) => {
         console.log("Game " + gameID + " does not exist. (I'm inside deletePlayerFromGame)");
         return;
     }
-    gameState[gameID]["players"].splice(playerID, 1);
+    console.log("blah");
+    console.log(playerID);
+    console.log(IDtoPlayerID(playerID._id, gameID));
+    gameState[gameID]["players"].splice(IDtoPlayerID(playerID._id, gameID), 1);
     gameState[gameID]["num_Players"] -= 1;
 
     // TODO: More graceful handling of player removal?
     console.log("Player " + playerID + " has been removed from game " + gameID);
-    gameState[gameID]["termianted"] = true;
-    console.log("Game " + gameID + " has been terminated.");
+    // gameState[gameID]["terminated"] = true;
+    // console.log("Game " + gameID + " has been terminated.");
 
     // TODO: Currently we ignore this for debug purposes.
     if(gameState[gameID]["num_Players"] <= 0){
         console.log("Game " + gameID + " now has no players. It will be deleted.");
         delete gameState[gameID];
     }
+    console.log(gameState[gameID]);
 }
 
 /** Adds a player to the game state */
@@ -184,6 +188,7 @@ const spawnPlayer = (id, name, gameID) => {
         gameState[gameID]["num_Players"] += 1;
 
     }
+    console.log(gameState[gameID]);
 };
 
 

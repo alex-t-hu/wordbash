@@ -132,7 +132,11 @@ router.post("/despawn", (req, res) => {
     if(req.body.gameID){
       Game.deletePlayerFromGame(req.user, req.body.gameID); // Removes from specific game
       socketManager.gameJustChanged(req.body.gameID);
+    } else {
+      console.log('inside 1');
     }
+  } else {
+    console.log('inside 0');
   }
   res.send({});
 });

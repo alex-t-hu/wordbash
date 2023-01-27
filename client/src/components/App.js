@@ -11,6 +11,7 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import { navigate } from "@reach/router";
 
 
 /**
@@ -52,6 +53,7 @@ const App = () => {
     console.log("Logged out successfully!");
     setUserId(null);
     post("/api/logout");
+    navigate("/");
   };
 
   return (

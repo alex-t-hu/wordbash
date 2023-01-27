@@ -82,7 +82,7 @@ const Landing = (props) => {
           console.log("Game created because ");
           post("/api/spawn", {gameID: randomCode}).then((g) => {
             console.log("Spawned");
-            window.location.href = `/game/${randomCode}/lobby`;
+            navigate(`/game/${randomCode}/lobby`);
           });
         });
       } else {
