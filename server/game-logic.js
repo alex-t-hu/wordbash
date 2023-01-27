@@ -161,24 +161,29 @@ const startGame = (gameID, temperature) => {
     //     return;
     // }
 
-    gameState[gameID]["started"] = true;
+    console.log("Starting game " + gameID);
+
     gameState[gameID]["temperature"] = temperature;
     // Generate Prompts
     // TODO
-
-    let subset = PromptLoader.getPromptSubset(temperature, gameState[gameID]["num_Players"]);
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
-        gameState[gameID]["prompts"][i] = {
-            content: subset[i],
-            response_0_answer: "",
-            response_1_answer: "",
-            response_0_vote_names: [],
-            response_1_vote_names: [],
-            response_0_vote: [],
-            response_1_vote: [],
-            numNoVote: 0
+    PromptLoader.getPromptSubset(temperature, gameState[gameID]["num_Players"]).then((subset) => {
+        console.log("Subset: " + subset);
+        for(let i = 0; i < gameState[gameID]["num_Players"]; i++) {
+            gameState[gameID]["prompts"][i] = {
+                content: subset[i],
+                response_0_answer: "",
+                response_1_answer: "",
+                response_0_vote_names: [],
+                response_1_vote_names: [],
+                response_0_vote: [],
+                response_1_vote: [],
+                numNoVote: 0
+            }
         }
-    }
+        
+        gameState[gameID]["started"] = true;
+        console.log("Starting game for real " + gameID);
+    });
 }
 
 const IDtoPlayerID = (id, gameID) => {

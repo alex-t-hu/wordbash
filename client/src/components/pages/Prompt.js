@@ -193,7 +193,7 @@ const Prompt = (props) => {
     return (
         <div className="Prompt-container bg-gradient-to-r from-indigo-300 via-blue-300 to-indigo-300 p-8">
             <div className="Prompt-prompt mb-4">
-                <h1>{currentPrompt}</h1>
+                <h2>{currentPrompt}</h2>
             </div>
             <div className="Prompt-response">
                 <textarea

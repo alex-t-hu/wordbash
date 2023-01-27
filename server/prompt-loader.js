@@ -1,13 +1,21 @@
 const Prompt = require("./models/prompt");
 
-const getPromptSubset = (temperature, n) => {
-    // Count the number of prompts with the given temperature
-    const numPrompts = Prompt.countDocuments({}).where('temperature').equals(temperature).exec();
+const getPromptSubset = async (temperature, n) => {
+    const prompts = await Prompt.find({temperature: temperature});
+    const numPrompts = prompts.length;
+            
     const nums = new Set();
     while(nums.size !== n) {
         nums.add(Math.floor(Math.random() * numPrompts));
     }
-    return Prompt.find({}).where('temperature').equals(temperature).where('index').in(Array.from(nums)).exec();
+    let result = [];
+
+    for(const i of prompts){
+        if(nums.has(i.index)){
+            result.push(i["prompt"]);
+        }
+    }
+    return result;
 };
 
 
