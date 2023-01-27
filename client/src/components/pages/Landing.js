@@ -6,6 +6,8 @@ import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
 
+import Login from "./Login.js"
+
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
 
@@ -80,14 +82,16 @@ const Landing = (props) => {
 
 
   if (!props.userId) {
-    return <div>Please Log in</div>;
+    return (
+      <Login handleLogin={props.handleLogin}/>
+    );
   }
   return (
     <div>
       <div className="Landing-optionContainer rounded-3xl u-centerPage u-flexColumn bg-gray-50">
         <div className="flex flex-row m-8">
           <input
-          type="text"
+            type="text"
             placeholder="Enter Game Code"
             value={value}
             onChange={handleChange}
@@ -97,7 +101,7 @@ const Landing = (props) => {
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick = {handleSubmitJoin}>
             {/* TODO: This stuff gives errors for some reason? */}
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
             </svg>
           </button>

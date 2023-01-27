@@ -22,7 +22,7 @@ const Home = (props) => {
           userId={props.userId}
         />
         <Router>
-          <Landing path="/" userId={props.userId} gameID ={props.gameID} setGameID = {props.setGameID}/>
+          <Landing path="/" userId={props.userId} gameID ={props.gameID} setGameID = {props.setGameID} handleLogin = {props.handleLogin}/>
           <Profile path="/profile/:userId" />
         </Router>
       </div>

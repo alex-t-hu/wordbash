@@ -252,8 +252,8 @@ const Voting = (props) => {
                 handleVote1 = {handleVote1}
             />
             </div>
-                <div class="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
-                <div class="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
+                <div className="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+                <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
             </div>
         </div>
         

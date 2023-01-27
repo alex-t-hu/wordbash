@@ -1,15 +1,14 @@
-.Landing-title{
+.Login-title{
     font-size: 40px;
     padding: 100px;
     color: var(--primary)
 }
 
-.Landing-optionContainer{
+.Login-optionContainer{
     position: absolute;
-    width: 300px;
 }
 
-.Landing-optionButton{
+.Login-optionButton{
     background-color: var(--secondary--dim);
     color: var(--black);
 
@@ -28,13 +27,13 @@
     flex-grow: 1;
 }
 
-.Landing-optionButton:hover {
+.Login-optionButton:hover {
     background-color: var(--secondary);
     color: white;
     cursor: pointer;
 }
 
-#Landing-joinGame {
+#Login-joinGame {
     /* color: var(--primary);*/
     flex-grow: 1;
 }
