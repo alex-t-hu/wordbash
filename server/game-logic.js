@@ -35,11 +35,11 @@ const gameState = {}
 
             votingRound: a number
             prompts: {
-                id (a number from 0 to N-1):{
+                id (a number from 0 to numPrompts-1):{
                     timestamp for round start (TODO)
 
                     content
-                    // players id and id +1 will answer this, everyone else will vote.
+                    // players id%N and (id +1)%N will answer this, everyone else will vote.
                     
                     Response 0: a string (corresponds to id)
                     Response 1: a string (corresponds to id + 1)

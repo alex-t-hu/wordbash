@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserList from "../modules/UserList.js";
+import UserList from "../modules/Userlist/UserList.js";
 import TemperatureSlider from "../modules/TemperatureSlider.js";
 import RoundSlider from "../modules/RoundSlider.js";
 import { socket } from "../../client-socket.js";
@@ -162,13 +162,17 @@ const Lobby = (props) => {
           <div className="w-full">
             <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
           </div>
+          
+          <div className="w-full">
+            <RoundSlider numRounds = {numRounds} setNumRounds = {setNumRounds} numPlayers = {props.game.num_Players}/>
+          </div>
         </div>
 
       </div>
 
       <div className="w-full mt-4">
         <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-        onClick = {(props.game.num_Players > 1) ? handleSubmit: null}>
+        onClick = {(props.game.num_Players > 2) ? handleSubmit: null}>
           START GAME
         </button>
       </div>

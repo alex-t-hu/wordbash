@@ -6,7 +6,8 @@ import React, { useState, useEffect } from "react";
  * @returns 
  */
 const RoundSlider = (props) => {
-    // const [mouseOverTemperature, setMouseOverTemperature] = useState(false);
+    const [mouseOver, setMouseOver] = useState(false);
+
     // 45 seconds for one prompt,
     // 45 seconds for voting.
     // 20 seconds showing results (This is per prompt pair. Right?)
@@ -33,22 +34,35 @@ const RoundSlider = (props) => {
         }
     };
 
+    const onMouseEnter = (event) => {
+        setMouseOver(true);
+    };
+    
+    const onMouseLeave = (event) => {
+        setMouseOver(false);
+    };
+
+    
+
     return (
         <div>
-        <div className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md">
+            <div 
+                onMouseEnter = {onMouseEnter}
+                onMouseLeave = {onMouseLeave}
+                className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md">
 
-        <h1 className="">Number of Rounds:</h1>
+                    <h1 className="">Number of Rounds:</h1>
 
-        <input 
-        className={`slider`}
-        id="myRange"
-        onChange={onChange}
-        // onMouseUp={onMouseUp} // only if such effect is desired
+                    <input 
+                    className={`slider`}
+                    id="myRange"
+                    onChange={onChange}
+                    // onMouseUp={onMouseUp} // only if such effect is desired
 
-        type="range" min="1" max="20" value={props.numRounds}/>
-        <h1 className="">{props.numRounds} rounds</h1>
-        <h1 className="">{recommendedRounds[props.numPlayers]}</h1>
-        </div>
+                    type="range" min="1" max="5" value={props.numRounds}/>
+                    <h1 className="">{props.numRounds} rounds</h1>
+                    {mouseOver && <h1 className="">{recommendedRounds[props.numPlayers]}</h1>}
+            </div>
         </div>
     );
 }
