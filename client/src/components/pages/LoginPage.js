@@ -13,7 +13,7 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
 /**
  * Define the "App" component
  */
-const Login = (props) => {
+const LoginPage = (props) => {
 
   return (
     <div className="text-center items-center flex flex-col">
@@ -50,4 +50,5 @@ const Login = (props) => {
     </div>
   );
 };
-export default Login;
+
+export default LoginPage;

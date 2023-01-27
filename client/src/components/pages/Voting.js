@@ -69,8 +69,8 @@ const Voting = (props) => {
             // console.log("data", data);
             if (props.setGame) {
               props.setGame(data);
-              console.log("l;kasdjf;lkasdf", data['promptsFinished']);
-              setAllFinishedAnswering(data['promptsFinished']);
+              console.log("l;kasdjf;lkasdf", data['votingFinished']);
+              setAllVoted(data['votingFinished']);
             };
           });
         }
@@ -84,8 +84,8 @@ const Voting = (props) => {
                   // console.log("data", data);
                   if (props.setGame) {
                     props.setGame(data);
-                    console.log("blah", data['promptsFinished']);
-              setAllFinishedAnswering(data['promptsFinished']);
+                    console.log("blah", data['votingFinished']);
+                    setAllVoted(data['votingFinished']);
                   };
                 });
             }};

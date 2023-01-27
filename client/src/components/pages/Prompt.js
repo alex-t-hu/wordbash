@@ -21,6 +21,13 @@ const Prompt = (props) => {
     const [minutes, setMinutes] = useState(0);
     const [stringSeconds, setStringSeconds] = useState("20");
     const [stringMinutes, setStringMinutes] = useState("00");
+
+    const promptNumbertoIdx = (k, playerIdx) => {
+        const N = props.game["num_Players"];
+        const iteration = Math.floor(k / 2);
+        return (playerIdx -(k % 2) +N)% N + iteration * N;
+    };
+
   /**
    * This effect is run every time any state variable changes.
    */
@@ -32,7 +39,7 @@ const Prompt = (props) => {
         // console.log("data", data);
         if (props.setGame) {
           props.setGame(data);
-          console.log("l;kasdjf;lkasdf", data['promptsFinished']);
+        //   console.log("l;kasdjf;lkasdf", data['promptsFinished']);
           setAllFinishedAnswering(data['promptsFinished']);
         };
       });
@@ -45,14 +52,6 @@ const Prompt = (props) => {
             if(props.userId && props.gameID){
                 props.setGame(stuff.game);
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
-            // get("/api/game", {gameID: props.gameID}).then((data) => {
-            //   // console.log("data", data);
-            //   if (props.setGame) {
-            //     props.setGame(data);
-            //     console.log("blah", data['promptsFinished']);
-            //     setAllFinishedAnswering(data['promptsFinished']);
-            //   };
-            // });
         }};
         socket.on("gameUpdate", callback);
         return () => {
@@ -126,7 +125,7 @@ const Prompt = (props) => {
                 break;
             }
         }
-        let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"]
+        let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
         
         post("/api/submitResponse", {
             gameID: props.gameID,
@@ -140,23 +139,23 @@ const Prompt = (props) => {
 
     useEffect(() => {
         if(props.game && props.game["started"]){
+            let N = props.game["num_Players"];
             let playerIdx = -1;
-            for(let i = 0; i < props.game["num_Players"]; i++){
+            for(let i = 0; i < N; i++){
                 if(props.game["players"][i]['id'] === props.userId){
                     playerIdx = i;
                     break;
                 }
             }
-            let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"];
-            // console.log("promptIdx", promptIdx);
-            // console.log("promptNumber", promptNumber);
-            // console.log("props.game", props.game);
-            if (promptNumber === 0) {
-                setCurrentPrompt(props.game["prompts"][promptIdx]["content"]);
-            } else if (promptNumber === 1) {
-                setCurrentPrompt(
-                    props.game["prompts"][promptIdx]["content"]
-                );
+            let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
+
+            if (promptIdx < props.game["numPrompts"]) {
+                // console.log("promptNumber", promptNumber);
+                // console.log("playerIdx", playerIdx);
+                // console.log("promptNumbertoIdx", promptNumbertoIdx(promptNumber, playerIdx));
+                setCurrentPrompt(props.game["prompts"][
+                    promptNumbertoIdx(promptNumber, playerIdx)
+                ]["content"]);
             } else {
                 setCurrentPrompt("");
                 setFinishedAnswering(true);
@@ -209,7 +208,8 @@ const Prompt = (props) => {
                 type="submit"
                 value="Submit"
                 onClick = {handleSubmit}>
-                    {promptNumber == 1 ? "Submit" : "Next"}
+                    Submit
+                    {/* {promptNumber == 1 ? "Submit" : "Next"} */}
                 </button>
             </div>
             <div className="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">

@@ -43,13 +43,11 @@ const RoundSlider = (props) => {
         className={`slider`}
         id="myRange"
         onChange={onChange}
-        onMouseEnter = {onMouseEnter}
-        onMouseLeave = {onMouseLeave}
         // onMouseUp={onMouseUp} // only if such effect is desired
 
         type="range" min="1" max="20" value={props.numRounds}/>
         <h1 className="">{props.numRounds} rounds</h1>
-        <h1 className="">{recommendedRounds[props.numRounds]}</h1>
+        <h1 className="">{recommendedRounds[props.numPlayers]}</h1>
         </div>
         </div>
     );

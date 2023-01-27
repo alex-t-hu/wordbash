@@ -195,13 +195,15 @@ const startGame = (gameID, temperature, numRounds) => {
     // }
 
     console.log("Starting game " + gameID);
+    gameState[gameID]["numRounds"] = numRounds;
+    gameState[gameID]["numPrompts"] = gameState[gameID]["num_Players"] * gameState[gameID]["numRounds"];
 
     gameState[gameID]["temperature"] = temperature;
     // Generate Prompts
     // TODO
-    PromptLoader.getPromptSubset(temperature, gameState[gameID]["numRounds"]).then((subset) => {
+    PromptLoader.getPromptSubset(temperature, gameState[gameID]["numPrompts"]).then((subset) => {
         console.log("Subset: " + subset);
-        for(let i = 0; i < gameState[gameID]["numRounds"]; i++) {
+        for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
             gameState[gameID]["prompts"][i] = {
                 content: subset[i],
                 response_0_answer: "",

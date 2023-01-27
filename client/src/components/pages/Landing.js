@@ -6,7 +6,7 @@ import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
 
-import Login from "./Login.js"
+import LoginPage from "./LoginPage.js"
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
@@ -83,7 +83,7 @@ const Landing = (props) => {
 
   if (!props.userId) {
     return (
-      <Login handleLogin={props.handleLogin}/>
+      <LoginPage handleLogin={props.handleLogin}/>
     );
   }
   return (
