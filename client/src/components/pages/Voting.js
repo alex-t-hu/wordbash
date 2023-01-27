@@ -70,7 +70,7 @@ const Voting = (props) => {
             if (props.setGame) {
               props.setGame(data);
               console.log("l;kasdjf;lkasdf", data['votingFinished']);
-              setAllVoted(data['votingFinished']);
+              setAllVoted(data['votingResults']);
             };
           });
         }
@@ -85,7 +85,7 @@ const Voting = (props) => {
                   if (props.setGame) {
                     props.setGame(data);
                     console.log("blah", data['votingFinished']);
-                    setAllVoted(data['votingFinished']);
+                    setAllVoted(data['votingResults']); 
                   };
                 });
             }};
@@ -180,7 +180,7 @@ const Voting = (props) => {
      */
 
     useEffect(() => {
-        if(props.game.votingFinished) {
+        if(props.game.votingFinished ) {
             navigate(`/game/${props.gameID}/results`);
         }
     }, [props.game]);
