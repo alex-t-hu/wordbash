@@ -21,11 +21,7 @@ const Voting = (props) => {
     const [promptNumber, setPromptNumber] = useState(-1); // 0, 1, or 2 (done)
     const [voted, setVoted] = useState(false); // true if the user has voted on the CURRENT prompt
     const [allVoted, setAllVoted] = useState(false); // true if the user has voted on the CURRENT prompt
-    const [startTime, setStartTime] = useState(0);
-    const [seconds, setSeconds] = useState(20);
-    const [minutes, setMinutes] = useState(0);
-    const [stringSeconds, setStringSeconds] = useState("20");
-    const [stringMinutes, setStringMinutes] = useState("00");
+    
 
     /**
      * Here's the voting loop:
@@ -111,48 +107,7 @@ const Voting = (props) => {
             }
         }
     }, [promptNumber, props.game]);
-    const padNum = (num) => {
-        let zero = '00';
-        return (zero + num).slice(-2);
-    };
-    const handleVoteTimeout = () => {
-        post("/api/submitVote", {
-            gameID: props.gameID,
-            promptID: promptNumber, 
-            timedOut: true,
-            response: 0,
-        }).then(() => {
-            setVoted(true);
-            setMinutes(0);
-            setSeconds(20);
-        }); 
-    };
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log("BLAHGAH!");
-            if (seconds === 0 && minutes === 0) {
-                handleVoteTimeout();
-            } else {
-                if (minutes > 0 && seconds > 0) {
-                    setSeconds(seconds-1);
-
-                } else if (minutes > 0 && seconds === 0) {
-                    setMinutes(minutes-1);
-                    setSeconds(59);
-
-
-                } else {
-                    setSeconds(seconds-1);
-
-                }
-                setStringMinutes( padNum(minutes) );
-                setStringSeconds( padNum(seconds));
-            }
-        },1000);
-        return () => {
-            clearInterval(interval);
-        };
-    });
+    
 
     /**
      * Update promptNumber if the voting round has changed
@@ -212,7 +167,16 @@ const Voting = (props) => {
             setVoted(true)
         );
     };
-    
+    const handleVoteTimeout = () => {
+        post("/api/submitVote", {
+            gameID: props.gameID,
+            promptID: promptNumber, 
+            timedOut: true,
+            response: 0,
+        }).then(() => {
+            setVoted(true);
+        }); 
+    };
     const handleDoneVoting = (event) => {
         console.log("Hello");
         event.preventDefault();
@@ -243,18 +207,14 @@ const Voting = (props) => {
     }
     return (
         <div>
-            <div>
             <VotingSelection
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}
                 currentResponse1 = {currentResponse1}
                 handleVote0 = {handleVote0}
                 handleVote1 = {handleVote1}
+                handleVoteTimeout = {handleVoteTimeout}
             />
-            </div>
-                <div className="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
-                <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
-            </div>
         </div>
         
         );
