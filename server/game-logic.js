@@ -219,23 +219,9 @@ const startGame = (gameID, temperature, numRounds) => {
     });
 }
 
-const IDtoPlayerID = (id, gameID) => {
-    for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
-        if(gameState[gameID]["players"][i]['id'] === id){
-            return i;
-        }
-    }
-    return -1;
-}
-
-const IDtoPlayerName = (id, gameID) => {
-    return gameState[gameID]["players"][IDtoPlayerID(id, gameID)]['name'];
-}
-
-const playerIDtoPlayerName = (id, gameID) => {
-    return gameState[gameID]["players"][id]['name'];
-}
-
+/*
+-------------------------------- Game Logic --------------------------------
+*/
 
 const submitResponse = (id, gameID, promptID, timedOut, response) => {
     console.log("just submitted response");
