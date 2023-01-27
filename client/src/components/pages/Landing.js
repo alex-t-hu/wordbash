@@ -16,6 +16,7 @@ import { navigate } from "@reach/router";
 const Landing = (props) => {
 
   const [value, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // called whenever the user types in the new post input box
   const handleChange = (event) => {
@@ -36,23 +37,35 @@ const Landing = (props) => {
 
   // called when the user hits "Submit" for a new post
   const handleSubmitJoin = (event) => {
+    
     event.preventDefault();
 
-    // Spawn then redirect to lobby.
-    get("/api/gameExists", {gameID: value}).then((game) => {
-      console.log("Game is: ", game.gameExists);
-      if(!game.gameExists){
-        console.log("Game does not exist (inside Landing.js)");
-      }else{
-        console.log("Game exists (inside Landing.js)");
-        props.setGameID(value);
-        post("/api/spawn", {gameID: value}).then((g) => {
-          console.log("Spawned");
-          navigate(`/game/${value}/lobby`);
-        });
-      }
-    });
+    if (value.length != 4) {
+      setErrorMessage("Game code should be 4 letters.");
+    } else {
+      // Spawn then redirect to lobby.
+      get("/api/gameExists", {gameID: value}).then((game) => {
+        console.log("Game is: ", game.gameExists);
+        if(!game.gameExists){
+          console.log("Game does not exist (inside Landing.js)");
+          setErrorMessage("Enter a valid game code.")
+        }else{
+          console.log("Game exists (inside Landing.js)");
+          props.setGameID(value);
+          post("/api/spawn", {gameID: value}).then((g) => {
+            console.log("Spawned");
+            navigate(`/game/${value}/lobby`);
+          });
+        }
+      });
+    }
   };
+
+  const handleCloseError = (event) => {
+    event.preventDefault();
+
+    setErrorMessage("");
+  }
 
   const handleSubmitCreate = (event) => {
     event.preventDefault();
@@ -87,8 +100,17 @@ const Landing = (props) => {
     );
   }
   return (
-    <div>
-      <div className="Landing-optionContainer rounded-3xl u-centerPage u-flexColumn bg-gray-50">
+    <div className="flex h-screen justify-center ">
+      <div className="Landing-optionContainer rounded-3xl u-flexColumn bg-gray-50">
+        {errorMessage && 
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{errorMessage}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+              <svg class="fill-current h-6 w-6 text-red-500" onClick={handleCloseError} role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+          </div>
+        }
+        
         <div className="flex flex-row m-8">
           <input
             type="text"
