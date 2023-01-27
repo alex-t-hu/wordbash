@@ -142,7 +142,7 @@ router.post("/submitResponse", (req, res) => {
   // playerID, gameID, promptID, response
   if (req.user) {
     if(req.body.gameID){
-      Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.response);
+      Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);
       socketManager.gameJustChanged(req.body.gameID);
     }
   }
@@ -154,7 +154,7 @@ router.post("/submitVote", (req, res) => {
   // playerID, gameID, promptID, response
   if (req.user) {
     if(req.body.gameID){
-      Game.submitVote(req.user._id, req.body.gameID, req.body.promptID, req.body.response);
+      Game.submitVote(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);
       socketManager.gameJustChanged(req.body.gameID);
     }
   }

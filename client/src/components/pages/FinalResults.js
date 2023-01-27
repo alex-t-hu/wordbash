@@ -6,6 +6,8 @@ import { useState } from "react";
 import SortedPlayerList from "../modules/SortedPlayerList";
 import { get, post } from "../../utilities";
 
+import { navigate } from "@reach/router";
+
 
 
 const FinalResults = (props) => {

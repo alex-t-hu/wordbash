@@ -108,15 +108,15 @@ server.listen(port, () => {
 
 // // Temporary code to test the server
 
-// const Prompt = require("./models/prompt");
-// const PromptLoader = require("./prompt-loader");
+const Prompt = require("./models/prompt");
+const PromptLoader = require("./prompt-loader");
 
 
-// const logAllPrompts = () => {
-//   Prompt.find({}, (err, prompts) => {
-//       console.log(prompts);
-//   });
-// };
+const logAllPrompts = () => {
+  Prompt.find({}, (err, prompts) => {
+      console.log(prompts);
+  });
+};
 
 // const deleteAllPrompts = () => {
 //   Prompt.deleteMany({}, (err) => {
@@ -129,9 +129,9 @@ server.listen(port, () => {
 // };
 
 
-/**
- * This code is used to populate the database with temporary prompts.
- */
+// /**
+//  * This code is used to populate the database with temporary prompts.
+//  */
 // const addTmpPrompts = () => {
 //   deleteAllPrompts();
 //   for(let i = 5; i <= 21; i++) {
@@ -168,3 +168,9 @@ server.listen(port, () => {
 // addTmpPrompts();
 
 // logAllPrompts();
+
+// PromptLoader.getPromptSubset(10, 5).then(
+//   (result) => {
+//     console.log("Badonk" + result);
+//   }
+// )
