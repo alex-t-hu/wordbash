@@ -39,16 +39,16 @@ const Landing = (props) => {
     event.preventDefault();
 
     // Spawn then redirect to lobby.
-    get("/api/gameExists", {gameID: value}).then((game) => {
+    get("/api/gameExists", {gameID: value.toUpperCase()}).then((game) => {
       console.log("Game is: ", game.gameExists);
       if(!game.gameExists){
         console.log("Game does not exist (inside Landing.js)");
       }else{
         console.log("Game exists (inside Landing.js)");
-        props.setGameID(value);
-        post("/api/spawn", {gameID: value}).then((g) => {
+        props.setGameID(value.toUpperCase());
+        post("/api/spawn", {gameID: value.toUpperCase()}).then((g) => {
           console.log("Spawned");
-          navigate(`/game/${value}/lobby`);
+          navigate(`/game/${value.toUpperCase()}/lobby`);
         });
       }
     });
