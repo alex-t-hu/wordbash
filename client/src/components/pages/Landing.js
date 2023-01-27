@@ -6,7 +6,7 @@ import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
 
-import Login from "./Login.js"
+import LoginPage from "./LoginPage.js"
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
@@ -44,17 +44,17 @@ const Landing = (props) => {
       setErrorMessage("Game code should be 4 letters.");
     } else {
       // Spawn then redirect to lobby.
-      get("/api/gameExists", {gameID: value}).then((game) => {
+      get("/api/gameExists", {gameID: value.toUpperCase()}).then((game) => {
         console.log("Game is: ", game.gameExists);
         if(!game.gameExists){
           console.log("Game does not exist (inside Landing.js)");
           setErrorMessage("Enter a valid game code.")
         }else{
           console.log("Game exists (inside Landing.js)");
-          props.setGameID(value);
-          post("/api/spawn", {gameID: value}).then((g) => {
+          props.setGameID(value.toUpperCase());
+          post("/api/spawn", {gameID: value.toUpperCase()}).then((g) => {
             console.log("Spawned");
-            navigate(`/game/${value}/lobby`);
+            navigate(`/game/${value.toUpperCase()}/lobby`);
           });
         }
       });
@@ -96,7 +96,7 @@ const Landing = (props) => {
 
   if (!props.userId) {
     return (
-      <Login handleLogin={props.handleLogin}/>
+      <LoginPage handleLogin={props.handleLogin}/>
     );
   }
   return (

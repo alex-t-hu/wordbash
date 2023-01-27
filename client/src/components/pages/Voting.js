@@ -69,8 +69,8 @@ const Voting = (props) => {
             // console.log("data", data);
             if (props.setGame) {
               props.setGame(data);
-              console.log("l;kasdjf;lkasdf", data['promptsFinished']);
-              setAllFinishedAnswering(data['promptsFinished']);
+              console.log("l;kasdjf;lkasdf", data['votingFinished']);
+              setAllVoted(data['votingFinished']);
             };
           });
         }
@@ -84,8 +84,8 @@ const Voting = (props) => {
                   // console.log("data", data);
                   if (props.setGame) {
                     props.setGame(data);
-                    console.log("blah", data['promptsFinished']);
-              setAllFinishedAnswering(data['promptsFinished']);
+                    console.log("blah", data['votingFinished']);
+                    setAllVoted(data['votingFinished']);
                   };
                 });
             }};
@@ -100,7 +100,7 @@ const Voting = (props) => {
 
     useEffect(() => {
         if(props.game && props.game["promptsFinished"]){
-            if(props.game.votingRound < props.game["num_Players"]){
+            if(props.game.votingRound < props.game["numPrompts"]){
                 setCurrentPrompt(props.game["prompts"][props.game.votingRound]["content"]);
                 setCurrentResponse0(props.game["prompts"][props.game.votingRound]["response_0_answer"]);
                 setCurrentResponse1(props.game["prompts"][props.game.votingRound]["response_1_answer"]);

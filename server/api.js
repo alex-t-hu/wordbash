@@ -95,8 +95,8 @@ router.post("/createGame", (req, res) => {
 
 router.post("/startGame", (req, res) => {
   if (req.user) {
-    if(req.body.gameID && req.body.temperature){
-      Game.startGame(req.body.gameID, req.body.temperature);
+    if(req.body.gameID && req.body.temperature && req.body.numRounds){
+      Game.startGame(req.body.gameID, req.body.temperature, req.body.numRounds);
       console.log("started game");
       console.log(Game.gameState);
       socketManager.gameJustChanged(req.body.gameID);

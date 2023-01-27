@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../modules/UserList.js";
 import TemperatureSlider from "../modules/TemperatureSlider.js";
+import RoundSlider from "../modules/RoundSlider.js";
 import { socket } from "../../client-socket.js";
 import { get, post } from "../../utilities";
 import {navigate} from "@reach/router";
@@ -11,6 +12,7 @@ const Lobby = (props) => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [user, setUser] = useState(); // My name
   const [temperature, setTemperature] = useState(15);
+  const [numRounds, setNumRounds] = useState(3);
 
   /**
    * This effect is run when the component mounts.
@@ -94,7 +96,11 @@ const Lobby = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    post("/api/startGame", {gameID: props.gameID, temperature: temperature}).then((g) => {
+    post("/api/startGame", {
+      gameID: props.gameID,
+      temperature: temperature,
+      numRounds: numRounds,
+    }).then((g) => {
       console.log("Game created ");
     });
   };
