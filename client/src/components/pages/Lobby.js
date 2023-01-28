@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserList from "../modules/Userlist/UserList.js";
+import UserList from "../modules/UserList/UserList.js";
 import TemperatureSlider from "../modules/TemperatureSlider.js";
 import RoundSlider from "../modules/RoundSlider.js";
 import { socket } from "../../client-socket.js";
