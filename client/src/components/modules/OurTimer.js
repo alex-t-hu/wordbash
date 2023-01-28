@@ -32,7 +32,7 @@ const OurTimer = (props) => {
     });
     return (
         stringSeconds ? 
-        <div className="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+        <div className="mx-1 p-2 text-9xl text-green-400 flex justify-center">
             <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
         </div>
         : <div></div>

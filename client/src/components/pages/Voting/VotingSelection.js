@@ -8,23 +8,18 @@ const VotingSelection = (props) => {
 
     
     return (
-        <div>
-            <div className="Prompt-prompt">
+        <div className="relative flex flex-col h-screen justify-between bg-slate-100 py-5">
+            <div className="flex justify-center font-mono text-7xl text-center py-10 px-20">
                 <h1>{props.currentPrompt}</h1>
             </div>
-            <div className="Prompt-prompt">
-                <h1>{props.currentResponse0}</h1>
+            <div className="flex flex-row justify-between px-20">
+                <button onClick = {props.handleVote0} className="font-mono text-5xl">
+                    {props.currentResponse0}
+                </button>
+                <button onClick = {props.handleVote1} className="font-mono text-5xl">
+                    {props.currentResponse1}
+                </button>
             </div>
-            <div className="Prompt-prompt">
-                <h1>{props.currentResponse1}</h1>
-            </div>
-
-            <button onClick = {props.handleVote0}>
-                Vote 0      
-            </button>
-            <button onClick = {props.handleVote1}>
-                Vote 1
-            </button>
             <OurTimer seconds={20} handleTimeout={props.handleVoteTimeout}/>
         </div>
     );
