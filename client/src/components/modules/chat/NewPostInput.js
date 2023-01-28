@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import "./NewPostInput.css";
-import { post } from "../../utilities";
+
+import { post } from "../../../utilities";
 
 /**
  * New Post is a parent component for all input components

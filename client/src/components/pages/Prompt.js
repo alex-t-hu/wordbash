@@ -70,7 +70,7 @@ const Prompt = (props) => {
                 break;
             }
         }
-        let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"]
+        let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
         
         post("/api/submitResponse", {
             gameID: props.gameID,

@@ -20,6 +20,7 @@ const gameJustChanged = (gameID) => {
     });
   }
 };
+
 const addUser = (user, socket) => {
   const oldSocket = userToSocketMap[user._id];
 
@@ -33,6 +34,20 @@ const addUser = (user, socket) => {
   socketToUserMap[socket.id] = user;
   io.emit("activeUsers", { activeUsers: getAllConnectedUsers() });
 };
+
+
+
+const editUser = (user) => {
+  const oldSocket = userToSocketMap[user._id];
+  console.log("editUser", user);
+  if (oldSocket) {
+    console.log("oldSocket");
+    socketToUserMap[oldSocket.id] = user;
+    io.emit("activeUsers", { activeUsers: getAllConnectedUsers() });
+  }
+};
+
+
 
 const removeUser = (user, socket) => {
   if (user) {
@@ -57,6 +72,7 @@ module.exports = {
 
   addUser: addUser,
   removeUser: removeUser,
+  editUser: editUser,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
