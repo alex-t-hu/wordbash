@@ -22,9 +22,9 @@ const App = () => {
   const [gameID, setGameID] = useState("");
   const [game, setGame] = useState({});
   
-  // useEffect(() => {
-  //   console.log(`Game ID set in App! Game ID = ${gameID}`);
-  // }, [gameID]);
+  useEffect(() => {
+    console.log(`Game ID set in App! Game ID = ${gameID}`);
+  }, [gameID]);
   
   // useEffect(() => {
   //   console.log(`User ID set in App! User ID = ${userId}`);
