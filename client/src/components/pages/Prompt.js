@@ -74,6 +74,7 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
+        
         post("/api/submitResponse", {
             gameID: props.gameID,
             promptID: promptIdx,

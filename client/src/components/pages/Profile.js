@@ -33,23 +33,13 @@ const Profile = (props) => {
       post("/api/updateUserName", {
         name: value
       });
-      // .then( () => {
-      //   get(`/api/user`, { userid: props.userId }).then(
-      //       (userObj) => {
-      //         setUser(userObj);
-
-      //       }
-      //     );
-      //   console.log("Changed name to ", value);
-      // });
-
       setEditing(false);
       
   }
 
 
 
-  if (!value) {
+  if (!user) {
     return (<div> Loading! </div>);
   }
   return (
