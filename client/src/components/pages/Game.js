@@ -20,7 +20,7 @@ const Game = (props) => {
   console.log(props.gameID);
   return (
     <>
-      <div className="h-screen bg-gray-50">
+      <div className="h-screen bg-blue-200">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
         <Router>
             <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>

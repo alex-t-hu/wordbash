@@ -1,0 +1,8 @@
+.floatingWord {
+    position: absolute;
+    z-index: 2;
+    color: yellow;
+    font-size: 30px;
+    width: 500px;
+    height: 500px;
+}

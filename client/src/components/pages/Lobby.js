@@ -137,7 +137,7 @@ const Lobby = (props) => {
   return (
     <div className="flex flex-col items-center mx-[15%] my-[3%] bg-white">
       {/*Player list and game code*/}
-      <div className="w-full grid grid-cols-2 divide-x space-x-4 justify-center">
+      <div className="w-full flex flex-row divide-x space-x-4 justify-center">
         <div className="w-full bg-gray-50 flex flex-col">
           <div className="text-center bg-teal-500 text-white py-2">
             <h3>Players ({props.game.num_Players})</h3>
@@ -154,11 +154,7 @@ const Lobby = (props) => {
         <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-md">
           {/*<h1 className="">Lobby userID = {props.userId}</h1>*/}
           {/*<h1 className=""> user = {user.name}</h1>*/}
-          <h1 className="w-full text-center bg-teal-500 text-white py-2">Game Info</h1>
-          <div className="flex flex-row space-x-4 justify-center align-center items-center">
-            <h1>Game code:</h1>
-            <input className="text-3xl text-center border border-gray-400 rounded" type="text" value={props.gameID} readOnly></input>
-          </div>
+          <h1 className="w-full text-center bg-teal-500 text-white py-2">Game Settings</h1>
           <div className="w-full">
             <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
           </div>

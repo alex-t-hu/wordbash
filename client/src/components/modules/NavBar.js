@@ -17,7 +17,7 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
  */
 const NavBar = (props) => {
   return (
-    <nav className="NavBar-container bg-teal-500">
+    <nav className="NavBar-container bg-transparent ">
       <div className="">
         <Link to="/" className="NavBar-title">
           <span id="NavBar-title-word">word</span>

@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Landing.css";
 import './Skeleton.css';
 import "../../utilities.css"
 import { Link } from "@reach/router";
 import { useState } from "react";
+import ManyWords from "../modules/ManyWords.js";
 
 import LoginPage from "./LoginPage.js"
+import Background from "../modules/Background.js"
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
-
-
 
 const Landing = (props) => {
 
   const [value, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setValue("");
+  }, []);
 
   // called whenever the user types in the new post input box
   const handleChange = (event) => {
@@ -90,9 +94,9 @@ const Landing = (props) => {
         handleSubmitCreate(event);
       }
     });
-  };
-  
+  }; 
 
+  //bg-[url('../../../../bubbles.gif')]
 
   if (!props.userId) {
     return (
@@ -100,8 +104,8 @@ const Landing = (props) => {
     );
   }
   return (
-    <div className="flex h-screen justify-center ">
-      <div className="Landing-optionContainer rounded-3xl u-flexColumn bg-gray-50">
+    <div className="flex w-full h-screen justify-center align-center">
+      <div className="Landing-optionContainer drop-shadow-2xl rounded-3xl u-flexColumn bg-gray-50">
         {errorMessage && 
           <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <span class="block sm:inline">{errorMessage}</span>
@@ -140,6 +144,8 @@ const Landing = (props) => {
           </button>
         </div>
       </div>
+      {/* <ManyWords /> */}
+      <Background className="-z-20"/>
     </div>
   );
 };

@@ -49,7 +49,7 @@ const TemperatureSlider = (props) => {
 
     return (
         <div>
-        <div className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md">
+        <div className="bg-gray-200 p-4 flex flex-col items-center rounded-md">
 
         <h1 className="">Temperature:</h1>
 
