@@ -119,7 +119,6 @@ const Landing = (props) => {
             onChange={handleChange}
             className="w-full border border-gray-400 rounded px-4 py-2"
           />
-          
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick = {handleSubmitJoin}>
             {/* TODO: This stuff gives errors for some reason? */}
@@ -134,7 +133,8 @@ const Landing = (props) => {
         </div>
 
         <div className="m-8">
-          <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-130 duration-300 "
+
           onClick = {handleSubmitCreate}>
             Create Game
           </button>
