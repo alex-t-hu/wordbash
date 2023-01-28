@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "./SingleUser.css";
+import "./SingleScoreUser.css";
 
 /**
  * Component to render an online user
@@ -11,28 +11,25 @@ import "./SingleUser.css";
  * @param {UserObject} user
  * @param {boolean} active
  */
-const SingleUser = (props) => {
+const SingleScoreUser = (props) => {
   // console.log(props.user);
   // console.log(props.index);
   return (props.index != 0) ? (
     <div
-      className={`SingleUser-container u-pointer`}
-      // onClick={() => {
-      //   props.setActiveUser(props.user);
-      // }}
+      className={`SingleScoreUser-container u-pointer`}
     >
       {props.user}
+      {props.score}
     </div>
   ) : (
     <div
-      className={`SingleUser-container u-pointer`}
-      // onClick={() => {
-      //   props.setActiveUser(props.user);
-      // }}
+      className={`SingleScoreUser-container u-pointer`}
     >
       {props.user} (host)
+      
+      {props.score}
     </div>
   );
 }
 
-export default SingleUser;
+export default SingleScoreUser;

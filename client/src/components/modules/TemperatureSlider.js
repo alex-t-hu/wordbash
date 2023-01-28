@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 const TemperatureSlider = (props) => {
 
 
-    const [mouseOverTemperature, setMouseOverTemperature] = useState(false);
+    const [mouseOver, setMouseOver] = useState(false);
 
 
     const temperatureOptions = [
@@ -38,37 +38,37 @@ const TemperatureSlider = (props) => {
         }
     };
 
-    // I'm not sure if this is the best way to do this, but it works
     const onMouseEnter = (event) => {
-        setMouseOverTemperature(true);
+        setMouseOver(true);
     };
     
     const onMouseLeave = (event) => {
-        setMouseOverTemperature(false);
+        setMouseOver(false);
     };
 
     return (
         <div>
-        <div className="bg-gray-200 p-4 flex flex-col items-center rounded-md">
+            <div 
+                onMouseEnter = {onMouseEnter}
+                onMouseLeave = {onMouseLeave}
+                className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md"
+                >
+                <h1 className="">Temperature:</h1>
 
-        <h1 className="">Temperature:</h1>
+                <input 
+                className={`slider`}
+                id="myRange"
+                onChange={onChange}
+                // onMouseUp={onMouseUp} // only if such effect is desired
 
-        <input 
-        className={`slider`}
-        id="myRange"
-        onChange={onChange}
-        onMouseEnter = {onMouseEnter}
-        onMouseLeave = {onMouseLeave}
-        // onMouseUp={onMouseUp} // only if such effect is desired
-
-        type="range" min="5" max="20" value={props.temperature}/>
-        <h1 className="">{temperatureOptions[props.temperature]}</h1>
-        
-        </div>
-        {mouseOverTemperature && <div>
-            The temperature of the game determines how much randomness the language model will use.
-            Much like LSD, increasing the temperature will increase the model's creativity, but also its incoherence.
-        </div>}
+                type="range" min="5" max="20" value={props.temperature}/>
+                <h1 className="">{temperatureOptions[props.temperature]}</h1>
+                
+                {mouseOver && <h1>
+                    The temperature of the game determines how much randomness the language model will use.
+                    Much like LSD, increasing the temperature will increase the model's creativity, but also its incoherence.
+                </h1>}
+            </div>
         </div>
     );
 }

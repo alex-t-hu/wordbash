@@ -1,0 +1,13 @@
+.SingleScoreUser-container {
+  border-radius: var(--xs);
+  padding: var(--m) var(--l);
+  margin-bottom: var(--s);
+}
+
+.SingleScoreUser-container:hover {
+  background: var(--medgrey);
+}
+
+.SingleScoreUser-container--active {
+  background: var(--grey);
+}
