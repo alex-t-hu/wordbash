@@ -1,0 +1,14 @@
+.ChatSingleUser-container {
+  background: var(--white);
+  border-radius: var(--xs);
+  padding: var(--m) var(--l);
+  margin-bottom: var(--s);
+}
+
+.ChatSingleUser-container:hover {
+  background: var(--medgrey);
+}
+
+.ChatSingleUser-container--active {
+  background: var(--grey);
+}
