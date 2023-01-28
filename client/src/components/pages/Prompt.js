@@ -5,6 +5,7 @@ import "../../utilities.css";
 import { get, post } from "../../utilities";
 import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
+import OurTimer from "../modules/OurTimer.js";
 /**
  * Define the "Prompt" component
  */
@@ -16,11 +17,8 @@ const Prompt = (props) => {
     // whether the user has finished answering all the prompts
     const [finishedAnswering, setFinishedAnswering] = useState(false);
     const [allFinishedAnswering, setAllFinishedAnswering] = useState(false);
-    const [startTime, setStartTime] = useState(0);
-    const [seconds, setSeconds] = useState(20);
-    const [minutes, setMinutes] = useState(0);
-    const [stringSeconds, setStringSeconds] = useState("20");
-    const [stringMinutes, setStringMinutes] = useState("00");
+    const [gamePromptAnsweringTime, setGamePromptAnsweringTime] = useState(0);
+    const [hasSetPromptAnsweringTime, setHasSetPromptAnsweringTime] = useState(false);
 
     const promptNumbertoIdx = (k, playerIdx) => {
         const N = props.game["num_Players"];
@@ -41,6 +39,10 @@ const Prompt = (props) => {
           props.setGame(data);
         //   console.log("l;kasdjf;lkasdf", data['promptsFinished']);
           setAllFinishedAnswering(data['promptsFinished']);
+          if (!hasSetPromptAnsweringTime) {
+            setHasSetPromptAnsweringTime(true);
+            setGamePromptAnsweringTime(data['numPrompts'] * 20);
+          }
         };
       });
     }
@@ -52,16 +54,17 @@ const Prompt = (props) => {
             if(props.userId && props.gameID){
                 props.setGame(stuff.game);
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
+                if (!hasSetPromptAnsweringTime) {
+                    setHasSetPromptAnsweringTime(true);
+                    setGamePromptAnsweringTime(data['numPrompts'] * 20);
+                  } 
         }};
         socket.on("gameUpdate", callback);
         return () => {
             socket.off("gameUpdate", callback);
         };
     },[]);
-    const padNum = (num) => {
-        let zero = '00';
-        return (zero + num).slice(-2);
-    };
+    
     const handlePromptTimeout = () => {
         let playerIdx = -1;
         for(let i = 0; i < props.game["num_Players"]; i++){
@@ -70,43 +73,17 @@ const Prompt = (props) => {
                 break;
             }
         }
-        let promptIdx = (playerIdx -promptNumber+props.game["num_Players"])% props.game["num_Players"]
-        
+        let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
         post("/api/submitResponse", {
             gameID: props.gameID,
             promptID: promptIdx,
             timedOut: true,
-            response: value == "" ? "(blank)" : value,
+            response: value === "" ? "(blank)" : value,
+        }).then( () => {
+            setFinishedAnswering(true);
         });
-        setFinishedAnswering(true);
     };
-    useEffect(() => {
-        
-        const interval = setInterval(() => {
-            console.log("BLAHGAH!");
-            if (seconds === 0 && minutes === 0) {
-                handlePromptTimeout();
-            } else {
-                if (minutes > 0 && seconds > 0) {
-                    setSeconds(seconds-1);
-
-                } else if (minutes > 0 && seconds === 0) {
-                    setMinutes(minutes-1);
-                    setSeconds(59);
-
-
-                } else {
-                    setSeconds(seconds-1);
-
-                }
-                setStringMinutes( padNum(minutes) );
-                setStringSeconds( padNum(seconds));
-            }
-        },1000);
-        return () => {
-            clearInterval(interval);
-        };
-    });
+    
 
     // called whenever the user types in the input box
     const handleChange = (event) => {
@@ -131,7 +108,7 @@ const Prompt = (props) => {
             gameID: props.gameID,
             promptID: promptIdx,
             timedOut: false,
-            response: value == "" ? "(blank)" : value,
+            response: (value === "") ? "(blank)" : value,
         });
         setPromptNumber(promptNumber + 1);
         setValue("");
@@ -169,7 +146,7 @@ const Prompt = (props) => {
                 navigate(`/game/${props.gameID}/voting`);
             }
         }
-    }, [allFinishedAnswering]);
+    }, [allFinishedAnswering, props.game, finishedAnswering]);
 
 
     if(!props.game){
@@ -212,9 +189,7 @@ const Prompt = (props) => {
                     {/* {promptNumber == 1 ? "Submit" : "Next"} */}
                 </button>
             </div>
-            <div className="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
-                <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
-            </div>
+            {gamePromptAnsweringTime === 0 ? <div>Loading ...</div> : <OurTimer seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
         </div>
     );
 };

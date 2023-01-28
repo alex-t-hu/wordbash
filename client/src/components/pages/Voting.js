@@ -75,7 +75,7 @@ const Voting = (props) => {
             const callback = (stuff) => {
                 console.log("gah voting");
                 if(props.userId && props.gameID){
-    
+                    console.log("did it get insid ehre");
                 get("/api/game", {gameID: props.gameID}).then((data) => {
                   // console.log("data", data);
                   if (props.setGame) {
@@ -196,6 +196,7 @@ const Voting = (props) => {
         return (<div>
             <VotingResults
                 handleDoneVoting = {handleDoneVoting}
+                handleVoteTimeout = {handleVoteTimeout}
                 continueToNextPrompt = {props.continueToNextVoting}
                 prompt = {props.game["prompts"][promptNumber]}
                 userId = {props.userId}
