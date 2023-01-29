@@ -4,11 +4,9 @@
 }
 
 .Chatbook-userList {
-  flex: 0 0 220px;
   margin-right: var(--l);
 }
 
 .Chatbook-chatContainer {
-  flex-grow: 1;
   overflow-x: hidden;
 }

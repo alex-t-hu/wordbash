@@ -5,18 +5,19 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  color: #3a1b4e;
 }
 
 .NavBar-title,
 .NavBar-title:visited {
-  color: #E0E0E2;
+  color: #3a1b4e;
   font-size: 25px;
-  opacity: 1;
+  opacity: 0.8;
   text-decoration: none;
 }
 
 .NavBar-title:hover {
-  color: rgb(255, 255, 255);
+  opacity: 1
 }
 
 .NavBar-linkContainer {
@@ -25,13 +26,13 @@
 
 .NavBar-link,
 .NavBar-link:visited {
-  color: #E0E0E2;
+  color: #3a1b4e;
   opacity: 0.8;
   text-decoration: none;
 }
 
 .NavBar-link:hover {
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .NavBar-link.NavBar-login {

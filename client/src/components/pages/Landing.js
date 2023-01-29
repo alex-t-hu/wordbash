@@ -8,7 +8,7 @@ import { useState } from "react";
 import ManyWords from "../modules/ManyWords.js";
 
 import LoginPage from "./LoginPage.js"
-import Background from "../modules/Background.js"
+import Background2 from "../modules/Background2.js"
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
@@ -114,7 +114,7 @@ const Landing = (props) => {
     );
   }
   return (
-    <div className="flex w-full h-screen justify-center align-center">
+    <div className="flex w-full h-full justify-center align-center">
       <div className="Landing-blah">
         {errorMessage && 
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-up" role="alert">
@@ -124,7 +124,7 @@ const Landing = (props) => {
             </span>
           </div>
         }
-        <div className="Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-[#E0E0E2]">
+        <div className="Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-[#EEEEEE]">
           
           
           <div className="flex flex-row m-8">
@@ -138,7 +138,7 @@ const Landing = (props) => {
               onKeyDown={handleKeyPressed}
             />
             <button 
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:translate-x-1 hover:scale-130 duration-300"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:translate-x-0.5 hover:scale-130 duration-300"
               onClick = {handleSubmitJoin}
               id="myBtn">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
@@ -161,7 +161,7 @@ const Landing = (props) => {
         </div>
       </div>
       {/* <ManyWords /> */}
-      <Background className="-z-20"/>
+      <Background2 className="-z-20" />
     </div>
     
   );

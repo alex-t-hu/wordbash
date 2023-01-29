@@ -21,21 +21,21 @@ const Game = (props) => {
   // console.log(props.gameID);
   return (
     <>      
-      <div className="h-screen flex flex-col bg-gray-50">
+      <div className="h-full flex flex-col bg-gray-50">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <div className="h-screen flex flex-row">
-          <div className="w-[30%] h-screen">
+        <div className="h-full flex flex-row">
+          <div className="h-full">
             <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
           </div>
-          <div className="w-full">
+
+          <div className="h-full w-full">
             <Router>
               <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
               <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
               <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
             </Router>
-        </div>
           </div>
-          
+        </div>
       </div>
     </>
   );

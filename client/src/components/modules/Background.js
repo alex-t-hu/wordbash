@@ -9,8 +9,6 @@ import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-
-
 /**
  * Define the "App" component
  */
@@ -37,8 +35,9 @@ const Background = (props) => {
                 options={{
                     background: {
                         color: {
-                            value: "#416788",
+                            value: `${props.bg_color}`,
                         },
+                        opacity: 1,
                     },
                     fpsLimit: 120,
                     interactivity: {
@@ -65,7 +64,7 @@ const Background = (props) => {
                     },
                     particles: {
                         color: {
-                            value: `#81D2C7`,
+                            value: `#BEE9B6`,
                         },
                         // links: {
                         //     color: "#ffffff",
@@ -100,7 +99,8 @@ const Background = (props) => {
                         shape: {
                             type: "circle",
                             stroke: { width: 0, color: "white"},
-                            image: { src: "bubbles.gif", width: 50, height: 50 }
+                            image: { src: {},
+                             width: 50, height: 50 }
                         },
                         size: {
                             value: { min: 20, max: 30 },
