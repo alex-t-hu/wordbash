@@ -1,14 +1,18 @@
 .Chatbook-container {
   width: 100%;
-  background-color: red;
+  /* background-color: #99D19C; */
+  margin-left: var(--l);
+  margin-top: 3%;
+  padding: var(--l);
 }
 
 .Chatbook-userList {
-  flex: 0 0 220px;
+  flex: 0 0 100px;
   margin-right: var(--l);
 }
 
 .Chatbook-chatContainer {
   flex-grow: 1;
   overflow-x: hidden;
+  border: #e9c46a 2px solid;
 }

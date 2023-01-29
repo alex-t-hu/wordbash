@@ -18,8 +18,8 @@
 }
 
 .NewPostInput-button {
-  color: var(--primary);
-  border: var(--primary) 1px solid;
+  color: #ffc8dd;
+  border: #ffafcc 2px solid;
   border-radius: 0 var(--xs) var(--xs) 0;
   background: none;
   transition: color 0.1s, background 0.1s;
@@ -27,5 +27,5 @@
 
 .NewPostInput-button:hover {
   color: var(--white);
-  background-color: var(--primary);
+  background-color: #bde0fe;
 }
