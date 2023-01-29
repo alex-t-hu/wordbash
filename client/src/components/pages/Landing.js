@@ -44,15 +44,19 @@ const Landing = (props) => {
     
     event.preventDefault();
 
-    if (value.length != 4) {
-      setErrorMessage("Game code should be 4 letters.");
+    if (value.length == 0) {
+      setErrorMessage("Enter a valid 4-letter code.");
+    } else if (value.length != 4) {
+      setErrorMessage("Game code must be 4 letters.");
+      setValue("");
     } else {
       // Spawn then redirect to lobby.
       get("/api/gameExists", {gameID: value.toUpperCase()}).then((game) => {
         console.log("Game is: ", game.gameExists);
         if(!game.gameExists){
           console.log("Game does not exist (inside Landing.js)");
-          setErrorMessage("Enter a valid game code.")
+          setErrorMessage("Enter a valid game code.");
+          setValue("");
         }else{
           console.log("Game exists (inside Landing.js)");
           props.setGameID(value.toUpperCase());
@@ -96,6 +100,12 @@ const Landing = (props) => {
     });
   }; 
 
+  const handleKeyPressed = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmitJoin(event);
+    }
+  }
+
   //bg-[url('../../../../bubbles.gif')]
 
   if (!props.userId) {
@@ -105,48 +115,55 @@ const Landing = (props) => {
   }
   return (
     <div className="flex w-full h-screen justify-center align-center">
-      <div className="Landing-optionContainer drop-shadow-2xl rounded-3xl u-flexColumn bg-gray-50">
+      <div className="Landing-blah">
         {errorMessage && 
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <span class="block sm:inline">{errorMessage}</span>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg class="fill-current h-6 w-6 text-red-500" onClick={handleCloseError} role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-up" role="alert">
+            <span className="block sm:inline">{errorMessage}</span>
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+              <svg className="fill-current h-6 w-6 text-red-500" onClick={handleCloseError} role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
           </div>
         }
-        
-        <div className="flex flex-row m-8">
-          <input
-            type="text"
-            placeholder="Enter Game Code"
-            value={value}
-            onChange={handleChange}
-            className="NewPostInput-input w-full border border-gray-400 rounded px-4 py-2"
-          />
+        <div className="Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-[#E0E0E2]">
           
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-          onClick = {handleSubmitJoin}>
-            {/* TODO: This stuff gives errors for some reason? */}
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-            </svg>
-          </button>
-        </div>
-        
-        <div>
-          <h1 className="text-center">or</h1>
-        </div>
+          
+          <div className="flex flex-row m-8">
+            <input
+              id="myInput"
+              type="text"
+              placeholder="Enter Game Code"
+              value={value}
+              onChange={handleChange}
+              className="w-full border border-gray-400 rounded px-4 py-2"
+              onKeyDown={handleKeyPressed}
+            />
+            <button 
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:translate-x-1 hover:scale-130 duration-300"
+              onClick = {handleSubmitJoin}
+              id="myBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+              </svg>
+            </button>
+          </div>
+          
+          <div>
+            <h1 className="text-center">or</h1>
+          </div>
 
-        <div className="m-8">
-          <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-          onClick = {handleSubmitCreate}>
-            Create Game
-          </button>
+          <div className="m-8">
+            <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-130 duration-300"
+
+            onClick = {handleSubmitCreate}>
+              Create Game
+            </button>
+          </div>
         </div>
       </div>
       {/* <ManyWords /> */}
       <Background className="-z-20"/>
     </div>
+    
   );
 };
 

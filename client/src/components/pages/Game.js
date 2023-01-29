@@ -7,6 +7,8 @@ import Lobby from "./Lobby.js";
 import FinalResults from "./FinalResults.js";
 import Ingame from "./Ingame.js";
 
+import Chatbook from "./Chatbook.js";
+
 
 import "../../utilities.css";
 
@@ -19,13 +21,21 @@ const Game = (props) => {
   // console.log(props.gameID);
   return (
     <>      
-      <div className="h-screen bg-gray-50">
+      <div className="h-screen flex flex-col bg-gray-50">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <Router>
-            <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-            <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-            <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-        </Router>
+        <div className="h-screen flex flex-row">
+          <div className="w-[30%] h-screen">
+            <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
+          </div>
+          <div className="w-full">
+            <Router>
+              <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
+              <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
+              <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
+            </Router>
+        </div>
+          </div>
+          
       </div>
     </>
   );

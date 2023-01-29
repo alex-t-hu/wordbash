@@ -5,7 +5,10 @@ import "../../utilities.css";
 import "./Login.css";
 import "./Skeleton.css";
 
+import Background from "../modules/Background.js";
+
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
+import { TypeAnimation } from 'react-type-animation';
 
 
 const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.googleusercontent.com";
@@ -18,14 +21,37 @@ const LoginPage = (props) => {
   return (
     <div className="text-center items-center flex flex-col">
         <div className="my-8 text-3xl">
-            <h1 className="">
-                Welcome to
-            </h1>
+            <TypeAnimation
+                sequence={[
+                    'Welcome to', // Types 'One'
+                    () => {
+                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                    }
+                ]}
+                wrapper="div"
+                cursor={false}
+                repeat={0}
+                style={{ fontSize: '1.2em' }}
+            />
         </div>
         <div className="my-8 text-8xl">
-            <h1>
-            wordbash
-            </h1>
+            <TypeAnimation
+                sequence={[
+                    1000,
+                    'word', // Types 'One'
+                    750, // Waits 1s
+                    'wordbash', // Deletes 'One' and types 'Two'
+                    4000,
+                    '',
+                    () => {
+                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                    }
+                ]}
+                wrapper="div"
+                cursor={true}
+                repeat={Infinity}
+                style={{ fontSize: '2em' }}
+            />
         </div>
         <div className="flex flex-col justify-center items-center w-1/4 my-8 rounded-3xl bg-gray-50">
             {/* <h1 className="text-white w-full text-center text-xl p-2 bg-teal-500 rounded-t-3xl">
@@ -47,6 +73,7 @@ const LoginPage = (props) => {
             </div>
                 
         </div>
+        <Background />
     </div>
   );
 };

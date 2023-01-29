@@ -13,6 +13,11 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import { navigate } from "@reach/router";
 
+import {
+  TransitionGroup,
+  CSSTransition
+} from "react-transition-group";
+
 
 /**
  * Define the "App" component
@@ -22,9 +27,9 @@ const App = () => {
   const [gameID, setGameID] = useState("");
   const [game, setGame] = useState({});
   
-  // useEffect(() => {
-  //   console.log(`Game ID set in App! Game ID = ${gameID}`);
-  // }, [gameID]);
+  useEffect(() => {
+    console.log(`Game ID set in App! Game ID = ${gameID}`);
+  }, [gameID]);
   
   // useEffect(() => {
   //   console.log(`User ID set in App! User ID = ${userId}`);

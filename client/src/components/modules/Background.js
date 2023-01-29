@@ -37,7 +37,7 @@ const Background = (props) => {
                 options={{
                     background: {
                         color: {
-                            value: "#000000",
+                            value: "#416788",
                         },
                     },
                     fpsLimit: 120,
@@ -65,17 +65,17 @@ const Background = (props) => {
                     },
                     particles: {
                         color: {
-                            value: "#ffffff",
+                            value: `#81D2C7`,
                         },
-                        links: {
-                            color: "#ffffff",
-                            distance: 150,
-                            enable: true,
-                            opacity: 0.5,
-                            width: 1,
-                        },
+                        // links: {
+                        //     color: "#ffffff",
+                        //     distance: 150,
+                        //     enable: true,
+                        //     opacity: 0.5,
+                        //     width: 1,
+                        // },
                         collisions: {
-                            enable: true,
+                            enable: false,
                         },
                         move: {
                             directions: "none",
@@ -92,16 +92,18 @@ const Background = (props) => {
                                 enable: true,
                                 area: 800,
                             },
-                            value: 80,
+                            value: 30,
                         },
                         opacity: {
                             value: 0.5,
                         },
                         shape: {
                             type: "circle",
+                            stroke: { width: 0, color: "white"},
+                            image: { src: "bubbles.gif", width: 50, height: 50 }
                         },
                         size: {
-                            value: { min: 1, max: 5 },
+                            value: { min: 20, max: 30 },
                         },
                     },
                     detectRetina: true,

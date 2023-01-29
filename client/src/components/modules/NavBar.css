@@ -9,14 +9,14 @@
 
 .NavBar-title,
 .NavBar-title:visited {
-  color: var(--white);
+  color: #E0E0E2;
   font-size: 25px;
   opacity: 1;
   text-decoration: none;
 }
 
 .NavBar-title:hover {
-  color: rgb(227, 215, 215);
+  color: rgb(255, 255, 255);
 }
 
 .NavBar-linkContainer {
@@ -25,7 +25,7 @@
 
 .NavBar-link,
 .NavBar-link:visited {
-  color: var(--white);
+  color: #E0E0E2;
   opacity: 0.8;
   text-decoration: none;
 }

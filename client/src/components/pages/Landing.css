@@ -4,10 +4,16 @@
     color: var(--primary)
 }
 
-.Landing-optionContainer{
+.Landing-blah {
     position: absolute;
     width: 300px;
+    z-index: 100;
     bottom: 40%;
+}
+
+.Landing-optionContainer{
+
+    width: 300px;
     z-index: 100;
 }
 

@@ -20,7 +20,7 @@ const Voting = (props) => {
     
     const [promptNumber, setPromptNumber] = useState(-1); // 0, 1, or 2 (done)
     const [voted, setVoted] = useState(false); // true if the user has voted on the CURRENT prompt
-    const [allVoted, setAllVoted] = useState(false); // true if the user has voted on the CURRENT prompt
+    const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
     
 
     /**
@@ -65,7 +65,7 @@ const Voting = (props) => {
             // console.log("data", data);
             if (props.setGame) {
               props.setGame(data);
-              console.log("l;kasdjf;lkasdf", data['votingFinished']);
+            //   console.log("l;kasdjf;lkasdf", data['votingResults']);
               setAllVoted(data['votingResults']);
             };
           });
@@ -75,12 +75,12 @@ const Voting = (props) => {
             const callback = (stuff) => {
                 console.log("gah voting");
                 if(props.userId && props.gameID){
-    
+                    console.log("did it get insid ehre");
                 get("/api/game", {gameID: props.gameID}).then((data) => {
                   // console.log("data", data);
                   if (props.setGame) {
                     props.setGame(data);
-                    console.log("blah", data['votingFinished']);
+                    // console.log("blah", data['votingResults']);
                     setAllVoted(data['votingResults']); 
                   };
                 });
@@ -196,6 +196,7 @@ const Voting = (props) => {
         return (<div>
             <VotingResults
                 handleDoneVoting = {handleDoneVoting}
+                handleVoteTimeout = {handleVoteTimeout}
                 continueToNextPrompt = {props.continueToNextVoting}
                 prompt = {props.game["prompts"][promptNumber]}
                 userId = {props.userId}

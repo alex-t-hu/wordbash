@@ -5,6 +5,7 @@ import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/goo
 // import {GoogleOAuthProvider, GoogleLogin,  GoogleLogout } from "react-google-login";
 
 import {get} from "../../utilities";
+import {useState, useEffect} from "react";
 
 import "./NavBar.css";
 import "../pages/Skeleton.css"
@@ -16,15 +17,32 @@ const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.goo
  * The navigation bar at the top of all pages. Takes no props.
  */
 const NavBar = (props) => {
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (props.userId) {
+      get(`/api/user`, { userid: props.userId }).then(
+        (userObj) => {
+          setValue(userObj.name);
+        }
+      );
+    }
+  }, [props.userId]);
+
   return (
-    <nav className="NavBar-container bg-transparent ">
+    <nav className="NavBar-container bg-transparent text-[#E0E0E2]">
       <div className="">
         <Link to="/" className="NavBar-title">
           <span id="NavBar-title-word">word</span>
           <span id="NavBar-title-bash">bash</span>
         </Link>
       </div>
-      <div className="flex items-center NavBar-linkContainer">
+      <div className="flex items-center NavBar-linkContainer space-x-4">
+        {value && 
+          (<h1>
+            Welcome, {value}!
+          </h1>)
+        }
         {props.userId && (
           <Link to={`/profile/${props.userId}`} className="NavBar-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -42,7 +60,6 @@ const NavBar = (props) => {
               }}
               className="NavBar-link"
             >
-              {/* TODO: this stuff gives errors for some reason?  Like classname -> class? stroke-width -> strokeWidth?*/}
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
               </svg>

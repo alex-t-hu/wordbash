@@ -28,24 +28,6 @@ const Lobby = (props) => {
     });
   }, []);
 
-
-
-  /**
-   * This effect is run every time any state variable changes.
-   */
-  
-  // useEffect(() => {
-  //   console.log("game effect is ");
-  //   if(props.userId && user && props.gameID){
-  //     get("/api/game", {gameID: props.gameID}).then((data) => {
-  //       // console.log("data", data);
-  //       if (props.setGame) {
-  //         props.setGame(data);
-  //       };
-  //     });
-  //   }
-    
-  // }, []);
   if(props.userId && user && props.gameID){
     get("/api/game", {gameID: props.gameID}).then((data) => {
       // console.log("data", data);
@@ -64,17 +46,7 @@ const Lobby = (props) => {
       socket.off("activeUsers", callback);
     };
   }, []);
-  // useEffect(() => {
-  //   const callback = (data) => {
-  //     if (data.gameID === props.gameID) {
-  //       window.location.href = `/prompt/${props.gameID}`;
-  //     }
-  //   };
-  //   socket.on("game", callback);
-  //   // return () => {
-  //   //   socket.off("game", callback);
-  //   // };
-  // }, []);
+  
   useEffect(() => {
     console.log('activeUsers', activeUsers);
   }, [activeUsers]);
@@ -168,6 +140,7 @@ const Lobby = (props) => {
 
       <div className="w-full mt-4">
         <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        // TOOD: add a check to make sure there are at least 3 players
         onClick = {(props.game.num_Players > 2) ? handleSubmit: null}>
           START GAME
         </button>
