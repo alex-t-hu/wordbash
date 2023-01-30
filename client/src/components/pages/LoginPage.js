@@ -5,6 +5,7 @@ import "../../utilities.css";
 import "./Login.css";
 import "./Skeleton.css";
 
+import Background2 from "../modules/Background2.js";
 import Background from "../modules/Background.js";
 
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
@@ -73,7 +74,7 @@ const LoginPage = (props) => {
             </div>
                 
         </div>
-        <Background />
+        <Background bg_color={'#EEEEEE'}/>
     </div>
   );
 };

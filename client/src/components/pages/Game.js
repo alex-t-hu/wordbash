@@ -8,7 +8,11 @@ import FinalResults from "./FinalResults.js";
 import Ingame from "./Ingame.js";
 
 import Chatbook from "./Chatbook.js";
+import Background from "../modules/Background.js"
 
+import Collapsible from 'react-collapsible';
+
+import { Resizable, Draggable } from 'react-resizable';
 
 import "../../utilities.css";
 
@@ -19,23 +23,46 @@ import "../../utilities.css";
 const Game = (props) => {
   // console.log("GAMEEE",props.userId);
   // console.log(props.gameID);
+
+  const [dims, setDims] = useState([200, 200]);
+
+  // On top layout
+  const onResize = (event, {element, size, handle}) => {
+    setDims([size.width, size.height]);
+  };
+
+  const [chatOpen, setChatOpen] = useState(true);
   return (
     <>      
-      <div className="h-screen flex flex-col bg-gray-50">
+      <div className="h-screen flex flex-col">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <div className="h-screen flex flex-row">
-          <div className="w-[30%] h-screen">
-            <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-          </div>
-          <div className="w-full">
+        <div className="h-full flex flex-row">
+          <div className="h-full w-full">
             <Router>
               <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
               <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
               <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
             </Router>
-        </div>
+          </div>
+          <div className="flex flex-col justify-center">
+            <button
+              className={`${chatOpen ? "ease-in-out duration-500 translate-x-[50%]" : "ease-in-out duration-500 translate-x-0"} bg-white w-14 h-14 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-full shadow flex text-l text-black items-center cursor-pointer bottom-6 z-50`}
+              onClick={() => setChatOpen(!chatOpen)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+              </svg>
+            </button>
           </div>
           
+          <div className={`h-full right-0 text-white z-20 ease-in-out duration-500 
+          ${
+            chatOpen ? "w-[30%]" : "w-0"
+          }`}>
+            <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
+          </div>
+        </div>
+        <Background />
       </div>
     </>
   );

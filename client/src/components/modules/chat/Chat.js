@@ -36,7 +36,7 @@ const Chat = (props) => {
           <SingleMessage message={m} key={i} />
         ))}
       </div>
-      <div className="Chat-newContainer">
+      <div className="">
         <NewMessage recipient={props.data.recipient} />
       </div>
     </div>

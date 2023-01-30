@@ -30,7 +30,7 @@ const NavBar = (props) => {
   }, [props.userId]);
 
   return (
-    <nav className="NavBar-container bg-transparent text-[#E0E0E2]">
+    <nav className="NavBar-container bg-transparent text-[#3a1b4e]">
       <div className="">
         <Link to="/" className="NavBar-title">
           <span id="NavBar-title-word">word</span>
@@ -38,7 +38,7 @@ const NavBar = (props) => {
         </Link>
       </div>
       <div className="flex items-center NavBar-linkContainer space-x-4">
-        {value && 
+        {(props.userId && value) && 
           (<h1>
             Welcome, {value}!
           </h1>)

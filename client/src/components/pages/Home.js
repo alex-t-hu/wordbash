@@ -16,7 +16,7 @@ import "../../utilities.css";
 const Home = (props) => {
   return (
     <>
-      <div className="h-screen">
+      <div className="h-full">
         <div className="z-20">
             <NavBar
                 handleLogin={props.handleLogin}

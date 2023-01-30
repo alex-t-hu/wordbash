@@ -11,19 +11,23 @@ import "./ManyWords.css";
  * @param {string} userId id of current logged in user
  */
 const ManyWords = (props) => {
-    const [wordPositions, setWordPositions] = useState([[10, 10]]);
+    const [wordPositions, setWordPositions] = useState([]);
 
     useEffect(() => {
         let t = [];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             t.push([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)]);
         }
         setWordPositions(t);
-    });
+    }, []);
+
+    let listItems = wordPositions.map((position) =>
+        <FloatingWord x={position[0]} y={position[1]} color={"red"} word={"helooooooo"}/>
+    );
 
     return (
         <>
-            <FloatingWord x={wordPositions[0][0]} y={wordPositions[0][1]} color={"red"} word={"helooooooo"}/>
+            {listItems}
         </>
     );
 }

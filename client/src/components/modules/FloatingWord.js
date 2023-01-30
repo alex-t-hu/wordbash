@@ -14,6 +14,12 @@ import "../pages/Skeleton.css"
 
 const FloatingWord = (props) => {
 
+    const [position, setPosition] = useState([props.x, props.y]);
+
+    const setRandomPosition = () => {
+        setPosition([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)]);
+    }
+
     return (
         <div className='relative w-full h-screen'>
             <TypeAnimation
@@ -23,17 +29,19 @@ const FloatingWord = (props) => {
                     '',
                     () => {
                         console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                        setRandomPosition();
+                        
                     }
                 ]}
                 wrapper="div"
                 cursor={true}
-                repeat={5}
+                repeat={Infinity}
                 speed={Math.floor(Math.random() * 40 + 20)}
                 deletionSpeed={10}
                 style={{
                         position: "relative",
-                        left: `${props.x}%`,
-                        top: `${props.y}%`,
+                        left: `${position[0]}%`,
+                        top: `${position[1]}%`,
                         color: `${props.color}`,
                     }}
             />
