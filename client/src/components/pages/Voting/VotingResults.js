@@ -6,9 +6,13 @@ import { useState } from "react";
 import SortedPlayerList from "../../modules/SortedPlayerList";
 import "./VotingResults.css";
 import { TypeAnimation } from 'react-type-animation';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import {CSSTransitionGroup} from 'react-transition-group';
 const VotingResults = (props) => {
-    const [hasFinished, setHasFinished] = useState(false);
+    const [hasFinishedPrompt0, setHasFinishedPrompt0] = useState(false);
+    const [hasFinishedPrompt1, setHasFinishedPrompt1] = useState(false);
+    const [hasFinishedName0, setHasFinishedName0] = useState(false);
+    const [hasFinishedName1, setHasFinishedName1] = useState(false);
+    const [currentPrompt, setCurrentPrompt] = useState(props.prompt);
     // players = {props.game.players}
     // promptText = {currentPrompt}
     // currentResponse0 = {currentResponse0}
@@ -23,39 +27,43 @@ const VotingResults = (props) => {
     }
     return (
         <div className="votingResults-container">
-            <div className="votingResults-prompt">{props.prompt.content}</div>
+            <div className="votingResults-prompt">{currentPrompt.content}</div>
             <div className="votingResults-responsesContainer">
                 <div className="votingResults-responseContainer">
                     <div className="votingResults-animatingResponseContainer">
-                    <TypeAnimation
+                        <TypeAnimation
+                            sequence={[
+                                currentPrompt['response_0_answer'],// Types 'One'
+                                () => {
+                                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                    setHasFinishedPrompt0(true);
+                                }
+                            ]}
+                            wrapper="div"
+                            cursor={false}
+                            repeat={0}
+                            style={{ fontSize: '1.2em' }}
+                        />
+                    </div>
+                    { hasFinishedPrompt0 && hasFinishedPrompt1 && 
+                    <div className="votingResults-animatingPlayerNameContainer">
+                        <TypeAnimation
                         sequence={[
-                            'Response 0: '.concat(props.currentResponse0).concat('\n').concat(props.prompt['response_0_person_name']), // Types 'One'
+                            currentPrompt['response_0_person_name'],
                             () => {
                                 console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                                setHasFinished(true);
+                                setHasFinishedName0(true);
                             }
                         ]}
                         wrapper="div"
                         cursor={false}
                         repeat={0}
                         style={{ fontSize: '1.2em' }}
-                    />
+                        />
                     </div>
-                    {/* <TypeAnimation
-                        sequence={[
-                            'Response 0: '.concat(props.currentResponse0), // Types 'One'
-                            () => {
-                            console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                            }
-                        ]}
-                        wrapper="div"
-                        cursor={false}
-                        repeat={0}
-                        style={{ fontSize: '1.2em' }}
-                    /> */}
-                    {/* <div className="votingResults-responseText">Response 0: {props.currentResponse0}</div> */}
-                    {hasFinished &&
-                        props.prompt["response_0_vote_names"].map((player) => {
+                    }                    
+                    {hasFinishedPrompt0 && hasFinishedPrompt1 && hasFinishedName0 && hasFinishedName1 &&
+                        currentPrompt["response_0_vote_names"].map((player) => {
                                 // setTimeout(() => {
                                 //     console.log("Hello");
                                 // }, 1000).then( ()=> {
@@ -69,10 +77,10 @@ const VotingResults = (props) => {
                     <div className="votingResults-animatingResponseContainer">
                     <TypeAnimation
                             sequence={[
-                                'Response 1: '.concat(props.currentResponse1).concat('\n').concat(props.prompt['response_1_person_name']), // Types 'One'
+                                currentPrompt['response_1_answer'], // Types 'One'
                                 () => {
                                 console.log('Done typing!') // Place optional callbacks anywhere in the array
-                                    setHasFinished(true);
+                                    setHasFinishedPrompt1(true);
                                 }
                             ]}
                             wrapper="div"
@@ -81,13 +89,27 @@ const VotingResults = (props) => {
                             style={{ fontSize: '1.2em' }}
                     />
                     </div>
-                    {/* <div className="votingResults-responseText">Response 1: {props.currentResponse1}</div> */}
+                    { hasFinishedPrompt0 && hasFinishedPrompt1 && 
+                    <div className="votingResults-animatingPlayerNameContainer">
+                        <TypeAnimation
+                        sequence={[
+                            currentPrompt['response_1_person_name'],
+                            () => {
+                                console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                setHasFinishedName1(true);
+                            }
+                        ]}
+                        wrapper="div"
+                        cursor={false}
+                        repeat={0}
+                        style={{ fontSize: '1.2em' }}
+                        />
+                    </div>
+                    } 
                     {
-                        hasFinished &&
-                        props.prompt["response_1_vote_names"].map((player) => {
+                        hasFinishedPrompt0 && hasFinishedPrompt1 && hasFinishedName0 && hasFinishedName1 &&
+                        currentPrompt["response_1_vote_names"].map((player) => {
                                 return <div>{player}</div>;
-                            
-                            
                         })
                     }
                 </div> 
