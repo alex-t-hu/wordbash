@@ -23,9 +23,24 @@ const Prompt = (props) => {
     const promptNumbertoIdx = (k, playerIdx) => {
         const N = props.game["num_Players"];
         const iteration = Math.floor(k / 2);
+        // keke return (playerIdx - k*(k^2))
         return (playerIdx -(k % 2) +N)% N + iteration * N;
     };
-
+    /**
+     * promptNumber 0, 1, 2, ... number of prompts. promptNumber saved on backend, same for each player.
+     * promptNumberToIdx converts promptNumber to the index of the prompt in the array of prompts.
+     * for round 1, prompt number is 0 or 1
+     * for round 2, prompt number is 2 or 3
+     * for round 3, prompt number is 4 or 5 ...
+     * playerIdx 0, 1, 2, ... number of players
+     * round 1: player 0 answers 0 & -1, player 1 answers 1 & 0, player 2 answers 2 & 1
+     * round 2: player 0 answers N & N-1, player 1 answers N+1 & N, player 2 answers N+2 & N+1
+     * etc... 
+     * instead,
+     * round k: player 0 answers (k-1)N - k, (k-1)N
+     * also, prompt number should be stored on the backend for each player, so that it is immune to refreshes. currently when players refresh their prompt number gets erased
+     * we tell server what playerIdx is so it can deduce which prompts the player answered
+     */
   /**
    * This effect is run every time any state variable changes.
    */
@@ -39,8 +54,9 @@ const Prompt = (props) => {
           props.setGame(data);
         //   console.log("l;kasdjf;lkasdf", data['promptsFinished']);
           setAllFinishedAnswering(data['promptsFinished']);
-          if (!hasSetPromptAnsweringTime) {
+          if (!hasSetPromptAnsweringTime) { // !hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
             setHasSetPromptAnsweringTime(true);
+            // keke setGamePromptAnsweringTime(data['numPlayers'] * 20);
             setGamePromptAnsweringTime(data['numPrompts'] * 20);
           }
         };
@@ -54,8 +70,9 @@ const Prompt = (props) => {
             if(props.userId && props.gameID){
                 props.setGame(stuff.game);
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
-                if (!hasSetPromptAnsweringTime) {
+                if (!hasSetPromptAnsweringTime) { //!hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
                     setHasSetPromptAnsweringTime(true);
+                    // keke setGamePromptAnsweringTime(data['numPlayers'] * 20);
                     setGamePromptAnsweringTime(stuff.game['numPrompts'] * 20);
                   } 
         }};
@@ -77,6 +94,7 @@ const Prompt = (props) => {
         console.log("prompt just timed out somehow!!!!");  
         post("/api/submitResponse", {
             gameID: props.gameID,
+            // playerIdx: playerIdx,
             promptID: promptIdx,
             timedOut: true,
             response: value === "" ? "(blank)" : value,
@@ -107,6 +125,7 @@ const Prompt = (props) => {
         console.log("user just CLICKKEDDSSDFDSF SUBMIT YEYEYEYE FUCK"); 
         post("/api/submitResponse", {
             gameID: props.gameID,
+            // playerIdx: playerIdx,
             promptID: promptIdx,
             timedOut: false,
             response: (value === "") ? "(blank)" : value,
@@ -140,7 +159,9 @@ const Prompt = (props) => {
             }
         }
     }, [promptNumber, props.game]);
-
+    /**
+     * if promptNumber is th 
+     */
     useEffect(() => {
         if(props.game){
             if(props.game.promptsFinished){
