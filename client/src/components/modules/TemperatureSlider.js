@@ -51,23 +51,25 @@ const TemperatureSlider = (props) => {
             <div 
                 onMouseEnter = {onMouseEnter}
                 onMouseLeave = {onMouseLeave}
-                className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md"
-                >
-                <h1 className="">Temperature:</h1>
+                className="bg-gray-200 p-4 flex flex-row space-x-4 mx-2 rounded-md">
 
-                <input 
-                className={`slider`}
-                id="myRange"
-                onChange={onChange}
-                // onMouseUp={onMouseUp} // only if such effect is desired
+                <h1 className="w-[120px] text-right">Temperature:</h1>
 
-                type="range" min="5" max="20" value={props.temperature}/>
-                <h1 className="">{temperatureOptions[props.temperature]}</h1>
-                
-                {mouseOver && <h1>
-                    The temperature of the game determines how much randomness the language model will use.
-                    Much like LSD, increasing the temperature will increase the model's creativity, but also its incoherence.
-                </h1>}
+                <div className="flex flex-col flex-grow text-center pt-1">
+                    <input 
+                    className={`slider`}
+                    id="myRange"
+                    onChange={onChange}
+                    // onMouseUp={onMouseUp} // only if such effect is desired
+
+                    type="range" min="5" max="20" value={props.temperature}/>
+                    <h1 className="">{temperatureOptions[props.temperature]}</h1>
+                    
+                    {mouseOver && <h1>
+                        The temperature of the game determines how much randomness the language model will use.
+                        Much like LSD, increasing the temperature will increase the model's creativity, but also its incoherence.
+                    </h1>}
+                </div>
             </div>
         </div>
     );

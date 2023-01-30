@@ -8,7 +8,7 @@ const VotingSelection = (props) => {
 
     
     return (
-        <div className="relative flex flex-col h-screen justify-between bg-slate-100 py-5">
+        <div className="relative flex flex-col h-full justify-between bg-slate-100 py-5">
             <div className="flex justify-center font-mono text-7xl text-center py-10 px-20">
                 <h1>{props.currentPrompt}</h1>
             </div>

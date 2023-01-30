@@ -44,15 +44,15 @@ const Game = (props) => {
   return (
     <>
       <div className="h-screen flex flex-col">
-        <GameBar userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
+        <div>
+          <GameBar userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
+        </div>
         <div className="flex flex-row flex-grow overflow-y-scroll overflow-x-hidden">
-          <div className="h-full w-full">
-            <Router>
-              <Lobby path="lobby" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
-              <FinalResults path="results" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
-              <Ingame path="*" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
-            </Router>
-          </div>
+          <Router className="h-full w-full">
+            <Lobby path="lobby" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
+            <FinalResults path="results" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
+            <Ingame path="*" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
+          </Router>
           <div className="h-full flex flex-col justify-end w-0 right-8 bottom-8">
             <button
               className={`${chatOpen ? 

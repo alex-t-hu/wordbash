@@ -56,7 +56,7 @@ const Prompt = (props) => {
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
                 if (!hasSetPromptAnsweringTime) {
                     setHasSetPromptAnsweringTime(true);
-                    setGamePromptAnsweringTime(data['numPrompts'] * 20);
+                    setGamePromptAnsweringTime(stuff.game['numPrompts'] * 20);
                   } 
         }};
         socket.on("gameUpdate", callback);
@@ -168,7 +168,7 @@ const Prompt = (props) => {
     }
 
     return (
-        <div className="Prompt-container bg-gradient-to-r from-indigo-300 via-blue-300 to-indigo-300 p-8">
+        <div className="Prompt-container p-8">
             <div className="Prompt-prompt mb-4">
                 <h2>{currentPrompt}</h2>
             </div>

@@ -88,6 +88,8 @@ router.post("/createGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.createGame(req.body.gameID);
+      socketManager.gameJustChanged(req.body.gameID);
+
 
       console.log("created new Game with gameID: " + req.body.gameID);
       console.log(Game.gameState);
@@ -124,6 +126,8 @@ router.post("/spawn", (req, res) => {
       Game.spawnPlayer(req.user._id, req.user.name, req.body.gameID);
         console.log("Spawned player. Here are the players:");
         console.log(Game.gameState[req.body.gameID]["players"]);
+            socketManager.gameJustChanged(req.body.gameID);
+
 
     }else{
       console.log("no gameID provided");

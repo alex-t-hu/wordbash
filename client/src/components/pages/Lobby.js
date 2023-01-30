@@ -14,6 +14,9 @@ const Lobby = (props) => {
   const [temperature, setTemperature] = useState(15);
   const [numRounds, setNumRounds] = useState(3);
 
+  const [numPlayers, setNumPlayers] = useState(0); // Used to ensure numPlayers updates...
+  const[Players, setPlayers] = useState([]); // Used to ensure Players updates...
+
   /**
    * This effect is run when the component mounts.
    */
@@ -28,19 +31,45 @@ const Lobby = (props) => {
     });
   }, []);
 
-  if(props.userId && user && props.gameID){
-    get("/api/game", {gameID: props.gameID}).then((data) => {
-      if(data.players[props.userId] === undefined){
-        post("/api/spawn", {gameID: props.gameID});
-      }
+  useEffect(() => {
+    const callback = (stuff) => {
+        console.log("gah");
+        props.setGame(stuff.game);
+    };
+    socket.on("gameUpdate", callback);
+    return () => {
+        socket.off("gameUpdate", callback);
+    };
+  },[]);
+
+  useEffect(() => {
+    if(props.userId && user && props.gameID){
+      get("/api/game", {gameID: props.gameID}).then((data) => {
+        if(data.players[props.userId] === undefined){
+          post("/api/spawn", {gameID: props.gameID});
+        }
 
 
-      // console.log("data", data);
-      if (props.setGame) {
-        props.setGame(data);
-      };
-    });
-  }
+        // console.log("data", data);
+        if (props.setGame) {
+          props.setGame(data);
+        };
+      });
+    }
+  }, [props.userId, user, props.gameID]);
+
+  useEffect(() => {
+    if(props.game && props.game.num_Players){
+      setNumPlayers(props.game.num_Players);
+    }
+  }, [props.game.numPlayers]);
+
+  useEffect(() => {
+    if(props.game && props.game.players){
+      setPlayers(props.game.players);
+    }
+  }, [props.game.players]);
+  
   
   useEffect(() => {
     const callback = (data) => {
@@ -115,23 +144,21 @@ const Lobby = (props) => {
     <div className="flex flex-col items-center mx-[10%] my-[3%] bg-gray-50 bg-opacity-30 rounded-3xl p-12">
       {/*Player list and game code*/}
       <div className="w-full flex flex-row divide-x space-x-4 justify-center">
-        <div className="w-full bg-gray-50 flex flex-col">
-          <div className="text-center bg-teal-500 text-white py-2">
+        <div className="w-full bg-gray-50 flex flex-col rounded-xl">
+          <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
             <h3>Players ({props.game.num_Players})</h3>
           </div>
 
           <div className="items-center m-4">
             <UserList
               userId={props.userId}
-              users={props.game.players}
+              users={Players}
             />
           </div>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-md">
-          {/*<h1 className="">Lobby userID = {props.userId}</h1>*/}
-          {/*<h1 className=""> user = {user.name}</h1>*/}
-          <h1 className="w-full text-center bg-teal-500 text-white py-2">Game Settings</h1>
+        <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-xl pb-4">
+          <h1 className="w-full text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">Game Settings</h1>
           <div className="w-full">
             <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
           </div>
@@ -144,7 +171,7 @@ const Lobby = (props) => {
       </div>
 
       <div className="w-full mt-4">
-        <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
         // TOOD: add a check to make sure there are at least 3 players
         onClick = {(props.game.num_Players > 1) ? handleSubmit: null}>
           START GAME
