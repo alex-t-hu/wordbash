@@ -8,6 +8,7 @@ import { useState } from "react";
 import ManyWords from "../modules/ManyWords.js";
 
 import LoginPage from "./LoginPage.js"
+import Background from "../modules/Background.js"
 import Background2 from "../modules/Background2.js"
 
 import { get, post } from "../../utilities";
@@ -161,7 +162,7 @@ const Landing = (props) => {
         </div>
       </div>
       {/* <ManyWords /> */}
-      <Background2 className="-z-20" />
+      <Background className="-z-20" />
     </div>
     
   );

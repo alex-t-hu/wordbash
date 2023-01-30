@@ -107,7 +107,7 @@ const Lobby = (props) => {
     return <div>No Game</div>;
   }
   return (
-    <div className="h-full flex flex-col items-center mx-[15%] my-[3%] bg-white">
+    <div className="flex flex-col items-center mx-[10%] my-[3%] bg-white">
       {/*Player list and game code*/}
       <div className="w-full flex flex-row divide-x space-x-4 justify-center">
         <div className="w-full bg-gray-50 flex flex-col">

@@ -1,5 +1,6 @@
 .Chat-container {
   height: 100%;
+  padding: var(--s);
 }
 
 .Chat-newContainer {
@@ -9,5 +10,5 @@
 .Chat-historyContainer {
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
 }

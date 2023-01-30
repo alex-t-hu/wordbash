@@ -149,7 +149,15 @@ const Chatbook = (props) => {
   }
   return (
     <>
-      <div className="h-full bg-red-50">
+      <div className="flex flex-row h-full Chatbook-container">
+        <div className="Chatbook-userList">
+          <ChatList
+            setActiveUser={setActiveUser}
+            userId={props.userId}
+            users={activeUsers}
+            active={activeChat.recipient}
+          />
+        </div>
         <div className="Chatbook-chatContainer w-full u-relative">
           <Chat data={activeChat} />
         </div>
