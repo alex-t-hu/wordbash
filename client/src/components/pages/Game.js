@@ -16,6 +16,7 @@ import Collapsible from 'react-collapsible';
 import { Resizable, Draggable } from 'react-resizable';
 
 import "../../utilities.css";
+import { navigate } from "@reach/router";
 
 
 /**
@@ -27,22 +28,29 @@ const Game = (props) => {
 
   const [dims, setDims] = useState([200, 200]);
 
+  const [game, setGame] = useState({});
+
+  useEffect(() => {
+    console.log("Inside Game.js, Game ID is"  + props.gameID);
+  }, [props.gameID]);
+
   // On top layout
   const onResize = (event, {element, size, handle}) => {
     setDims([size.width, size.height]);
   };
 
   const [chatOpen, setChatOpen] = useState(true);
+
   return (
-    <>      
+    <>
       <div className="h-screen flex flex-col">
-        <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <div className="flex flex-row overflow-y-scroll overflow-x-hidden">
+        <GameBar userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
+        <div className="flex flex-row flex-grow overflow-y-scroll overflow-x-hidden">
           <div className="h-full w-full">
             <Router>
-              <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-              <FinalResults path=":gameID/results" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
-              <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
+              <Lobby path="lobby" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
+              <FinalResults path="results" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
+              <Ingame path="*" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
             </Router>
           </div>
           <div className="h-full flex flex-col justify-end w-0 right-8 bottom-8">
@@ -63,7 +71,7 @@ const Game = (props) => {
           ${
             chatOpen ? "w-[30%]" : "w-0"
           }`}>
-            <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
+            <Chatbook userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
           </div>
         </div>
         <Background2 className="-z-20" direction={"y"} colorX={["#ffddb4","#fcd0d0"]} colorY={["#ffddb4","#fcd0d0"]}/>

@@ -28,7 +28,6 @@ import "./Chat.css";
  * @param {ChatData} data
  */
 const Chat = (props) => {
-
   const messagesEndRef = useRef(null)
 
   const scrollToBottom = () => {
@@ -37,19 +36,42 @@ const Chat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [props.data]);
+  }, [props.messages]);
+
+  if (!props.gameID) {
+    return(
+      <div className="u-flexColumn Chat-container">
+        <div className="Chat-historyContainer">
+          <h3>Loading Messages...</h3>
+        </div>
+        <div className="">
+          <h3>Loading Messages...</h3>
+        </div>
+      </div>);
+  }
+  if (!props.messages) {
+    return(
+    <div className="u-flexColumn Chat-container">
+      <div className="Chat-historyContainer">
+        <h3>Chatting with {props.gameID}</h3>
+      </div>
+      <div className="">
+        <NewMessage recipient={props.gameID} />
+      </div>
+    </div>);
+  }
 
   return (
-    <div className="flex flex-col p-2">
+    <div className="w-full flex flex-col p-2">
       {/* <h3>Chatting with {props.data.recipient.name}</h3> */}
-      <div className="overflow-y-auto mb-4">
-        {props.data.messages.map((m, i) => (
+      <div className="flex-grow overflow-y-auto mb-4">
+        {props.messages.map((m, i) => (
           <SingleMessage message={m} key={i} />
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="">
-        <NewMessage recipient={props.data.recipient} />
+      <div className="w-full">
+        <NewMessage recipient={props.gameID} />
       </div>
     </div>
   );

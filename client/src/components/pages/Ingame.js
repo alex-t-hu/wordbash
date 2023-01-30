@@ -21,9 +21,9 @@ const Ingame = (props) => {
       <div className="bg-gray-50">
         <SidebarUserList users={props.game["players"]}/>
         <Router>
-            <Prompt path=":gameID/prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
-            <Voting path=":gameID/voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
-            <Round path=":gameID/round" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+            <Prompt path="prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+            <Voting path="voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+            <Round path="round" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
         </Router>
       </div>
     </>
