@@ -56,7 +56,7 @@ const Prompt = (props) => {
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
                 if (!hasSetPromptAnsweringTime) {
                     setHasSetPromptAnsweringTime(true);
-                    setGamePromptAnsweringTime(data['numPrompts'] * 20);
+                    setGamePromptAnsweringTime(stuff.game['numPrompts'] * 20);
                   } 
         }};
         socket.on("gameUpdate", callback);
