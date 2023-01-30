@@ -30,6 +30,11 @@ const Lobby = (props) => {
 
   if(props.userId && user && props.gameID){
     get("/api/game", {gameID: props.gameID}).then((data) => {
+      if(data.players[props.userId] === undefined){
+        post("/api/spawn", {gameID: props.gameID});
+      }
+
+
       // console.log("data", data);
       if (props.setGame) {
         props.setGame(data);
