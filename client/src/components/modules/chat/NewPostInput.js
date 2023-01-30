@@ -27,6 +27,13 @@ const NewPostInput = (props) => {
     setValue("");
   };
 
+  const handleKeyPressed = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  }
+
+
   return (
     <div className="u-flex">
       <input
@@ -35,6 +42,7 @@ const NewPostInput = (props) => {
         value={value}
         onChange={handleChange}
         className="NewPostInput-input"
+        onKeyDown={handleKeyPressed}
       />
       <button
         type="submit"

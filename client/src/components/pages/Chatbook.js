@@ -148,21 +148,17 @@ const Chatbook = (props) => {
     return <div>Log in before using Chatbook</div>;
   }
   return (
-    <>
-      <div className="flex flex-row h-full Chatbook-container bg-red-50">
-        <div className="Chatbook-userList">
-          <ChatList
-            setActiveUser={setActiveUser}
-            userId={props.userId}
-            users={activeUsers}
-            active={activeChat.recipient}
-          />
-        </div>
-        <div className="Chatbook-chatContainer w-full u-relative">
-          <Chat data={activeChat} />
-        </div>
-      </div>
-    </>
+    <div className="h-full flex flex-row bg-gray-50 bg-opacity-30 rounded-3xl">
+      {/* <div className="h-full">
+        <ChatList
+          setActiveUser={setActiveUser}
+          userId={props.userId}
+          users={activeUsers}
+          active={activeChat.recipient}
+        />
+      </div> */}
+      <Chat data={activeChat} />
+    </div>
   );
 }
 

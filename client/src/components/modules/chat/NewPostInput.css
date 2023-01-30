@@ -1,8 +1,8 @@
 .NewPostInput-input,
 .NewPostInput-button {
-  font-family: "Open Sans";
   font-size: 14px;
   padding: var(--s) var(--m);
+  color: black
 }
 
 .NewPostInput-input {

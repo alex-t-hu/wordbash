@@ -9,6 +9,7 @@ import Ingame from "./Ingame.js";
 
 import Chatbook from "./Chatbook.js";
 import Background from "../modules/Background.js"
+import Background2 from "../modules/Background2.js"
 
 import Collapsible from 'react-collapsible';
 
@@ -36,7 +37,7 @@ const Game = (props) => {
     <>      
       <div className="h-screen flex flex-col">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <div className="h-full flex flex-row">
+        <div className="flex flex-row overflow-y-scroll">
           <div className="h-full w-full">
             <Router>
               <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
@@ -44,7 +45,7 @@ const Game = (props) => {
               <Ingame path="/*" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
             </Router>
           </div>
-          <div className="flex flex-col justify-center">
+          <div className="h-full flex flex-col justify-center">
             <button
               className={`${chatOpen ? "ease-in-out duration-500 translate-x-[50%]" : "ease-in-out duration-500 translate-x-0"} bg-white w-14 h-14 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-full shadow flex text-l text-black items-center cursor-pointer bottom-6 z-50`}
               onClick={() => setChatOpen(!chatOpen)}
@@ -55,14 +56,14 @@ const Game = (props) => {
             </button>
           </div>
           
-          <div className={`h-full right-0 text-white z-20 ease-in-out duration-500 
+          <div className={`right-0 text-white z-20 ease-in-out duration-500 
           ${
             chatOpen ? "w-[30%]" : "w-0"
           }`}>
             <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
           </div>
         </div>
-        <Background />
+        <Background2 />
       </div>
     </>
   );
