@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import SingleMessage from "./SingleMessage.js";
 import { NewMessage } from "./NewPostInput.js";
 
@@ -28,28 +28,39 @@ import "./Chat.css";
  * @param {ChatData} data
  */
 const Chat = (props) => {
-
-  const messagesEndRef = useRef(null)
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+  if (!props.gameID) {
+    return(
+      <div className="u-flexColumn Chat-container">
+        <div className="Chat-historyContainer">
+          <h3>Loading Messages...</h3>
+        </div>
+        <div className="">
+          <h3>Loading Messages...</h3>
+        </div>
+      </div>);
   }
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [props.data]);
-
-  return (
-    <div className="flex flex-col p-2">
-      {/* <h3>Chatting with {props.data.recipient.name}</h3> */}
-      <div className="overflow-y-auto mb-4">
-        {props.data.messages.map((m, i) => (
-          <SingleMessage message={m} key={i} />
-        ))}
-        <div ref={messagesEndRef} />
+  if (!props.messages) {
+    return(
+    <div className="u-flexColumn Chat-container">
+      <div className="Chat-historyContainer">
+        <h3>Chatting with {props.gameID}</h3>
       </div>
       <div className="">
-        <NewMessage recipient={props.data.recipient} />
+        <NewMessage recipient={props.gameID} />
+      </div>
+    </div>);
+  }
+
+  return (
+    <div className="u-flexColumn Chat-container">
+      {/* <h3>Chatting with {props.data.recipient.name}</h3> */}
+      <div className="Chat-historyContainer">
+        {props.messages.map((m, i) => (
+          <SingleMessage message={m} key={i} />
+        ))}
+      </div>
+      <div className="">
+        <NewMessage recipient={props.gameID} />
       </div>
     </div>
   );

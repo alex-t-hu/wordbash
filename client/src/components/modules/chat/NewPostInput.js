@@ -27,13 +27,6 @@ const NewPostInput = (props) => {
     setValue("");
   };
 
-  const handleKeyPressed = (event) => {
-    if (event.key === 'Enter') {
-      handleSubmit(event);
-    }
-  }
-
-
   return (
     <div className="u-flex">
       <input
@@ -42,7 +35,6 @@ const NewPostInput = (props) => {
         value={value}
         onChange={handleChange}
         className="NewPostInput-input"
-        onKeyDown={handleKeyPressed}
       />
       <button
         type="submit"
@@ -96,11 +88,28 @@ const NewStory = (props) => {
 /**
  * New Message is a New Message component for messages
  *
+router.post("/message", auth.ensureLoggedIn, (req, res) => {
+  console.log(`Received a chat message from ${req.user.name}: ${req.body.content}`);
+
+  // insert this message into the database
+  const message = new Message({
+    recipient: req.body.recipient,
+    sender: {
+      _id: req.user._id,
+      name: req.user.name,
+    },
+    content: req.body.content,
+  });
+  message.save();
+
+  // if (req.body.recipient._id == "ALL_CHAT") {
+    socketManager.getIo().emit("message", message);
  * Proptypes
  * @param {UserObject} recipient is the intended recipient
  */
 const NewMessage = (props) => {
   const sendMessage = (value) => {
+    
     const body = { recipient: props.recipient, content: value };
     post("/api/message", body);
   };
