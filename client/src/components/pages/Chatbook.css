@@ -1,9 +1,7 @@
 .Chatbook-container {
   width: 100%;
   /* background-color: #99D19C; */
-  margin-left: var(--l);
-  margin-top: 3%;
-  padding: var(--l);
+  padding-right: var(--l);
 }
 
 .Chatbook-userList {
