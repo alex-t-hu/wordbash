@@ -1,0 +1,76 @@
+/**
+* move the button to the bottom of the page
+*/
+.votingResults-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: #fff;
+}
+.votingResults-prompt {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-align: center;
+}
+.votingResults-responsesContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid #000;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+.votingResults-responseContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    margin: 0.5rem 10px;
+    padding: 0 1rem;
+    border: 1px solid #000;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+.votingResults-animatingResponseContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    margin: 0.5rem 10px;
+    padding: 0 1rem;
+    border: 1px solid #000;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    animation: animatingResponseContainer 0.5s ease-in-out;
+}
+.votingResults-responseText {
+    font-size: 1rem;
+    font-weight: 400;
+}
+.votingResults-button {
+    position: absolute;
+    bottom: 0;
+    margin: 0 0 0 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #000;
+    border-radius: 0.25rem;
+    background-color: rgb(19, 165, 155);
+    color: #000;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
