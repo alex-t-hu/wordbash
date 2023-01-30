@@ -20,7 +20,7 @@ const VotingSelection = (props) => {
                     {props.currentResponse1}
                 </button>
             </div>
-            <OurTimer seconds={20} handleTimeout={props.handleVoteTimeout}/>
+            { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={20} handleTimeout={props.handleVoteTimeout} />}
         </div>
     );
 };

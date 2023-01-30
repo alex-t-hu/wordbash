@@ -198,7 +198,10 @@ const startGame = (gameID, temperature, numRounds) => {
     //     console.log("Game " + gameID + " does not have enough players to start.");
     //     return;
     // }
-
+    if (gameState[gameID]["started"]) {
+        console.log("Game " + gameID + " has already started.");
+        return;
+    }
     console.log("Starting game " + gameID);
     gameState[gameID]["numRounds"] = numRounds;
     gameState[gameID]["numPrompts"] = gameState[gameID]["num_Players"] * gameState[gameID]["numRounds"];
@@ -221,12 +224,17 @@ const startGame = (gameID, temperature, numRounds) => {
                 response_1_vote_names: [],
                 response_0_vote: [],
                 response_1_vote: [],
-                numNoVote: 0
+                numNoVote: 0,
+                votingStartTime: 0
             }
         }
-        
+         
         gameState[gameID]["started"] = true;
+        gameState[gameID]["currentPrompt"] = 0;
+        gameState[gameID]["promptStartTime"] = Date.now();
         console.log("Starting game for real " + gameID);
+        console.log("start time is ", gameState[gameID]["promptStartTime"]);
+
     });
 }
 
@@ -238,35 +246,62 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     console.log("just submitted response");
     const playerIdx = IDtoPlayerID(id, gameID);
     const numPlayers = gameState[gameID]["num_Players"];
-    // const numPrompts = gameState[gameID]["numPrompts"];
-    if(promptID % numPlayers === playerIdx ){
-        gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
-        gameState[gameID]["prompts"][promptID]["response_0_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
-    }else if((promptID + 1) % numPlayers === playerIdx){
-        gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
-        gameState[gameID]["prompts"][promptID]["response_1_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
-    }else{
-        console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
+    if(gameState[gameID]["promptsFinished"]) {
+        console.log("this shouldn't be happening. game-logic.js, still submitting responses after all responses have been submitted.");
     }
-    // Check if all responses are in
+    // const numPrompts = gameState[gameID]["numPrompts"];
     let allResponsesIn = true;
-    for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
-        console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
-        if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
-            if (timedOut) {
-                console.log("Timed out. Submitting empty responses.");
-                if (gameState[gameID]["prompts"][i]["response_0_answer"] === "") {
-                    gameState[gameID]["prompts"][i]["response_0_answer"] = "(blank)"; // change hre if want to do smth funny for timeout
-                }
-                if (gameState[gameID]["prompts"][i]["response_1_answer"] === "") {
-                    gameState[gameID]["prompts"][i]["response_1_answer"] = "(blank)";
+    if (!timedOut) {
+        if(promptID % numPlayers === playerIdx ){
+            gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
+            gameState[gameID]["prompts"][promptID]["response_0_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
+        }else if((promptID + 1) % numPlayers === playerIdx){
+            gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
+            gameState[gameID]["prompts"][promptID]["response_1_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
+        }else{
+            console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
+        }
+        // Check if all responses are in
+        for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
+            console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
+            if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
+                console.log("in game-logic/submitResponse, found that not timed out and all response are not in yet");
+    
+                allResponsesIn = false;
+            }
+        }
+    } else {
+        for (let i=0; i < gameState[gameID]["numPrompts"]; i++) {
+            for (let j = 0; j < numPlayers; j++) {
+                if (i % numPlayers === j) {
+                    gameState[gameID]["prompts"][i]["response_0_person_name"] =gameState[gameID]["players"][j]["name"]; 
+                } else if ((i+1)%numPlayers === j) {
+                    gameState[gameID]["prompts"][i]["response_1_person_name"] =gameState[gameID]["players"][j]["name"]; 
                 }
             }
-            allResponsesIn = false;
+            
+        }
+        // Check if all responses are in
+        console.log("checking and replacing all empty responses with (blank) after timing out prompt. in game-logic.js.")
+        for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
+            console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
+                    if (gameState[gameID]["prompts"][i]["response_0_answer"] === "") {
+                        gameState[gameID]["prompts"][i]["response_0_answer"] = "(blank)"; // change hre if want to do smth funny for timeout
+    
+                    }
+                    if (gameState[gameID]["prompts"][i]["response_1_answer"] === "") {
+                        gameState[gameID]["prompts"][i]["response_1_answer"] = "(blank)";
+                    }
         }
     }
+    
     if(allResponsesIn || timedOut){
+        if (!gameState[gameID]["promptsFinished"]) {
+            console.log("All responses in for game " + gameID);
+            // need to find the start time of the current round
+        }
         gameState[gameID]["promptsFinished"] = true;
+        gameState[gameID]["prompts"][0]["votingStartTime"] = Date.now();
     }
 }
 
@@ -322,6 +357,10 @@ const submitVote = (id, gameID, promptID, timedOut, response) => {
 const doneVoting = (gameID) => {
     gameState[gameID]["votingResults"] = false;
     gameState[gameID]["votingRound"] += 1;
+    const promptIdx = gameState[gameID]["votingRound"];
+    if (promptIdx < gameState[gameID]["numPrompts"] && gameState[gameID]["prompts"][promptIdx]["votingStartTime"] === 0) {
+        gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
+    }
     console.log("We are done voting.");
     
     if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){

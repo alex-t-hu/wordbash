@@ -74,7 +74,7 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        
+        console.log("prompt just timed out somehow!!!!");  
         post("/api/submitResponse", {
             gameID: props.gameID,
             promptID: promptIdx,
@@ -104,7 +104,7 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        
+        console.log("user just CLICKKEDDSSDFDSF SUBMIT YEYEYEYE FUCK"); 
         post("/api/submitResponse", {
             gameID: props.gameID,
             promptID: promptIdx,
@@ -190,7 +190,7 @@ const Prompt = (props) => {
                     {/* {promptNumber == 1 ? "Submit" : "Next"} */}
                 </button>
             </div>
-            {gamePromptAnsweringTime === 0 ? <div>Loading ...</div> : <OurTimer seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
+            { (gamePromptAnsweringTime === 0 || (!props.game) || (props.game["promptStartTime"]===0)) ? <div>Loading ...</div> : <OurTimer startTime = {props.game["promptStartTime"]} seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
         </div>
     );
 };

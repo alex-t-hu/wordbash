@@ -215,6 +215,7 @@ const Voting = (props) => {
                 handleVote0 = {handleVote0}
                 handleVote1 = {handleVote1}
                 handleVoteTimeout = {handleVoteTimeout}
+                prompt = {props.game["prompts"][promptNumber]}
             />
         </div>
         

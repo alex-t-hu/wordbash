@@ -37,7 +37,7 @@ const Game = (props) => {
     <>      
       <div className="h-screen flex flex-col">
         <GameBar userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
-        <div className="flex flex-row overflow-y-scroll">
+        <div className="flex flex-row overflow-y-scroll overflow-x-hidden">
           <div className="h-full w-full">
             <Router>
               <Lobby path=":gameID/lobby" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame}/>
