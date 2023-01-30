@@ -11,7 +11,6 @@
 }
 
 .SingleMessage-content {
-  padding: var(--s) var(--m);
   border-radius: var(--l);
   flex-shrink: 1;
   overflow-wrap: break-word;

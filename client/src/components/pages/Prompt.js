@@ -6,6 +6,7 @@ import { get, post } from "../../utilities";
 import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
 import OurTimer from "../modules/OurTimer.js";
+import PromptQuestion from "../modules/PromptQuestion.js"
 
 import { TypeAnimation } from 'react-type-animation';
 
@@ -27,9 +28,24 @@ const Prompt = (props) => {
     const promptNumbertoIdx = (k, playerIdx) => {
         const N = props.game["num_Players"];
         const iteration = Math.floor(k / 2);
+        // keke return (playerIdx - k*(k^2))
         return (playerIdx -(k % 2) +N)% N + iteration * N;
     };
-
+    /**
+     * promptNumber 0, 1, 2, ... number of prompts. promptNumber saved on backend, same for each player.
+     * promptNumberToIdx converts promptNumber to the index of the prompt in the array of prompts.
+     * for round 1, prompt number is 0 or 1
+     * for round 2, prompt number is 2 or 3
+     * for round 3, prompt number is 4 or 5 ...
+     * playerIdx 0, 1, 2, ... number of players
+     * round 1: player 0 answers 0 & -1, player 1 answers 1 & 0, player 2 answers 2 & 1
+     * round 2: player 0 answers N & N-1, player 1 answers N+1 & N, player 2 answers N+2 & N+1
+     * etc... 
+     * instead,
+     * round k: player 0 answers (k-1)N - k, (k-1)N
+     * also, prompt number should be stored on the backend for each player, so that it is immune to refreshes. currently when players refresh their prompt number gets erased
+     * we tell server what playerIdx is so it can deduce which prompts the player answered
+     */
   /**
    * This effect is run every time any state variable changes.
    */
@@ -43,8 +59,9 @@ const Prompt = (props) => {
           props.setGame(data);
         //   console.log("l;kasdjf;lkasdf", data['promptsFinished']);
           setAllFinishedAnswering(data['promptsFinished']);
-          if (!hasSetPromptAnsweringTime) {
+          if (!hasSetPromptAnsweringTime) { // !hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
             setHasSetPromptAnsweringTime(true);
+            // keke setGamePromptAnsweringTime(data['numPlayers'] * 20);
             setGamePromptAnsweringTime(data['numPrompts'] * 20);
           }
         };
@@ -58,8 +75,9 @@ const Prompt = (props) => {
             if(props.userId && props.gameID){
                 props.setGame(stuff.game);
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
-                if (!hasSetPromptAnsweringTime) {
+                if (!hasSetPromptAnsweringTime) { //!hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
                     setHasSetPromptAnsweringTime(true);
+                    // keke setGamePromptAnsweringTime(data['numPlayers'] * 20);
                     setGamePromptAnsweringTime(stuff.game['numPrompts'] * 20);
                   } 
         }};
@@ -78,9 +96,10 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        
+        console.log("prompt just timed out somehow!!!!");  
         post("/api/submitResponse", {
             gameID: props.gameID,
+            // playerIdx: playerIdx,
             promptID: promptIdx,
             timedOut: true,
             response: value === "" ? "(blank)" : value,
@@ -108,9 +127,10 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        
+        console.log("user just CLICKKEDDSSDFDSF SUBMIT YEYEYEYE FUCK"); 
         post("/api/submitResponse", {
             gameID: props.gameID,
+            // playerIdx: playerIdx,
             promptID: promptIdx,
             timedOut: false,
             response: (value === "") ? "(blank)" : value,
@@ -144,7 +164,9 @@ const Prompt = (props) => {
             }
         }
     }, [promptNumber, props.game]);
-
+    /**
+     * if promptNumber is th 
+     */
     useEffect(() => {
         if(props.game){
             if(props.game.promptsFinished){
@@ -171,48 +193,58 @@ const Prompt = (props) => {
         );
     }
 
+    let cp = (currentPrompt && 
+        <TypeAnimation
+            sequence={[
+                `${currentPrompt}`, // Types 'One'
+                () => {
+                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                    console.log("current prompt", currentPrompt);
+                    setStartedAnswering(true);
+                }
+            ]}
+            wrapper="div"
+            cursor={false}
+            speed="60"
+            repeat={0}
+            style={{ fontSize: '1.2em' }}
+        />)
+
     return (
-        <div className="w-full h-full p-8 bg-gray-50 bg-opacity-30 rounded-3xl">
-            <div className="text-center mb-4">
-                {currentPrompt && 
-                <TypeAnimation
-                    sequence={[
-                        `${currentPrompt}`, // Types 'One'
-                        () => {
-                            console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                            console.log("current prompt", currentPrompt);
-                            setStartedAnswering(true);
-                        }
-                    ]}
-                    wrapper="div"
-                    cursor={false}
-                    repeat={0}
-                    style={{ fontSize: '1.2em' }}
-                />}
+        <div className="w-full h-full flex flex-col p-8">
+            <div className="text-left mb-4">
+                <PromptQuestion sender={"me"} message={cp}/>
             </div>
             {startedAnswering && (
-                <div>
-                    <div className="Prompt-response">
-                        <textarea
-                            className="Prompt-textarea"
-                            type="text"
-                            placeholder="Enter your response here"
-                            value={value}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="float-right">
-                        <button className="m-8 align-right bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                        type="submit"
-                        value="Submit"
-                        onClick = {handleSubmit}>
-                            Submit
-                            {/* {promptNumber == 1 ? "Submit" : "Next"} */}
-                        </button>
-                    </div>
-                    {gamePromptAnsweringTime === 0 ? <div>Loading ...</div> : <OurTimer seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
+            <div className="flex flex-row space-x-4 w-full h-[90px]">
+                <div className="flex-grow">
+                    <textarea
+                        className="Prompt-textarea border rounded-xl p-2"
+                        type="text"
+                        placeholder="Enter your response here!"
+                        value={value}
+                        onChange={handleChange}
+                    />
                 </div>
+                <div className="h-full flex items-center justify-center">
+                    <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold px-4 py-2 border border-gray-400 rounded shadow"
+                    type="submit"
+                    value="Submit"
+                    onClick = {handleSubmit}>
+                        Send
+                        {/* {promptNumber == 1 ? "Submit" : "Next"} */}
+                    </button>
+                </div>
+            </div>
             )}
+            <div className="flex-grow">
+            </div>
+            { (gamePromptAnsweringTime === 0 || (!props.game) || (props.game["promptStartTime"]===0)) ? 
+                (<div>Loading ...</div>) : 
+                (<div className="">
+                    <OurTimer startTime = {props.game["promptStartTime"]} seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />
+                </div>)
+            }
         </div>
     );
 };

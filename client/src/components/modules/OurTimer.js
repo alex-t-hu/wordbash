@@ -10,29 +10,31 @@ const OurTimer = (props) => {
     const [stringSeconds, setStringSeconds] = useState(undefined);
     const [stringMinutes, setStringMinutes] = useState("00");
     const [seconds, setSeconds] = useState(props.seconds);
+    const [currentSeconds, setCurrentSeconds] = useState(1000);
     const padNum = (num) => {
         let zero = '00';
         return (zero + num).slice(-2);
     };
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            console.log("current time left !",seconds);
-            if (seconds <= 0) {
+        const interval = setTimeout(() => {
+            console.log("current time on the timer is ", currentSeconds);
+            setCurrentSeconds( seconds - (Date.now()-props.startTime)/1000 );
+            console.log("current time left !",currentSeconds);
+            if (currentSeconds <= 0) {
                 props.handleTimeout();
             } else {
-                setSeconds(seconds-1);
-                setStringMinutes( padNum( Math.floor(seconds /60) ));
-                setStringSeconds( padNum( Math.floor(seconds % 60)));
+                setStringMinutes( padNum( Math.floor(currentSeconds /60) ));
+                setStringSeconds( padNum( Math.floor(currentSeconds % 60)));
             }
-        },1000);
+        },50);
         return () => {
-            clearInterval(interval);
+            clearTimeout(interval);
         };
-    });
+    },[currentSeconds]);
     return (
         stringSeconds ? 
-        <div className="mx-1 p-2 text-9xl text-green-400 flex justify-center">
+        <div className="mx-1 p-2 text-9xl text-emerald-300 flex justify-center">
             <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
         </div>
         : <div></div>

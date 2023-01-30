@@ -51,7 +51,7 @@ const GameBar = (props) => {
         <input className="text-3xl w-40 text-center box-content border border-gray-400 rounded text-red" type="text" value={props.gameID} readOnly></input>
       </div>
 
-      <div>
+      <div className="">
 
       </div>
       {/* <button className="bg-white hover:bg-red-100 hover:border hover:border-red-400 hover:text-red-700 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"

@@ -155,6 +155,8 @@ router.post("/despawn", (req, res) => {
 // Corresponds to submitResponse in game-logic.js
 router.post("/submitResponse", (req, res) => {
   // playerID, gameID, promptID, response
+  // keke pass in playerIdx to game.submitResponse
+  
   if (req.user) {
     if(req.body.gameID){
       Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);

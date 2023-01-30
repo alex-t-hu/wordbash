@@ -63,7 +63,7 @@ const Chat = (props) => {
 
   return (
     <div className="w-full flex flex-col p-2">
-      <h3 className="text-black text-center font-bold">Welcome to Room {props.gameID}!</h3>
+      <h3 className="text-black text-center font-bold mb-4">Welcome to Room {props.gameID}!</h3>
       <div className="flex-grow overflow-y-auto mb-4">
         {props.messages.map((m, i) => (
           <SingleMessage message={m} key={i} />
