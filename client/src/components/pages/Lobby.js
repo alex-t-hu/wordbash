@@ -14,6 +14,9 @@ const Lobby = (props) => {
   const [temperature, setTemperature] = useState(15);
   const [numRounds, setNumRounds] = useState(3);
 
+  const [numPlayers, setNumPlayers] = useState(0); // Used to ensure numPlayers updates...
+  const[Players, setPlayers] = useState([]); // Used to ensure Players updates...
+
   /**
    * This effect is run when the component mounts.
    */
@@ -28,19 +31,45 @@ const Lobby = (props) => {
     });
   }, []);
 
-  if(props.userId && user && props.gameID){
-    get("/api/game", {gameID: props.gameID}).then((data) => {
-      if(data.players[props.userId] === undefined){
-        post("/api/spawn", {gameID: props.gameID});
-      }
+  useEffect(() => {
+    const callback = (stuff) => {
+        console.log("gah");
+        props.setGame(stuff.game);
+    };
+    socket.on("gameUpdate", callback);
+    return () => {
+        socket.off("gameUpdate", callback);
+    };
+  },[]);
+
+  useEffect(() => {
+    if(props.userId && user && props.gameID){
+      get("/api/game", {gameID: props.gameID}).then((data) => {
+        if(data.players[props.userId] === undefined){
+          post("/api/spawn", {gameID: props.gameID});
+        }
 
 
-      // console.log("data", data);
-      if (props.setGame) {
-        props.setGame(data);
-      };
-    });
-  }
+        // console.log("data", data);
+        if (props.setGame) {
+          props.setGame(data);
+        };
+      });
+    }
+  }, [props.userId, user, props.gameID]);
+
+  useEffect(() => {
+    if(props.game && props.game.num_Players){
+      setNumPlayers(props.game.num_Players);
+    }
+  }, [props.game.numPlayers]);
+
+  useEffect(() => {
+    if(props.game && props.game.players){
+      setPlayers(props.game.players);
+    }
+  }, [props.game.players]);
+  
   
   useEffect(() => {
     const callback = (data) => {
@@ -123,7 +152,7 @@ const Lobby = (props) => {
           <div className="items-center m-4">
             <UserList
               userId={props.userId}
-              users={props.game.players}
+              users={Players}
             />
           </div>
         </div>
