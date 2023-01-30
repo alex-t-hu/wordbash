@@ -23,7 +23,7 @@ const SidebarUserList = (props) => {
 
     
     return (
-      <div className="w-full flex flex-col text-center bg-gray-50">
+      <div className="w-auto flex flex-col text-center bg-gray-50">
         {
             Object.keys(props.users)
               .map((key, i) => (

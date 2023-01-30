@@ -49,19 +49,21 @@ const RoundSlider = (props) => {
             <div 
                 onMouseEnter = {onMouseEnter}
                 onMouseLeave = {onMouseLeave}
-                className="bg-gray-200 p-4 flex flex-col items-center ml-2 rounded-md">
+                className="bg-gray-200 p-4 flex flex-row space-x-4 mx-2 rounded-md">
+                    
+                    <h1 className="w-[120px] text-right">Number of Rounds:</h1>
 
-                    <h1 className="">Number of Rounds:</h1>
-
-                    <input 
-                    className={`slider`}
-                    id="myRange"
-                    onChange={onChange}
-                    // onMouseUp={onMouseUp} // only if such effect is desired
-
-                    type="range" min="1" max="5" value={props.numRounds}/>
-                    <h1 className="">{props.numRounds} rounds</h1>
-                    {mouseOver && <h1 className="">{recommendedRounds[props.numPlayers]}</h1>}
+                    <div className="flex flex-col flex-grow text-center pt-1">
+                        <input 
+                        className={`slider`}
+                        id="myRange"
+                        onChange={onChange}
+                        // onMouseUp={onMouseUp} // only if such effect is desired
+                        type="range" min="1" max="5" value={props.numRounds}/>
+                        
+                        <h1 className="">{props.numRounds} rounds</h1>
+                        {mouseOver && <h1 className="">{recommendedRounds[props.numPlayers]}</h1>}
+                    </div>
             </div>
         </div>
     );

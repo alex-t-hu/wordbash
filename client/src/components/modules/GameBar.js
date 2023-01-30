@@ -31,14 +31,14 @@ const GameBar = (props) => {
     <nav className="GameBar-container bg-transparent text-black">
       <div className="">
         {!props.game.started && (
-        <button className="w-full bg-red-50 hover:bg-red-100 hover:border hover:border-red-400 hover:text-red-700 text-red-500 font-semibold py-2 px-4 border border-red-400 rounded shadow"
+        <button className="w-full bg-red-50 hover:bg-red-100 hover:border hover:border-red-400 hover:text-red-700 text-red-500 font-semibold py-2 px-4 border border-red-400 rounded shadow transition ease-in-out delay-50 hover:-translate-x-1 hover:scale-130 duration-300"
           onClick = {handleLeave}>
             <div className="flex flex-row justify-center space-x-4">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
               </svg>
               <h1>
-                LEAVE GAME
+                LEAVE ROOM
               </h1>
             </div>
             

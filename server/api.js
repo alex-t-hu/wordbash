@@ -88,6 +88,8 @@ router.post("/createGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.createGame(req.body.gameID);
+      socketManager.gameJustChanged(req.body.gameID);
+
 
       console.log("created new Game with gameID: " + req.body.gameID);
       console.log(Game.gameState);
@@ -124,6 +126,8 @@ router.post("/spawn", (req, res) => {
       Game.spawnPlayer(req.user._id, req.user.name, req.body.gameID);
         console.log("Spawned player. Here are the players:");
         console.log(Game.gameState[req.body.gameID]["players"]);
+            socketManager.gameJustChanged(req.body.gameID);
+
 
     }else{
       console.log("no gameID provided");
@@ -221,26 +225,22 @@ router.get("/game", (req, res) => {
  */
 
 
+// Only chats within a single game are implemented.
+
 router.get("/chat", (req, res) => {
-  let query;
-  if (req.query.recipient_id === "ALL_CHAT") {
-    // get any message sent by anybody to ALL_CHAT
-    query = { "recipient._id": "ALL_CHAT" };
-  } else {
-    // get messages that are from me->you OR you->me
-    query = {
-      $or: [
-        { "sender._id": req.user._id, "recipient._id": req.query.recipient_id },
-        { "sender._id": req.query.recipient_id, "recipient._id": req.user._id },
-      ],
-    };
-  }
+  // let query;
+  // if (req.query.recipient_id === "ALL_CHAT") {
+  //   // get any message sent by anybody to ALL_CHAT
+  //   query = { "recipient._id": "ALL_CHAT" };
+  // } else {
+  //   // get messages that are from me->you OR you->me
+  query = { "recipient": req.query.recipient_id }; 
 
   Message.find(query).then((messages) => res.send(messages));
 });
 
 router.post("/message", auth.ensureLoggedIn, (req, res) => {
-  console.log(`Received a chat message from ${req.user.name}: ${req.body.content}`);
+  console.log(`Received a chat message from ${req.user.name}: ${req.body.content} in game ${req.body.recipient}`);
 
   // insert this message into the database
   const message = new Message({
@@ -253,16 +253,16 @@ router.post("/message", auth.ensureLoggedIn, (req, res) => {
   });
   message.save();
 
-  if (req.body.recipient._id == "ALL_CHAT") {
+  // if (req.body.recipient._id == "ALL_CHAT") {
     socketManager.getIo().emit("message", message);
-  } else if(req.body.recipient._id.startsWith("GAME###")) {
-    socketManager.getIo().emit("message", message);
-  }else {
-    socketManager.getSocketFromUserID(req.user._id).emit("message", message);
-    if (req.user._id !== req.body.recipient._id) {
-      socketManager.getSocketFromUserID(req.body.recipient._id).emit("message", message);
-    }
-  }
+  // } else if(req.body.recipient._id.startsWith("GAME###")) {
+  //   socketManager.getIo().emit("message", message);
+  // }else {
+  //   socketManager.getSocketFromUserID(req.user._id).emit("message", message);
+  //   if (req.user._id !== req.body.recipient._id) {
+  //     socketManager.getSocketFromUserID(req.body.recipient._id).emit("message", message);
+  //   }
+  // }
 });
 
 /**

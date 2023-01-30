@@ -24,12 +24,11 @@ import {
  */
 const App = () => {
   const [userId, setUserId] = useState("");
-  const [gameID, setGameID] = useState("");
-  const [game, setGame] = useState({});
+  // const [gameID, setGameID] = useState("");
   
-  useEffect(() => {
-    console.log(`Game ID set in App! Game ID = ${gameID}`);
-  }, [gameID]);
+  // useEffect(() => {
+  //   console.log(`Game ID set in App! Game ID = ${gameID}`);
+  // }, [gameID]);
   
   // useEffect(() => {
   //   console.log(`User ID set in App! User ID = ${userId}`);
@@ -43,6 +42,7 @@ const App = () => {
       }
     });
   }, []);
+  
 
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
@@ -65,8 +65,9 @@ const App = () => {
     <>
       <div className="App-container h-screen">
         <Router>
-          <Home path="/*" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} gameID={gameID} setGameID={setGameID}/>
-          <Game path="/game/*" userId={userId} gameID={gameID} game={game} setGame={setGame} />
+          <Home path="/*" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}/>
+          {/*  gameID={gameID} setGameID={setGameID}/> */}
+          <Game path="/game/:gameID/*" userId={userId} />
           <NotFound default />
         </Router>
       </div>

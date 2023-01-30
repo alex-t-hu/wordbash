@@ -7,6 +7,7 @@
   width: 120px;
   margin-right: var(--xs);
   flex-shrink: 0;
+  font-weight: 800;
 }
 
 .SingleMessage-content {

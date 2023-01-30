@@ -27,7 +27,7 @@ const Landing = (props) => {
   const handleChange = (event) => {
     console.log(event);
     setValue(event.target.value);
-    props.setGameID(event.target.value);
+    // props.setGameID(event.target.value);
   };
 
   const makeid = (length) => {
@@ -48,7 +48,7 @@ const Landing = (props) => {
     if (value.length == 0) {
       setErrorMessage("Enter a valid 4-letter code.");
     } else if (value.length != 4) {
-      setErrorMessage("Game code must be 4 letters.");
+      setErrorMessage("Room code must be 4 letters.");
       setValue("");
     } else {
       // Spawn then redirect to lobby.
@@ -56,11 +56,11 @@ const Landing = (props) => {
         console.log("Game is: ", game.gameExists);
         if(!game.gameExists){
           console.log("Game does not exist (inside Landing.js)");
-          setErrorMessage("Enter a valid game code.");
+          setErrorMessage("Enter a valid room code.");
           setValue("");
         }else{
           console.log("Game exists (inside Landing.js)");
-          props.setGameID(value.toUpperCase());
+          // props.setGameID(value.toUpperCase());
           post("/api/spawn", {gameID: value.toUpperCase()}).then((g) => {
             console.log("Spawned");
             navigate(`/game/${value.toUpperCase()}/lobby`);
@@ -85,7 +85,7 @@ const Landing = (props) => {
 
     get("/api/gameExists", {gameID: randomCode}).then((game) => {
       if(!game.gameExists){
-        props.setGameID(randomCode);
+        // props.setGameID(randomCode);
         console.log("Game does not exist (inside Landing.js)");
         post("/api/createGame", {gameID: randomCode, userID: props.userId}).then((g) => {
           console.log("Game created because ");
@@ -132,14 +132,14 @@ const Landing = (props) => {
             <input
               id="myInput"
               type="text"
-              placeholder="Enter Game Code"
+              placeholder="Enter Room Code"
               value={value}
               onChange={handleChange}
               className="w-full border border-gray-400 rounded px-4 py-2"
               onKeyDown={handleKeyPressed}
             />
             <button 
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:translate-x-0.5 hover:scale-130 duration-300"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
               onClick = {handleSubmitJoin}
               id="myBtn">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
@@ -153,10 +153,10 @@ const Landing = (props) => {
           </div>
 
           <div className="m-8">
-            <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-130 duration-300"
+            <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
 
             onClick = {handleSubmitCreate}>
-              Create Game
+              CREATE ROOM
             </button>
           </div>
         </div>

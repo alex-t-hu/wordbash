@@ -17,6 +17,7 @@
 /* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Orbitron&family=Tillana:wght@500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&family=Grape+Nuts&family=Just+Another+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -47,7 +48,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Comic Neue", sans-serif;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 form {

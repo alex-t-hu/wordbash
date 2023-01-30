@@ -16,17 +16,15 @@ const Ingame = (props) => {
   // console.log("GAMEEE",props.userId);
   // console.log(props.gameID);
   const [currentRound, setCurrentRound] = useState(0);
-  return (
-    <>      
-      <div className="h-screen bg-gray-50">
-        <SidebarUserList users={props.game["players"]}/>
-        <Router>
-            <Prompt path=":gameID/prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
-            <Voting path=":gameID/voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
-            <Round path=":gameID/round" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
-        </Router>
-      </div>
-    </>
+  return (  
+    <div className="h-full flex flex-row">
+      <SidebarUserList users={props.game["players"]}/>
+      <Router className="h-full flex-grow">
+          <Prompt path="prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+          <Voting path="voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+          <Round path="round" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
+      </Router>
+    </div>
   );
 };
 export default Ingame;
