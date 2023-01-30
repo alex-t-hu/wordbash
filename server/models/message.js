@@ -6,10 +6,7 @@ const MessageSchema = new mongoose.Schema({
     _id: String,
     name: String,
   },
-  recipient: {
-    _id: String,
-    name: String,
-  },
+  recipient: String,
   timestamp: { type: Date, default: Date.now },
   content: String,
 });
