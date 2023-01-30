@@ -213,6 +213,10 @@ const startGame = (gameID, temperature, numRounds) => {
                 content: subset[i],
                 response_0_answer: "",
                 response_1_answer: "",
+                response_0_person_name: "",
+                response_1_person_name: "",
+                response_0_person_id: "",
+                response_1_person_id: "",
                 response_0_vote_names: [],
                 response_1_vote_names: [],
                 response_0_vote: [],
@@ -237,8 +241,10 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     // const numPrompts = gameState[gameID]["numPrompts"];
     if(promptID % numPlayers === playerIdx ){
         gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
+        gameState[gameID]["prompts"][promptID]["response_0_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
     }else if((promptID + 1) % numPlayers === playerIdx){
         gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
+        gameState[gameID]["prompts"][promptID]["response_1_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
     }else{
         console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
     }
