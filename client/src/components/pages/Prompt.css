@@ -1,5 +1,5 @@
 .Prompt-container {
-    height: calc(100vh - 120px);
+    height: 100%;
     width: 100%;
 }
 .Prompt-prompt {

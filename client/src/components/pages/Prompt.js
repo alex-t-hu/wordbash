@@ -6,6 +6,9 @@ import { get, post } from "../../utilities";
 import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
 import OurTimer from "../modules/OurTimer.js";
+
+import { TypeAnimation } from 'react-type-animation';
+
 /**
  * Define the "Prompt" component
  */
@@ -15,6 +18,7 @@ const Prompt = (props) => {
     const [currentPrompt, setCurrentPrompt] = useState(""); // the current prompt, text.
     const [value , setValue] = useState(""); // the current value of the input box
     // whether the user has finished answering all the prompts
+    const [startedAnswering, setStartedAnswering] = useState(false);
     const [finishedAnswering, setFinishedAnswering] = useState(false);
     const [allFinishedAnswering, setAllFinishedAnswering] = useState(false);
     const [gamePromptAnsweringTime, setGamePromptAnsweringTime] = useState(0);
@@ -168,29 +172,47 @@ const Prompt = (props) => {
     }
 
     return (
-        <div className="Prompt-container p-8">
-            <div className="Prompt-prompt mb-4">
-                <h2>{currentPrompt}</h2>
+        <div className="w-full h-full p-8 bg-gray-50 bg-opacity-30 rounded-3xl">
+            <div className="text-center mb-4">
+                {currentPrompt && 
+                <TypeAnimation
+                    sequence={[
+                        `${currentPrompt}`, // Types 'One'
+                        () => {
+                            console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                            console.log("current prompt", currentPrompt);
+                            setStartedAnswering(true);
+                        }
+                    ]}
+                    wrapper="div"
+                    cursor={false}
+                    repeat={0}
+                    style={{ fontSize: '1.2em' }}
+                />}
             </div>
-            <div className="Prompt-response">
-                <textarea
-                    className="Prompt-textarea"
-                    type="text"
-                    placeholder="Enter your response here"
-                    value={value}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="float-right">
-                <button className="m-8 align-right bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                type="submit"
-                value="Submit"
-                onClick = {handleSubmit}>
-                    Submit
-                    {/* {promptNumber == 1 ? "Submit" : "Next"} */}
-                </button>
-            </div>
-            {gamePromptAnsweringTime === 0 ? <div>Loading ...</div> : <OurTimer seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
+            {startedAnswering && (
+                <div>
+                    <div className="Prompt-response">
+                        <textarea
+                            className="Prompt-textarea"
+                            type="text"
+                            placeholder="Enter your response here"
+                            value={value}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="float-right">
+                        <button className="m-8 align-right bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                        type="submit"
+                        value="Submit"
+                        onClick = {handleSubmit}>
+                            Submit
+                            {/* {promptNumber == 1 ? "Submit" : "Next"} */}
+                        </button>
+                    </div>
+                    {gamePromptAnsweringTime === 0 ? <div>Loading ...</div> : <OurTimer seconds={gamePromptAnsweringTime} handleTimeout={handlePromptTimeout} />}
+                </div>
+            )}
         </div>
     );
 };

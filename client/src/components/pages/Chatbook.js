@@ -203,7 +203,7 @@ const Chatbook = (props) => {
     return <div>Log in before using Chatbook</div>;
   }
   return (
-    <div className="h-full flex flex-row bg-gray-50 bg-opacity-30 rounded-3xl">
+    <div className="h-full flex flex-row bg-gray-50 bg-opacity-50 rounded-3xl">
       {/* <div className="Chatbook-userList">
         <ChatList
           setActiveUser={setActiveUser}
