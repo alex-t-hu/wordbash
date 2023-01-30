@@ -162,7 +162,7 @@ const Landing = (props) => {
         </div>
       </div>
       {/* <ManyWords /> */}
-      <Background className="-z-20" />
+      <Background2 className="-z-20" direction={"y"} colorX={["#dbedff","#accbff"]} colorY={["#dbedff","#accbff"]}/>
     </div>
     
   );

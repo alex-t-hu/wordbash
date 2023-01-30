@@ -74,7 +74,7 @@ const LoginPage = (props) => {
             </div>
                 
         </div>
-        <Background bg_color={'#EEEEEE'}/>
+        <Background2 className="-z-20" direction={"y"} colorX={["#ffddb4","#fcd0d0"]} colorY={["#ffddb4","#fcd0d0"]}/>
     </div>
   );
 };

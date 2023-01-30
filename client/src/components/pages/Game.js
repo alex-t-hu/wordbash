@@ -63,7 +63,7 @@ const Game = (props) => {
             <Chatbook userId={props.userId} gameID={props.gameID} game={props.game} setGame={props.setGame}/>
           </div>
         </div>
-        <Background2 />
+        <Background2 className="-z-20" direction={"y"} colorX={["#ffddb4","#fcd0d0"]} colorY={["#ffddb4","#fcd0d0"]}/>
       </div>
     </>
   );
