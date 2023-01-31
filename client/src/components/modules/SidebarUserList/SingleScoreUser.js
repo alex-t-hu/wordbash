@@ -14,19 +14,11 @@ import "./SingleScoreUser.css";
 const SingleScoreUser = (props) => {
   // console.log(props.user);
   // console.log(props.index);
-  return (props.index != 0) ? (
+  return (
     <div
-      className={`SingleScoreUser-container u-pointer`}
+      className={`SingleScoreUser-container flex flex-row u-pointer`}
     >
-      {props.user}
-      {props.score}
-    </div>
-  ) : (
-    <div
-      className={`SingleScoreUser-container u-pointer`}
-    >
-      {props.user} (host)
-      
+      <h1 className="overflow-x-hidden text-ellipsis">{props.user}</h1>
       {props.score}
     </div>
   );

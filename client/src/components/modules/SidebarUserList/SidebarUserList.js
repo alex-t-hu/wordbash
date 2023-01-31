@@ -20,22 +20,24 @@ const SidebarUserList = (props) => {
 
 
   if(props.users&& Object.keys(props.users).length > 0){
-
-    
     return (
-      <div className="w-auto flex flex-col text-center bg-gray-50">
-        {
-            Object.keys(props.users)
-              .map((key, i) => (
-                <SingleScoreUser
-                  index={i}
-                  // setActiveUser={props.setActiveUser}
-                  user={props.users[key].name}
-                  score={props.users[key].score}
-                  // active={user === props.active}
-                />
-              ))
-          }
+      <div className="w-auto flex flex-col text-center bg-opacity-30 bg-gray-50 p-2">
+        <h1>Leaderboard</h1>
+        <div className="flex flex-row w-full text-center">
+          <h1 className="flex-grow">Player</h1>
+          <h1 className="w-[50px]">Score</h1>
+        </div>
+        {Object.keys(props.users)
+          .map((key, i) => (
+            <SingleScoreUser
+              index={i}
+              // setActiveUser={props.setActiveUser}
+              user={props.users[key].name}
+              score={props.users[key].score}
+              // active={user === props.active}
+            />
+          ))}
+
       </div>
     );
   } else {

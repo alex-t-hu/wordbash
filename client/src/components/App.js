@@ -13,11 +13,6 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import { navigate } from "@reach/router";
 
-import {
-  TransitionGroup,
-  CSSTransition
-} from "react-transition-group";
-
 
 /**
  * Define the "App" component

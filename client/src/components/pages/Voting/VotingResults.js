@@ -6,7 +6,7 @@ import { useState } from "react";
 import SortedPlayerList from "../../modules/SortedPlayerList";
 import "./VotingResults.css";
 import { TypeAnimation } from 'react-type-animation';
-import {CSSTransitionGroup} from 'react-transition-group';
+
 const VotingResults = (props) => {
     const [hasFinishedPrompt0, setHasFinishedPrompt0] = useState(false);
     const [hasFinishedPrompt1, setHasFinishedPrompt1] = useState(false);

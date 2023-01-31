@@ -11,6 +11,8 @@ import Background from "../modules/Background.js";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 import { TypeAnimation } from 'react-type-animation';
 
+import ReactTypingEffect from 'react-typing-effect';
+
 
 const GOOGLE_CLIENT_ID = "414404150327-qhpp3e5ihem4nvr38ba1vifiv04633ff.apps.googleusercontent.com";
 

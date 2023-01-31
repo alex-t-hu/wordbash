@@ -9,6 +9,7 @@ import OurTimer from "../modules/OurTimer.js";
 import PromptQuestion from "../modules/PromptQuestion.js"
 
 import { TypeAnimation } from 'react-type-animation';
+import Typed from "react-typed"
 
 /**
  * Define the "Prompt" component
@@ -17,6 +18,7 @@ const Prompt = (props) => {
 
     const [promptNumber, setPromptNumber] = useState(0); // 0, 1, or 2 (done)
     const [currentPrompt, setCurrentPrompt] = useState(""); // the current prompt, text.
+    const [prompts, setPrompts] = useState([]);
     const [currentPromptAnim, setCurrentPromptAnim] = useState(""); // the current prompt, text.
     const [value , setValue] = useState(""); // the current value of the input box
     // whether the user has finished answering all the prompts
@@ -87,6 +89,18 @@ const Prompt = (props) => {
             socket.off("gameUpdate", callback);
         };
     },[]);
+
+    useEffect(() => {
+        if (currentPrompt) {
+            setCurrentPromptAnim((
+                <PromptQuestion sender={"me"} message={
+                    currentPrompt
+                }/>
+            ));
+            console.log("dfasdfsdafs");
+            console.log(currentPrompt);
+        }
+    }, [currentPrompt])
     
     const handlePromptTimeout = () => {
         let playerIdx = -1;
@@ -194,31 +208,6 @@ const Prompt = (props) => {
             </div>
         );
     }
-
-    useEffect(() => {
-        if (currentPrompt) {
-            setCurrentPromptAnim((
-                <PromptQuestion sender={"me"} message={
-                    <TypeAnimation
-                        sequence={[
-                            currentPrompt, // Types 'One'
-                            () => {
-                                console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                                console.log("current prompt", currentPrompt, promptNumber);
-                            }
-                        ]}
-                        wrapper="div"
-                        cursor={false}
-                        speed="60"
-                        repeat={0}
-                        style={{ fontSize: '1.2em' }}
-                    />
-                }/>
-            ));
-            console.log("dfasdfsdafs");
-            console.log(currentPrompt);
-        }
-    }, [currentPrompt])
 
     const handleKeyPressed = (event) => {
         if (event.key === 'Enter') {

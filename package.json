@@ -43,11 +43,17 @@
     "react-transition-group": "^1.2.1",
     "react-tsparticles": "^2.8.0",
     "react-type-animation": "^2.1.2",
+    "react-typed": "^1.2.0",
+    "react-typewriter-effect": "^1.1.0",
+    "react-typewriting-effect": "^1.0.4",
+    "react-typing-effect": "^2.0.5",
+    "react-typing-text": "^1.0.4",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.1",
     "tsparticles": "^2.8.0",
     "underscore": "^1.13.6",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "writing.js": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
