@@ -193,13 +193,14 @@ const Voting = (props) => {
         return (<div>Please Log in</div>);
     }
     if(allVoted){
-        return (<div>
-            <VotingResults
-                handleDoneVoting = {handleDoneVoting}
-                handleVoteTimeout = {handleVoteTimeout}
-                continueToNextPrompt = {props.continueToNextVoting}
-                prompt = {props.game["prompts"][promptNumber]}
-                userId = {props.userId}
+        return (
+            <div>
+                <VotingResults
+                    handleDoneVoting = {handleDoneVoting}
+                    handleVoteTimeout = {handleVoteTimeout}
+                    continueToNextPrompt = {props.continueToNextVoting}
+                    prompt = {props.game["prompts"][promptNumber]}
+                    userId = {props.userId}
                 />
             </div>);
     }
@@ -207,7 +208,7 @@ const Voting = (props) => {
         return (<div>You have voted! Please wait for other players to vote.</div>);
     }
     return (
-        <div>
+        <div className="h-full">
             <VotingSelection
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}

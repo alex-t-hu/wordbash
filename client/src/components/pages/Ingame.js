@@ -17,7 +17,7 @@ const Ingame = (props) => {
   // console.log(props.gameID);
   const [currentRound, setCurrentRound] = useState(0);
   return (  
-    <div className="h-full flex flex-row">
+    <div className="h-full w-full flex flex-row">
       <SidebarUserList users={props.game["players"]}/>
       <Router className="h-full flex-grow">
           <Prompt path="prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>

@@ -5,10 +5,8 @@ import "../Prompt.css";
 import OurTimer from "../../modules/OurTimer.js";
 
 const VotingSelection = (props) => {
-
-    
     return (
-        <div className="relative flex flex-col h-full justify-between bg-slate-100 py-5">
+        <div className="flex flex-col h-full w-full justify-between">
             <div className="flex justify-center font-mono text-7xl text-center py-10 px-20">
                 <h1>{props.currentPrompt}</h1>
             </div>
@@ -20,7 +18,7 @@ const VotingSelection = (props) => {
                     {props.currentResponse1}
                 </button>
             </div>
-            { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={20} handleTimeout={props.handleVoteTimeout} />}
+            { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={300} handleTimeout={props.handleVoteTimeout} />}
         </div>
     );
 };
