@@ -190,7 +190,7 @@ const Voting = (props) => {
     }
     
     return (
-        <div>
+        <div className="h-full">
             <VotingSelection
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}

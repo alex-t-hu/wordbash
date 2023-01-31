@@ -13,7 +13,7 @@ const VotingSelection = (props) => {
     // }, [props.hasVoted])
     
     return (
-        <div className="relative flex flex-col h-full justify-between bg-slate-100 py-5">
+        <div className="flex flex-col h-full w-full justify-between">
             <div className="flex justify-center font-mono text-7xl text-center py-10 px-20">
                 <h1>{props.currentPrompt}</h1>
             </div>
@@ -28,7 +28,7 @@ You have voted! Please wait for other players to vote. If you would like, you ca
                     {props.currentResponse1}
                 </button>
             </div>
-            { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={20} handleTimeout={props.handleVoteTimeout} />}
+            { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={300} handleTimeout={props.handleVoteTimeout} />}
         </div>
     );
 };
