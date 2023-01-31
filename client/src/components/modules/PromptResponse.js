@@ -13,7 +13,6 @@ const PromptResponse = (props) => {
                 props.message,// Types 'One'
                   () => {
                       console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                      setHasFinishedPrompt0(true);
                   }
               ]}
               wrapper="div"
