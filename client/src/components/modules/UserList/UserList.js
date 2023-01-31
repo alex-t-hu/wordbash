@@ -20,6 +20,7 @@ const UserList = (props) => {
             // setActiveUser={props.setActiveUser}
             user={props.users[key].name}
             avatar={props.users[key].avatar}
+            returned = {props.returned.includes(props.users[key].id)}
             // active={user === props.active}
           />
         ))}

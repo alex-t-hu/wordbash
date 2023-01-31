@@ -4,15 +4,18 @@
   
   .Profile-avatar {
     /* make it responsive */
+    /* max-width: 100%; */
+    object-fit: contain;
+
+    width: auto;
+    height: 100%;
     max-width: 100%;
-    width: 100%;
-    height: auto;
     display: block;
     /* div height to be the same as width*/
-    padding-top: 100%;
+    /* padding-top: 100%; */
   
     /* make it a circle */
-    border-radius: 50%;
+    /* border-radius: 50%; */
   
     /* Centering on image`s center*/
     background-position-y: center;
@@ -37,7 +40,8 @@
   }
   
   .Profile-line {
-    border-color: var(--grey);
+    border-color: var(--white);
+    border-width: 10px;
   }
   
   .Profile-subContainer {
