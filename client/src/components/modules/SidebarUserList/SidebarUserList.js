@@ -17,22 +17,43 @@ const SidebarUserList = (props) => {
   //   setUserState(props.users);
   //   console.log("userState", props.users);
   // }, [props.users]);
+  const [playerList, setPlayerList] = useState([]);
+    // const getName = (id) => {
+    //     let name;
+    //     get("/api/user", {userid: id}).then((userObj) => {name=userObj.name});
+    //     return name;
+    // };
+    useEffect(() => {
+        
+        console.log("Players ", props.users);
+        if (props.users) {
+            let sortedPlayers = Object.keys(props.users).map((key) => {
+                return [key, props.users[key]];
+            });
+            sortedPlayers.sort((a, b) => {return b[1]['score']-a[1]['score']});
+            setPlayerList(sortedPlayers);
+            console.log(sortedPlayers);
+        }
+        
+    }, [props.users]); // see game-logic.js for the structure of game
 
+    
 
-  if(props.users&& Object.keys(props.users).length > 0){
+  if(Object.keys(playerList).length > 0){
     return (
       <div className="w-full h-full flex flex-col text-center bg-opacity-30 bg-gray-50 rounded-xl">
         <div className="w-full bg-gray-100 rounded-t-xl py-2">
           <h1>Leaderboard</h1>
         </div>
         <div className="p-2 flex-grow">
-          {Object.keys(props.users)
+          {Object.keys(playerList)
             .map((key, i) => (
               <SingleScoreUser
                 index={i}
                 // setActiveUser={props.setActiveUser}
-                user={props.users[key].name}
-                score={props.users[key].score}
+                user={playerList[key][1].name}
+                avatar={playerList[key][1].avatar}
+                score={playerList[key][1].score}
                 // active={user === props.active}
               />
             ))}
