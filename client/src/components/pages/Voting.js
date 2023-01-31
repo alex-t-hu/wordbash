@@ -131,7 +131,7 @@ const Voting = (props) => {
 
     
     /**
-     * Go to the Final results page if the voting round is over
+     * Go to the Lobby page if the voting round is over
      */
 
     useEffect(() => {

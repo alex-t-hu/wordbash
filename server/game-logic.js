@@ -198,6 +198,13 @@ const startGame = (gameID, temperature, numRounds) => {
     //     console.log("Game " + gameID + " does not have enough players to start.");
     //     return;
     // }
+
+    // Reset everything.
+    gameState[gameID]["promptsFinished"] = false;
+    gameState[gameID]["votingFinished"] = false;
+    gameState[gameID]["votingResults"] = false;
+    gameState[gameID]["votingRound"] = 0;
+
     if (gameState[gameID]["started"]) {
         console.log("Game " + gameID + " has already started.");
         return;
@@ -367,6 +374,7 @@ const doneVoting = (gameID) => {
     
     if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
         gameState[gameID]["votingFinished"] = true;
+        gameState[gameID]["started"] = false;
         uploadResults(gameID);
     }
 }
