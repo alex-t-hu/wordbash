@@ -28,14 +28,10 @@ const FinalResults = (props) => {
         console.log("game is ", props.game);
     });
 
-    
     const onSubmit = ()=> {
         if(props.userId && props.gameID){
-            post("/api/despawn", {gameID: props.gameID});
+            navigate(`/game/${props.gameID}/lobby`);
         }
-
-        navigate(`/`);
-        
     }
     return (
         <div>

@@ -51,8 +51,6 @@ const Lobby = (props) => {
         if(data.players[props.userId] === undefined){
           post("/api/spawn", {gameID: props.gameID});
         }
-
-
         // console.log("data", data);
         if (props.setGame) {
           props.setGame(data);
@@ -115,6 +113,7 @@ const Lobby = (props) => {
         numRounds: numRounds,
       }).then((g) => {
         console.log("Game created ");
+
       });
     }    
   };
@@ -133,7 +132,7 @@ const Lobby = (props) => {
     if (props.game && props.game.started) {
       navigate(`/game/${props.gameID}/prompt`);
     }
-  }, [props.game.started]);
+  }, [props.game]);
 
 
   

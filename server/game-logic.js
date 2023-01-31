@@ -5,6 +5,9 @@ const User = require("./models/user");
 
 const PromptLoader = require("./prompt-loader");
 
+const socketManager = require("./server-socket");
+
+
 
 /** constants */
 const SCORE_MULTIPLIER = 50;
@@ -111,7 +114,8 @@ const createGame = (gameID) => {
         prompts: []
     }
     console.log("Created game " + gameID);
-    
+    socketManager.gameJustChanged(gameState[gameID], "createGame");
+
     return gameID;
 }
 
@@ -121,6 +125,7 @@ const removePlayer = (playerID) => {
         for(let i = 0; i < gameState[game]["players"].length; i++) {
             if(gameState[game]["players"][i]["id"] === playerID) {
                 deletePlayerFromGame(i, game);
+                socketManager.gameJustChanged(gameState[game], "removePlayer");
             }
         }
     }
@@ -150,6 +155,8 @@ const deletePlayerFromGame = (playerID, gameID) => {
         delete gameState[gameID];
     }
     console.log(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "deletePlayerFromGame");
+
 }
 
 /** Adds a player to the game state */
@@ -189,6 +196,8 @@ const spawnPlayer = (id, name, gameID) => {
 
     }
     console.log(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "spawnPlayer");
+
 };
 
 
@@ -198,11 +207,22 @@ const startGame = (gameID, temperature, numRounds) => {
     //     console.log("Game " + gameID + " does not have enough players to start.");
     //     return;
     // }
+
+    // Reset everything.
+    gameState[gameID]["promptsFinished"] = false;
+    gameState[gameID]["votingFinished"] = false;
+    gameState[gameID]["votingResults"] = false;
+    gameState[gameID]["votingRound"] = 0;
+
     if (gameState[gameID]["started"]) {
         console.log("Game " + gameID + " has already started.");
         return;
     }
-    console.log("Starting game " + gameID);
+
+    gameState[gameID]["started"] = true;
+    
+
+
     gameState[gameID]["numRounds"] = numRounds;
     gameState[gameID]["numPrompts"] = gameState[gameID]["num_Players"] * gameState[gameID]["numRounds"];
 
@@ -217,24 +237,26 @@ const startGame = (gameID, temperature, numRounds) => {
                 content: subset[i],
                 response_0_answer: "",
                 response_1_answer: "",
-                response_0_person_name: "",
-                response_1_person_name: "",
+                response_0_person_name: gameState[gameID]["players"][i %  gameState[gameID]["num_Players"]]["name"],
+                response_1_person_name: gameState[gameID]["players"][(i + 1) %  gameState[gameID]["num_Players"]]["name"],
                 response_0_person_id: "",
                 response_1_person_id: "",
                 response_0_vote_names: [],
                 response_1_vote_names: [],
                 response_0_vote: [],
                 response_1_vote: [],
-                numNoVote: 0,
                 votingStartTime: 0
             }
         }
          
-        gameState[gameID]["started"] = true;
         gameState[gameID]["currentPrompt"] = 0;
         gameState[gameID]["promptStartTime"] = Date.now();
         console.log("Starting game for real " + gameID);
         console.log("start time is ", gameState[gameID]["promptStartTime"]);
+        console.log("Starting game " + gameID);
+
+
+        socketManager.gameJustChanged(gameState[gameID], "startGame");
 
     });
 }
@@ -256,10 +278,8 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     if (!timedOut) {
         if(promptID % numPlayers === playerIdx ){ // keke there's a random mapping from promptID to playerIdx. promptID from kN to (k+1)N-1 maps to perm[promptID%N], perm[promptID%N] -k
             gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
-            gameState[gameID]["prompts"][promptID]["response_0_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
         }else if((promptID + 1) % numPlayers === playerIdx){
             gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
-            gameState[gameID]["prompts"][promptID]["response_1_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
         }else{
             console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
         }
@@ -273,16 +293,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
             }
         }
     } else {
-        for (let i=0; i < gameState[gameID]["numPrompts"]; i++) { // keke numPlayers 
-            for (let j = 0; j < numPlayers; j++) {
-                if (i % numPlayers === j) {
-                    gameState[gameID]["prompts"][i]["response_0_person_name"] =gameState[gameID]["players"][j]["name"]; 
-                } else if ((i+1)%numPlayers === j) {
-                    gameState[gameID]["prompts"][i]["response_1_person_name"] =gameState[gameID]["players"][j]["name"]; 
-                }
-            }
-            
-        }
+        
         // Check if all responses are in
         console.log("checking and replacing all empty responses with (blank) after timing out prompt. in game-logic.js.")
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
@@ -299,23 +310,32 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     
     if(allResponsesIn || timedOut){
         if (!gameState[gameID]["promptsFinished"]) {
-            console.log("All responses in for game " + gameID);
+            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX All responses in for game " + gameID);
             // need to find the start time of the current round
         }
         gameState[gameID]["promptsFinished"] = true;
         gameState[gameID]["prompts"][0]["votingStartTime"] = Date.now();
     }
+    socketManager.gameJustChanged(gameState[gameID], "submitResponse");
+
 }
 
-const submitVote = (id, gameID, promptID, timedOut, response) => {
+const submitVote = (id, gameID, timedOut, response) => {
     playerID = IDtoPlayerID(id, gameID);
     playerName = playerIDtoPlayerName(playerID, gameID);
+
+    promptID = gameState[gameID]["votingRound"];
 
     // Check if player has already voted.
     // I want the playerID not the like google ID.
     if (timedOut) {
         console.log("Player " + playerID + " timed out. Submitting no vote.");
-        gameState[gameID]["prompts"][promptID]["numNoVote"] += 1;
+        
+        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        updateScore(gameID);
+        gameState[gameID]["votingResults"] = true;
+
+
     } else {
         console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
         if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
@@ -335,39 +355,43 @@ const submitVote = (id, gameID, promptID, timedOut, response) => {
         }
     }
     
-   console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
-   console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
+//    console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
+//    console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
     // Check if all votes are in for the current prompt.
-    if(gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_0_vote"].length
-    + gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_1_vote"].length + gameState[gameID]["prompts"][gameState[gameID]["votingRound"]]["numNoVote"]
+    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].length
+    + gameState[gameID]["prompts"][promptID]["response_1_vote"].length
     >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
         
-        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        console.log("Voting round " + promptID + " finished!");
         updateScore(gameID);
         gameState[gameID]["votingResults"] = true;
         // Don't update voting round yet!!
         // The voting round will get updated when the client sends a doneVoting message.
     }
     // Check if all votes are in for all prompts.
+    socketManager.gameJustChanged(gameState[gameID], "submitVote");
+
     
 }
 
 const doneVoting = (gameID) => {
-    gameState[gameID]["votingResults"] = false;
-    gameState[gameID]["votingRound"] += 1;
-    const promptIdx = gameState[gameID]["votingRound"];
-    if (promptIdx < gameState[gameID]["numPrompts"] && gameState[gameID]["prompts"][promptIdx]["votingStartTime"] === 0) {
-        gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
-    }
-    console.log("We are done voting.");
-    
-    if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
-        gameState[gameID]["votingFinished"] = true;
-        uploadResults(gameID);
+    if(gameState[gameID]["votingResults"]){
+        gameState[gameID]["votingResults"] = false;
+        gameState[gameID]["votingRound"] += 1;
+        const promptIdx = gameState[gameID]["votingRound"];
+        if (promptIdx < gameState[gameID]["numPrompts"]) {
+            gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
+        }
+        console.log("We are done voting.");
+        
+        if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
+            gameState[gameID]["votingFinished"] = true;
+            gameState[gameID]["started"] = false;
+            uploadResults(gameID);
+        }
+        socketManager.gameJustChanged(gameState[gameID], "doneVoting");
+    }else{
+        console.log("doneVoting called when votingResults is false.");
     }
 }
 
@@ -414,6 +438,7 @@ const updateScore = (gameID) => {
     gameState[gameID]["players"][
         (rd + 1) % numPlayers
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
+
 }
 
 
