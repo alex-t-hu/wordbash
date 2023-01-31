@@ -93,7 +93,7 @@ const Prompt = (props) => {
     useEffect(() => {
         if (currentPrompt) {
             setCurrentPromptAnim((
-                <PromptQuestion sender={"me"} message={
+                <PromptQuestion sender={"me"} dir={"none"} message={
                     currentPrompt
                 }/>
             ));
