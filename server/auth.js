@@ -17,6 +17,16 @@ function verify(token) {
     .then((ticket) => ticket.getPayload());
 }
 
+const AVATARS = [
+  "Crab.png",
+  "Dog.png",
+  "Frog.png",
+  "Ladybug.png",
+  "Pig.png",
+  "Rooster.png",
+  "Tiger.png",
+  "Wolf.png"]
+
 // gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
@@ -29,7 +39,7 @@ function getOrCreateUser(user) {
       games_played: 0,
       games_won: 0,
       high_score: 0,
-      avatar: "https://images.emojiterra.com/google/android-11/512px/1f43c.png"
+      avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)]
     });
 
     return newUser.save();
