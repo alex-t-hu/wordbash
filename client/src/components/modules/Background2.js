@@ -9,17 +9,18 @@ import "./Background2.css"
 import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-
+const randomColor = require("randomcolor");
 
 /**
  * Define the "App" component
  */
 const Background2 = (props) => {
-    const backgroundStyle = (reverse, direction, color1, color2) => ({
+    const backgroundStyle = (reverse, direction, color1, color2) => {
+        return {
         animationDirection: reverse && `alternate-reverse`,
         animationDuration: `4s`,
         backgroundImage: `linear-gradient(${direction==="y" ? '0deg' : '90deg'}, ${color1} 50%, ${color2} 50%)`,
-    });
+    };};
     return (
         <>
             {/* <div className="bg"></div> */}
