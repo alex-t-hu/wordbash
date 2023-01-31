@@ -9,9 +9,9 @@ const PromptResponse = (props) => {
 
 
   return (
-    <button onClick = {props.handleVote} className={`w-[40%]`}>
-      <div className={`${props.selected ? "bg-blue-400" : "bg-white"} flex w-full rounded-xl justify-center hover:cursor transition ease-in-out delay-50 hover:scale-[1.04] hover:scale-130 duration-300`}>
-        <div class={`w-full flex-1 text-black p-2 px-6 rounded-xl mb-2 relative text-[2rem] break-words text-${props.dir==="left" ? "left" : "right"}`}>
+    <button onClick = {props.handleVote} className={`w-full ${props.hoverable && "hover:cursor-auto"}`}>
+      <div className={`${props.selected ? "bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400" : "bg-white"} flex w-full rounded-xl justify-center transition ease-in-out delay-50 ${props.hoverable && "hover:cursor hover:scale-[1.04] hover:scale-130"} duration-300`}>
+        <div class={`w-full flex-1 text-black p-2 px-6 rounded-xl mb-2 relative text-[2rem] break-words text-center`}>
             {/* <TypeAnimation
                 sequence={[
                   props.message,// Types 'One'

@@ -6,7 +6,7 @@ import { useState } from "react";
 import SortedPlayerList from "../../modules/SortedPlayerList.js";
 import "./VotingResults.css";
 import { TypeAnimation } from 'react-type-animation';
-import PromptResponse2 from "../../modules/PromptResponse2.js";
+import PromptResponse from "../../modules/PromptResponse.js";
 import PromptQuestion from "../../modules/PromptQuestion.js";
 
 const VotingResults2 = (props) => {
@@ -40,37 +40,42 @@ const VotingResults2 = (props) => {
                 <PromptQuestion message={prompt["content"]} dir={"none"}/>
             </div>
 
-            <div className="flex flex-row justify-between px-20">
-                <div className="flex flex-col">
-                    <PromptResponse2 message={prompt['response_0_answer']} author={prompt['response_0_person_name']} dir="left"/>
-                        {prompt["response_0_vote_names"].map((player) => {
-                    return (<TypeAnimation
-                    sequence={player}
-                    wrapper="div"
-                    cursor={false}
-                    repeat={0}
-                    style={{ fontSize: '1.2em' }}
-                    /> );
+            <div className="flex flex-row w-full space-x-[20%] px-20">
+                <div className="flex flex-col w-[50%]">
+                    <PromptResponse hoverable={false} message={prompt['response_0_answer']} author={prompt['response_0_person_name']} dir="left"/>
+                    {prompt["response_0_vote_names"].map((player) => {
+                        return (<TypeAnimation
+                            sequence={(player + " hi")}
+                            wrapper="div"
+                            cursor={false}
+                            repeat={0}
+                            style={{ fontSize: '1.2em' }}
+                            className="text-center"
+                        /> );
                     })} 
                 </div>
-                <div className="flex flex-col">
-                    <PromptResponse2 message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
+                <div className="flex flex-col w-[50%]">
+                    <PromptResponse hoverable={false} message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
                     {prompt["response_1_vote_names"].map((player) => {
-                    return (<TypeAnimation
-                    sequence={player}
-                    wrapper="div"
-                    cursor={false}
-                    repeat={0}
-                    style={{ fontSize: '1.2em' }}
-                    /> );
+                        return (<TypeAnimation
+                            sequence={player}
+                            wrapper="div"
+                            cursor={false}
+                            repeat={0}
+                            style={{ fontSize: '1.2em' }}
+                            className="text-center"
+                        /> );
                     })}  
                 </div>
             </div>
             
-            <button className="votingResults-button align-center"
-            onClick = {props.handleDoneVoting}>
-                Continue to next round!
-            </button>
+            <div className="flex-grow"></div>
+            <div className="w-full flex justify-center my-[40px]">
+                <button className="w-[50%] bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
+                        onClick = {props.handleDoneVoting}>
+                    Continue to next round!
+                </button>               
+            </div>
         </div>
     );
     

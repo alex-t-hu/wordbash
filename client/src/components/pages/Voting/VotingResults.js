@@ -114,8 +114,8 @@ const VotingResults = (props) => {
                     }
                 </div> 
             </div>
-            <button className="votingResults-button"
-            onClick = {props.handleDoneVoting}>
+            <button className="votingResults-button flex justify-center"
+                    onClick = {props.handleDoneVoting}>
                 Continue to next round!
             </button>
         </div>

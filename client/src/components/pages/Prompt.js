@@ -7,6 +7,7 @@ import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
 import OurTimer from "../modules/OurTimer.js";
 import PromptQuestion from "../modules/PromptQuestion.js"
+import Waiting from "./Waiting";
 
 import { TypeAnimation } from 'react-type-animation';
 import Typed from "react-typed"
@@ -201,11 +202,7 @@ const Prompt = (props) => {
         //     return <div>Everyone's finished answering</div>
         // }
         return (
-            <div className="Prompt-container">
-                <div className="Prompt-prompt">
-                    <h1>Waiting for other players to finish...</h1>
-                </div>
-            </div>
+            <Waiting message={"Waiting for other players to finish..."} />
         );
     }
 
