@@ -209,6 +209,7 @@ const startGame = (gameID, temperature, numRounds) => {
     gameState[gameID]["temperature"] = temperature;
     // Generate Prompts
     // TODO
+    console.log("Generating prompts..." + gameState[gameID]["numPrompts"]);
     PromptLoader.getPromptSubset(temperature, gameState[gameID]["numPrompts"]).then((subset) => {
         console.log("Subset: " + subset);
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
