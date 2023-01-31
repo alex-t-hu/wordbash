@@ -36,6 +36,7 @@
     "nodemon": "^2.0.6",
     "react": "^16.14.0",
     "react-collapsible": "^2.10.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^16.14.0",
     "react-native-background-shapes": "^1.0.7",
     "react-resizable": "^3.0.4",

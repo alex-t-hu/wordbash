@@ -1,0 +1,40 @@
+.finalResults-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: #fff;
+}
+.finalResultsFirstPlace {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: #fff;
+}
+.finalResultsSecondPlace {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: #fff;
+}
+.returnToLobbyButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: #fff;
+}

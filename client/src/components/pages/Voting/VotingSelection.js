@@ -25,13 +25,21 @@ const VotingSelection = (props) => {
                 <p>
 You have voted! Please wait for other players to vote. If you would like, you can change your response!</p></div>}
 
-            <div className="flex flex-row justify-between px-20">
-                <button onClick = {props.handleVote0} className={props.votingSelection === 0 ? "font-mono text-5xl border-cyan-400 border-4" : "font-mono text-5xl" }>
-                    {props.currentResponse0 && <PromptResponse message={props.currentResponse0} dir="left"/>}
-                </button>
-                <button onClick = {props.handleVote1} className={props.votingSelection === 1 ? "font-mono text-5xl border-cyan-400 border-4" : "font-mono text-5xl"}>
-                    {props.currentResponse1 && <PromptResponse message={props.currentResponse1} dir="right"/>}
-                </button>
+            <div className="flex flex-row w-full justify-between px-20">
+                {props.currentResponse0 && 
+                    <PromptResponse selected={props.votingSelection===0}
+                                    message={props.currentResponse0}
+                                    dir="left"
+                                    handleVote={props.handleVote0}
+                    />
+                }
+                {props.currentResponse1 && 
+                    <PromptResponse selected={props.votingSelection===1}
+                                    message={props.currentResponse1}
+                                    dir="right"
+                                    handleVote={props.handleVote1}
+                    />
+                }
             </div>
             { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={300} handleTimeout={props.handleVoteTimeout} />}
         </div>

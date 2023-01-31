@@ -210,7 +210,7 @@ const Lobby = (props) => {
           </div>
         }
       </div>
-      <PromptResponse message={"hi mdfalskfjadskfkdsajfkadsf"} dir={"left"}/>
+      
     </div>
   );
 }
