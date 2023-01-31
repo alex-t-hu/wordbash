@@ -5,27 +5,33 @@ import "../../utilities.css";
 
 const PromptResponse = (props) => {
   let bgColor = "white";
+
+
+
   return (
-    <div class="flex w-full justify-center mb-4 w-[60%]">
-      <div class={`flex-1 bg-${bgColor} text-black p-2 px-6 rounded-lg mb-2 relative text-[2rem]`}>
-          <TypeAnimation
-              sequence={[
-                props.message,// Types 'One'
-                  () => {
-                      console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                      setHasFinishedPrompt0(true);
-                  }
-              ]}
-              wrapper="div"
-              cursor={false}
-              repeat={0}
-              speed="80"
-              style={{ fontSize: '1.2em' }}
-          />
-          {props.dir!=="none" && 
-          <div class={`absolute ${props.dir==="left" ? "left" : "right"}-0 top-1/2 transform ${props.dir==="left" ? "-translate-x-1/2" : "translate-x-1/2"} rotate-45 w-3 h-3 bg-${bgColor}`}></div>}
+    <button onClick = {props.handleVote} className={`w-[40%]`}>
+      <div className={`${props.selected ? "bg-blue-400" : "bg-white"} flex w-full rounded-xl justify-center hover:cursor transition ease-in-out delay-50 hover:scale-[1.04] hover:scale-130 duration-300`}>
+        <div class={`w-full flex-1 text-black p-2 px-6 rounded-xl mb-2 relative text-[2rem] break-words text-${props.dir==="left" ? "left" : "right"}`}>
+            {/* <TypeAnimation
+                sequence={[
+                  props.message,// Types 'One'
+                    () => {
+                        console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                        setHasFinishedPrompt0(true);
+                    }
+                ]}
+                wrapper="div"
+                cursor={false}
+                repeat={0}
+                speed="80"
+                style={{ fontSize: '1.2em' }}
+            /> */}
+            {props.message}
+            {props.dir!=="none" && 
+            <div className={`${props.selected ? "bg-blue-400" : "bg-white"} absolute ${props.dir==="left" ? "left" : "right"}-0 top-1/2 transform ${props.dir==="left" ? "-translate-x-1/2" : "translate-x-1/2"} rotate-45 w-3 h-3`}></div>}
+        </div>
       </div>
-    </div>
+    </button>
   );
 }
 
