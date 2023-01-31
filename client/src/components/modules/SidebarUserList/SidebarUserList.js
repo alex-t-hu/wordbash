@@ -21,11 +21,11 @@ const SidebarUserList = (props) => {
 
   if(props.users&& Object.keys(props.users).length > 0){
     return (
-      <div className="w-[25%] flex flex-col text-center bg-opacity-30 bg-gray-50 rounded-xl">
+      <div className="w-full h-full flex flex-col text-center bg-opacity-30 bg-gray-50 rounded-xl">
         <div className="w-full bg-gray-100 rounded-t-xl py-2">
           <h1>Leaderboard</h1>
         </div>
-        <div className="p-2">
+        <div className="p-2 flex-grow">
           {Object.keys(props.users)
             .map((key, i) => (
               <SingleScoreUser

@@ -6,6 +6,7 @@ import { socket } from "../../client-socket.js";
 import { get, post } from "../../utilities";
 import {navigate} from "@reach/router";
 import "./Lobby.css";
+import PromptResponse from "../modules/PromptResponse.js";
 
 const Lobby = (props) => {
 
@@ -209,6 +210,7 @@ const Lobby = (props) => {
           </div>
         }
       </div>
+      <PromptResponse message={"hi mdfalskfjadskfkdsajfkadsf"} dir={"left"}/>
     </div>
   );
 }
