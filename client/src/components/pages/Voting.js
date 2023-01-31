@@ -20,7 +20,7 @@ const Voting = (props) => {
     
     const [promptNumber, setPromptNumber] = useState(-1); // 0, 1, or 2 (done)
     const [voted, setVoted] = useState(false); // true if the user has voted on the CURRENT prompt
-    // const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
+    const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
     
 
     /**
@@ -66,7 +66,7 @@ const Voting = (props) => {
         if (props.setGame) {
             props.setGame(data);
         //   console.log("l;kasdjf;lkasdf", data['votingResults']);
-            // setAllVoted(data['votingResults']);
+            setAllVoted(data['votingResults']);
         };
         });
     }
@@ -81,7 +81,7 @@ const Voting = (props) => {
                 if (props.setGame) {
                 props.setGame(data);
                 // console.log("blah", data['votingResults']);
-                // setAllVoted(data['votingResults']); 
+                setAllVoted(data['votingResults']); 
                 };
             });
         }};
@@ -115,26 +115,11 @@ const Voting = (props) => {
      */
     
     useEffect(() => {
-        if(props.game.votingRound !== promptNumber){
+        if(props.game.votingRound > promptNumber){
             setPromptNumber(props.game.votingRound);
             setVoted(false);
         }
-    }, [props.game]);
-
-    /**
-     * Update allVoted if game["votingResults"] has changed
-     */
-    // useEffect(() => {
-    //     // console.log("Bobo");
-    //     setAllVoted(props.game["votingResults"]);
-    // }, [props.game]);
-
-    
-    /**
-     * Go to the Lobby page if the voting round is over
-     */
-
-    useEffect(() => {
+        setAllVoted(props.game["votingResults"]);
         if(props.game.votingFinished ) {
             navigate(`/game/${props.gameID}/results`);
         }
@@ -151,7 +136,8 @@ const Voting = (props) => {
             gameID: props.gameID,
             timedOut: false,
             response: 0,
-        }).then(
+        })
+        .then(
             setVoted(true)
         );
     };
@@ -161,7 +147,8 @@ const Voting = (props) => {
             gameID: props.gameID,
             timedOut: false,
             response: 1,
-        }).then(
+        })
+        .then(
             setVoted(true)
         );
     };
@@ -170,7 +157,8 @@ const Voting = (props) => {
             gameID: props.gameID,
             timedOut: true,
             response: 0,
-        }).then(
+        })
+        .then(
             setVoted(true)
         )
     };
@@ -180,34 +168,34 @@ const Voting = (props) => {
         post("/api/doneVoting", {
                 gameID: props.gameID,
             }
-        ).then(() => {
+        )
+        .then(() => {
             setVoted(false);
-            // setAllVoted(false);
+            setAllVoted(false);
         });
     };
 
     if (!props.userId) {
         return (<div>Please Log in</div>);
     }
-    if(voted){
-        if(props.game["votingResults"]){
-            return (<div>
-                <VotingResults
-                    handleDoneVoting = {handleDoneVoting}
-                    continueToNextPrompt = {props.continueToNextVoting}
-                    prompt = {props.game["prompts"][promptNumber]}
-                    userId = {props.userId}
-                    />
-                </div>);
-        }
-        return (<div>You have voted! Please wait for other players to vote.</div>);
+    if(allVoted){
+        return (<div>
+            <VotingResults
+                handleDoneVoting = {handleDoneVoting}
+                continueToNextPrompt = {props.continueToNextVoting}
+                prompt = {props.game["prompts"][promptNumber]}
+                userId = {props.userId}
+                />
+            </div>);
     }
+    
     return (
         <div>
             <VotingSelection
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}
                 currentResponse1 = {currentResponse1}
+                hasVoted = {voted}
                 handleVote0 = {handleVote0}
                 handleVote1 = {handleVote1}
                 handleVoteTimeout = {handleVoteTimeout}

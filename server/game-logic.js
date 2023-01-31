@@ -114,7 +114,7 @@ const createGame = (gameID) => {
         prompts: []
     }
     console.log("Created game " + gameID);
-    socketManager.gameJustChanged(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "createGame");
 
     return gameID;
 }
@@ -125,7 +125,7 @@ const removePlayer = (playerID) => {
         for(let i = 0; i < gameState[game]["players"].length; i++) {
             if(gameState[game]["players"][i]["id"] === playerID) {
                 deletePlayerFromGame(i, game);
-                socketManager.gameJustChanged(gameState[game]);
+                socketManager.gameJustChanged(gameState[game], "removePlayer");
             }
         }
     }
@@ -155,7 +155,7 @@ const deletePlayerFromGame = (playerID, gameID) => {
         delete gameState[gameID];
     }
     console.log(gameState[gameID]);
-    socketManager.gameJustChanged(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "deletePlayerFromGame");
 
 }
 
@@ -196,7 +196,7 @@ const spawnPlayer = (id, name, gameID) => {
 
     }
     console.log(gameState[gameID]);
-    socketManager.gameJustChanged(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "spawnPlayer");
 
 };
 
@@ -256,7 +256,7 @@ const startGame = (gameID, temperature, numRounds) => {
         console.log("Starting game " + gameID);
 
 
-        socketManager.gameJustChanged(gameState[gameID]);
+        socketManager.gameJustChanged(gameState[gameID], "startGame");
 
     });
 }
@@ -316,7 +316,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
         gameState[gameID]["promptsFinished"] = true;
         gameState[gameID]["prompts"][0]["votingStartTime"] = Date.now();
     }
-    socketManager.gameJustChanged(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "submitResponse");
 
 }
 
@@ -355,8 +355,8 @@ const submitVote = (id, gameID, timedOut, response) => {
         }
     }
     
-   console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
-   console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
+//    console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
+//    console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
     // Check if all votes are in for the current prompt.
     if(gameState[gameID]["prompts"][promptID]["response_0_vote"].length
     + gameState[gameID]["prompts"][promptID]["response_1_vote"].length
@@ -369,27 +369,30 @@ const submitVote = (id, gameID, timedOut, response) => {
         // The voting round will get updated when the client sends a doneVoting message.
     }
     // Check if all votes are in for all prompts.
-    socketManager.gameJustChanged(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID], "submitVote");
 
     
 }
 
 const doneVoting = (gameID) => {
-    gameState[gameID]["votingResults"] = false;
-    gameState[gameID]["votingRound"] += 1;
-    const promptIdx = gameState[gameID]["votingRound"];
-    if (promptIdx < gameState[gameID]["numPrompts"] && gameState[gameID]["prompts"][promptIdx]["votingStartTime"] === 0) {
-        gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
+    if(gameState[gameID]["votingResults"]){
+        gameState[gameID]["votingResults"] = false;
+        gameState[gameID]["votingRound"] += 1;
+        const promptIdx = gameState[gameID]["votingRound"];
+        if (promptIdx < gameState[gameID]["numPrompts"]) {
+            gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
+        }
+        console.log("We are done voting.");
+        
+        if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
+            gameState[gameID]["votingFinished"] = true;
+            gameState[gameID]["started"] = false;
+            uploadResults(gameID);
+        }
+        socketManager.gameJustChanged(gameState[gameID], "doneVoting");
+    }else{
+        console.log("doneVoting called when votingResults is false.");
     }
-    console.log("We are done voting.");
-    
-    if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
-        gameState[gameID]["votingFinished"] = true;
-        gameState[gameID]["started"] = false;
-        uploadResults(gameID);
-    }
-    socketManager.gameJustChanged(gameState[gameID]);
-
 }
 
 const uploadResults = (gameID) => {
@@ -435,7 +438,6 @@ const updateScore = (gameID) => {
     gameState[gameID]["players"][
         (rd + 1) % numPlayers
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
-    socketManager.gameJustChanged(gameState[gameID]);
 
 }
 
