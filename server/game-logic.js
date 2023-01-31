@@ -340,8 +340,19 @@ const submitVote = (id, gameID, timedOut, response) => {
         console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
         if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
             gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
-            console.log("You have already voted for this prompt!");
-            return;
+            if (gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) && response===1) {
+                gameState[gameID]["prompts"][promptID]["response_0_vote"].splice(gameState[gameID]["prompts"][promptID]["response_0_vote"].indexOf(playerID), 1);
+                gameState[gameID]["prompts"][promptID]["response_0_vote_names"].splice(gameState[gameID]["prompts"][promptID]["response_0_vote_names"].indexOf(playerID), 1);
+                console.log("Player " + playerID + " changed vote from 0 to 1");
+            } else if (gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)) {
+                gameState[gameID]["prompts"][promptID]["response_1_vote"].splice(gameState[gameID]["prompts"][promptID]["response_1_vote"].indexOf(playerID), 1);
+                gameState[gameID]["prompts"][promptID]["response_1_vote_names"].splice(gameState[gameID]["prompts"][promptID]["response_1_vote_names"].indexOf(playerID), 1);
+                console.log("Player " + playerID + " changed vote from 1 to 0");
+            } else {
+                console.log("badbad, submitVote failed");
+                console.log("You have already voted for this prompt!");
+                return;
+            }
         }
 
         if(response === 0){

@@ -22,7 +22,7 @@ const Voting = (props) => {
     const [voted, setVoted] = useState(false); // true if the user has voted on the CURRENT prompt
     const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
     
-
+    const [votingSelection, setVotingSelection] = useState(-1); // true if the user has voted on the CURRENT prompt
     /**
      * Here's the voting loop:
      * promptNumber = 0, voted = false, allVoted = false
@@ -137,9 +137,10 @@ const Voting = (props) => {
             timedOut: false,
             response: 0,
         })
-        .then(
-            setVoted(true)
-        );
+        .then( ()=> {
+            setVoted(true);
+            setVotingSelection(0);
+        });
     };
     const handleVote1 = (event) => {
         event.preventDefault();
@@ -148,9 +149,11 @@ const Voting = (props) => {
             timedOut: false,
             response: 1,
         })
-        .then(
-            setVoted(true)
-        );
+        .then( () => {
+            setVoted(true);
+            setVotingSelection(1);
+
+    });
     };
     const handleVoteTimeout = () => {
         post("/api/submitVote", {
@@ -199,6 +202,8 @@ const Voting = (props) => {
                 handleVote0 = {handleVote0}
                 handleVote1 = {handleVote1}
                 handleVoteTimeout = {handleVoteTimeout}
+                votingSelection = {votingSelection}
+                setVotingSelection = {setVotingSelection}
                 prompt = {props.game["prompts"][promptNumber]}
             />
         </div>
