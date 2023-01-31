@@ -11,6 +11,7 @@ import VotingSelection from "./Voting/VotingSelection";
 import VotingResults from "./Voting/VotingResults";
 import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
+import VotingResults2 from "./Voting/VotingResults2";
 
 const Voting = (props) => {
     /**
@@ -183,12 +184,20 @@ const Voting = (props) => {
     }
     if(allVoted){
         return (<div>
-            <VotingResults
+            {/* <VotingResults
                 handleDoneVoting = {handleDoneVoting}
                 continueToNextPrompt = {props.continueToNextVoting}
                 prompt = {props.game["prompts"][promptNumber]}
                 userId = {props.userId}
-                />
+        /> */}
+            <VotingResults2
+                handleDoneVoting = {handleDoneVoting}
+                currentPrompt = {currentPrompt}
+                currentResponse0 = {currentResponse0}
+                currentResponse1 = {currentResponse1}
+                userId = {props.userId}
+                prompt = {props.game["prompts"][promptNumber]}
+            />
             </div>);
     }
     
