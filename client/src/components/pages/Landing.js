@@ -10,6 +10,7 @@ import ManyWords from "../modules/ManyWords.js";
 import LoginPage from "./LoginPage.js"
 import Background from "../modules/Background.js"
 import Background2 from "../modules/Background2.js"
+import Help from "../modules/Help.js"
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
@@ -116,6 +117,8 @@ const Landing = (props) => {
   }
   return (
     <div className="flex w-full h-full justify-center align-center">
+
+      <Help />
       <div className="Landing-blah">
         {errorMessage && 
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-up" role="alert">

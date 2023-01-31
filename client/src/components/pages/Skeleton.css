@@ -618,6 +618,10 @@ video {
   top: -0.25rem;
 }
 
+.left-8{
+  left: 2rem;
+}
+
 .-z-20{
   z-index: -20;
 }
@@ -831,6 +835,10 @@ video {
 
 .w-\[300px\]{
   width: 300px;
+}
+
+.w-11\/12{
+  width: 91.666667%;
 }
 
 .flex-none{
@@ -1377,6 +1385,11 @@ video {
 .text-gray-100{
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
+.text-gray-700{
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .underline{

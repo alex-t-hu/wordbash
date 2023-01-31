@@ -114,19 +114,19 @@ const PromptLoader = require("./prompt-loader");
 
 const logAllPrompts = () => {
   Prompt.find({}, (err, prompts) => {
-      console.log(prompts);
+      console.log(prompts.length);
   });
 };
 
-// const deleteAllPrompts = () => {
-//   Prompt.deleteMany({}, (err) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("Successfully deleted all prompts");
-//     }
-//   });
-// };
+const deleteAllPrompts = () => {
+  Prompt.deleteMany({}, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully deleted all prompts");
+    }
+  });
+};
 
 
 // /**
@@ -154,20 +154,27 @@ const logAllPrompts = () => {
 
 // const Data = require("./data.json");
 
-// for(let i = 5; i <= 21; i++) {
-//   for(let j = 0; j <= 9; j++) {
+// deleteAllPrompts();
+
+// for(let i = 5; i < 21; i++) {
+//   for(let j = 0; j < Data.Data[i].length; j++) {
 //     const prompt = new Prompt({
-//       prompt: Data[i][j],
+//       prompt: Data.Data[i][j],
 //       temperature: i,
 //       index: j,
 //     });
-//     prompt.save();
+//     prompt.save().then(
+//       (result) => {
+//         console.log("Saved prompt: " + result);
+//       }
+//     )
 //   }
 // }
 
-// addTmpPrompts();
 
-// logAllPrompts();
+
+
+logAllPrompts();
 
 // PromptLoader.getPromptSubset(10, 5).then(
 //   (result) => {
