@@ -5,6 +5,9 @@ const User = require("./models/user");
 
 const PromptLoader = require("./prompt-loader");
 
+const socketManager = require("./server-socket");
+
+
 
 /** constants */
 const SCORE_MULTIPLIER = 50;
@@ -111,7 +114,8 @@ const createGame = (gameID) => {
         prompts: []
     }
     console.log("Created game " + gameID);
-    
+    socketManager.gameJustChanged(gameState[gameID]);
+
     return gameID;
 }
 
@@ -121,6 +125,7 @@ const removePlayer = (playerID) => {
         for(let i = 0; i < gameState[game]["players"].length; i++) {
             if(gameState[game]["players"][i]["id"] === playerID) {
                 deletePlayerFromGame(i, game);
+                socketManager.gameJustChanged(gameState[game]);
             }
         }
     }
@@ -150,6 +155,8 @@ const deletePlayerFromGame = (playerID, gameID) => {
         delete gameState[gameID];
     }
     console.log(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID]);
+
 }
 
 /** Adds a player to the game state */
@@ -189,6 +196,8 @@ const spawnPlayer = (id, name, gameID) => {
 
     }
     console.log(gameState[gameID]);
+    socketManager.gameJustChanged(gameState[gameID]);
+
 };
 
 
@@ -209,7 +218,11 @@ const startGame = (gameID, temperature, numRounds) => {
         console.log("Game " + gameID + " has already started.");
         return;
     }
-    console.log("Starting game " + gameID);
+
+    gameState[gameID]["started"] = true;
+    
+
+
     gameState[gameID]["numRounds"] = numRounds;
     gameState[gameID]["numPrompts"] = gameState[gameID]["num_Players"] * gameState[gameID]["numRounds"];
 
@@ -237,11 +250,14 @@ const startGame = (gameID, temperature, numRounds) => {
             }
         }
          
-        gameState[gameID]["started"] = true;
         gameState[gameID]["currentPrompt"] = 0;
         gameState[gameID]["promptStartTime"] = Date.now();
         console.log("Starting game for real " + gameID);
         console.log("start time is ", gameState[gameID]["promptStartTime"]);
+        console.log("Starting game " + gameID);
+
+
+        socketManager.gameJustChanged(gameState[gameID]);
 
     });
 }
@@ -301,6 +317,8 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
         gameState[gameID]["promptsFinished"] = true;
         gameState[gameID]["prompts"][0]["votingStartTime"] = Date.now();
     }
+    socketManager.gameJustChanged(gameState[gameID]);
+
 }
 
 const submitVote = (id, gameID, promptID, timedOut, response) => {
@@ -349,6 +367,8 @@ const submitVote = (id, gameID, promptID, timedOut, response) => {
         // The voting round will get updated when the client sends a doneVoting message.
     }
     // Check if all votes are in for all prompts.
+    socketManager.gameJustChanged(gameState[gameID]);
+
     
 }
 
@@ -366,6 +386,8 @@ const doneVoting = (gameID) => {
         gameState[gameID]["started"] = false;
         uploadResults(gameID);
     }
+    socketManager.gameJustChanged(gameState[gameID]);
+
 }
 
 const uploadResults = (gameID) => {
@@ -397,6 +419,8 @@ const uploadResults = (gameID) => {
             user.save();
         });
     }
+    socketManager.gameJustChanged(gameState[gameID]);
+
 }
 
 
@@ -411,6 +435,8 @@ const updateScore = (gameID) => {
     gameState[gameID]["players"][
         (rd + 1) % numPlayers
     ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
+    socketManager.gameJustChanged(gameState[gameID]);
+
 }
 
 

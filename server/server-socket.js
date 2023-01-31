@@ -7,9 +7,8 @@ const getAllConnectedUsers = () => Object.values(socketToUserMap);
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
-const gameJustChanged = (gameID) => {
+const gameJustChanged = (game) => {
   console.log("gameJustChanged");
-  const game = Game.getGame(gameID);
   if (game && game.players) {
     const sockets = game.players.map((player) => getSocketFromUserID(player.id));
     sockets.forEach((socket) => {

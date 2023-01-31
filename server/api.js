@@ -88,7 +88,7 @@ router.post("/createGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.createGame(req.body.gameID);
-      socketManager.gameJustChanged(req.body.gameID);
+//       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
 
 
       console.log("created new Game with gameID: " + req.body.gameID);
@@ -108,7 +108,6 @@ router.post("/startGame", (req, res) => {
       Game.startGame(req.body.gameID, req.body.temperature, req.body.numRounds);
       console.log("started game");
       console.log(Game.gameState);
-      socketManager.gameJustChanged(req.body.gameID);
     }else{
       console.log("huh something borked.");
     }
@@ -126,7 +125,7 @@ router.post("/spawn", (req, res) => {
       Game.spawnPlayer(req.user._id, req.user.name, req.body.gameID);
         console.log("Spawned player. Here are the players:");
         console.log(Game.gameState[req.body.gameID]["players"]);
-            socketManager.gameJustChanged(req.body.gameID);
+  //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
 
 
     }else{
@@ -142,7 +141,7 @@ router.post("/despawn", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.deletePlayerFromGame(req.user, req.body.gameID); // Removes from specific game
-      socketManager.gameJustChanged(req.body.gameID);
+//       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     } else {
       console.log('inside 1');
     }
@@ -160,7 +159,7 @@ router.post("/submitResponse", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.submitResponse(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);
-      socketManager.gameJustChanged(req.body.gameID);
+//       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     }
   }
   res.send({});
@@ -172,7 +171,7 @@ router.post("/submitVote", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.submitVote(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);
-      socketManager.gameJustChanged(req.body.gameID);
+//       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     }
   }
   res.send({});
@@ -185,7 +184,7 @@ router.post("/doneVoting", (req, res) => {
       // console.log("We are done voting inside api.");
 
       Game.doneVoting(req.body.gameID);
-      socketManager.gameJustChanged(req.body.gameID);
+//       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     }
   //   else{
   //     console.log("Problem 1.");
