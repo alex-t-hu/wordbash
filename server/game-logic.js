@@ -60,6 +60,7 @@ const gameState = {}
             players: {
                 player_id:{ (a number from 0 to N-1)
                     name (actual name)
+                    avatar (actual avatar)
                     id (actual hex id)
                     score
                 }
@@ -160,7 +161,7 @@ const deletePlayerFromGame = (playerID, gameID) => {
 }
 
 /** Adds a player to the game state */
-const spawnPlayer = (id, name, gameID) => {
+const spawnPlayer = (id, name, avatar, gameID) => {
     if(!gameState[gameID]) {
         // ur bad
         console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
@@ -189,7 +190,8 @@ const spawnPlayer = (id, name, gameID) => {
         gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
             score : 0,
-            name : name
+            name : name,
+            avatar : avatar
         };
 
         gameState[gameID]["num_Players"] += 1;

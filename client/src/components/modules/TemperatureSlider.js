@@ -53,7 +53,7 @@ const TemperatureSlider = (props) => {
                 onMouseLeave = {onMouseLeave}
                 className="bg-gray-200 p-4 flex flex-row space-x-4 mx-2 rounded-md">
 
-                <h1 className="w-[120px] text-right">Temperature:</h1>
+                <h1 className="w-[120px] text-right font-bold">Temperature:</h1>
 
                 <div className="flex flex-col flex-grow text-center pt-1">
                     <input 

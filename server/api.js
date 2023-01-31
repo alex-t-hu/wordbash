@@ -66,6 +66,22 @@ router.post("/updateUserName", (req, res) => {
 });
 
 
+router.post("/updateUserAvatar", (req, res) => {
+  console.log("Bork mf")
+  if (req.user) {
+    console.log("updating user " + req.user._id+ " avatar to " + req.body.avatar)
+    // Update the user in the MongoDB database
+    User.findById(req.user._id).then((user) => {
+      user.avatar = req.body.avatar;
+      user.save()
+    });
+    req.user.avatar = req.body.avatar;
+    socketManager.editUser(req.user);
+  }
+  res.send({});
+});
+
+
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
   if (req.user)
@@ -122,7 +138,7 @@ router.post("/spawn", (req, res) => {
     if(req.body.gameID){
       console.log(req.user);
       
-      Game.spawnPlayer(req.user._id, req.user.name, req.body.gameID);
+      Game.spawnPlayer(req.user._id, req.user.name, req.user.avatar, req.body.gameID);
         console.log("Spawned player. Here are the players:");
         console.log(Game.gameState[req.body.gameID]["players"]);
   //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));

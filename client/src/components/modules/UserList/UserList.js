@@ -19,6 +19,7 @@ const UserList = (props) => {
             index={i}
             // setActiveUser={props.setActiveUser}
             user={props.users[key].name}
+            avatar={props.users[key].avatar}
             // active={user === props.active}
           />
         ))}
