@@ -224,8 +224,8 @@ const startGame = (gameID, temperature, numRounds) => {
                 content: subset[i],
                 response_0_answer: "",
                 response_1_answer: "",
-                response_0_person_name: "",
-                response_1_person_name: "",
+                response_0_person_name: gameState[gameID]["players"][i %  gameState[gameID]["num_Players"]]["name"],
+                response_1_person_name: gameState[gameID]["players"][(i + 1) %  gameState[gameID]["num_Players"]]["name"],
                 response_0_person_id: "",
                 response_1_person_id: "",
                 response_0_vote_names: [],
@@ -263,10 +263,8 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     if (!timedOut) {
         if(promptID % numPlayers === playerIdx ){ // keke there's a random mapping from promptID to playerIdx. promptID from kN to (k+1)N-1 maps to perm[promptID%N], perm[promptID%N] -k
             gameState[gameID]["prompts"][promptID]["response_0_answer"] = response;
-            gameState[gameID]["prompts"][promptID]["response_0_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
         }else if((promptID + 1) % numPlayers === playerIdx){
             gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
-            gameState[gameID]["prompts"][promptID]["response_1_person_name"] = gameState[gameID]["players"][playerIdx]["name"];
         }else{
             console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
         }
@@ -280,16 +278,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
             }
         }
     } else {
-        for (let i=0; i < gameState[gameID]["numPrompts"]; i++) { // keke numPlayers 
-            for (let j = 0; j < numPlayers; j++) {
-                if (i % numPlayers === j) {
-                    gameState[gameID]["prompts"][i]["response_0_person_name"] =gameState[gameID]["players"][j]["name"]; 
-                } else if ((i+1)%numPlayers === j) {
-                    gameState[gameID]["prompts"][i]["response_1_person_name"] =gameState[gameID]["players"][j]["name"]; 
-                }
-            }
-            
-        }
+        
         // Check if all responses are in
         console.log("checking and replacing all empty responses with (blank) after timing out prompt. in game-logic.js.")
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
@@ -306,7 +295,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     
     if(allResponsesIn || timedOut){
         if (!gameState[gameID]["promptsFinished"]) {
-            console.log("All responses in for game " + gameID);
+            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX All responses in for game " + gameID);
             // need to find the start time of the current round
         }
         gameState[gameID]["promptsFinished"] = true;

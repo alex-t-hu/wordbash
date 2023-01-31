@@ -59,37 +59,37 @@ const Voting = (props) => {
     //     }
     // });
     useEffect(() => {
-        if(props.userId && props.gameID){
-            console.log("blah voting");
-          get("/api/game", {gameID: props.gameID}).then((data) => {
-            // console.log("data", data);
-            if (props.setGame) {
-              props.setGame(data);
-            //   console.log("l;kasdjf;lkasdf", data['votingResults']);
-              setAllVoted(data['votingResults']);
-            };
-          });
-        }
-      },[props.userId, props.gameID, props.setGame]);
-        useEffect(() => {
-            const callback = (stuff) => {
-                console.log("gah voting");
-                if(props.userId && props.gameID){
-                    console.log("did it get insid ehre");
-                get("/api/game", {gameID: props.gameID}).then((data) => {
-                  // console.log("data", data);
-                  if (props.setGame) {
-                    props.setGame(data);
-                    // console.log("blah", data['votingResults']);
-                    setAllVoted(data['votingResults']); 
-                  };
-                });
-            }};
-            socket.on("gameUpdate", callback);
-            return () => {
-                socket.off("gameUpdate", callback);
-            };
-            },[]);
+    if(props.userId && props.gameID){
+        console.log("blah voting");
+        get("/api/game", {gameID: props.gameID}).then((data) => {
+        // console.log("data", data);
+        if (props.setGame) {
+            props.setGame(data);
+        //   console.log("l;kasdjf;lkasdf", data['votingResults']);
+            setAllVoted(data['votingResults']);
+        };
+        });
+    }
+    },[props.userId, props.gameID, props.setGame]);
+    useEffect(() => {
+        const callback = (stuff) => {
+            console.log("gah voting");
+            if(props.userId && props.gameID){
+                console.log("did it get insid ehre");
+            get("/api/game", {gameID: props.gameID}).then((data) => {
+                // console.log("data", data);
+                if (props.setGame) {
+                props.setGame(data);
+                // console.log("blah", data['votingResults']);
+                setAllVoted(data['votingResults']); 
+                };
+            });
+        }};
+        socket.on("gameUpdate", callback);
+        return () => {
+            socket.off("gameUpdate", callback);
+        };
+        },[]);
     /**
      * Grab a new prompt
      */
