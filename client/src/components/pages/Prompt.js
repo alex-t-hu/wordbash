@@ -17,6 +17,7 @@ const Prompt = (props) => {
 
     const [promptNumber, setPromptNumber] = useState(0); // 0, 1, or 2 (done)
     const [currentPrompt, setCurrentPrompt] = useState(""); // the current prompt, text.
+    const [currentPromptAnim, setCurrentPromptAnim] = useState(""); // the current prompt, text.
     const [value , setValue] = useState(""); // the current value of the input box
     // whether the user has finished answering all the prompts
     const [startedAnswering, setStartedAnswering] = useState(false);
@@ -137,6 +138,7 @@ const Prompt = (props) => {
         });
         setPromptNumber(promptNumber + 1);
         setValue("");
+        setStartedAnswering(false);
     }
 
     useEffect(() => {
@@ -193,29 +195,42 @@ const Prompt = (props) => {
         );
     }
 
-    let cp = (currentPrompt && 
-        <TypeAnimation
-            sequence={[
-                `${currentPrompt}`, // Types 'One'
-                () => {
-                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
-                    console.log("current prompt", currentPrompt);
-                    setStartedAnswering(true);
-                }
-            ]}
-            wrapper="div"
-            cursor={false}
-            speed="60"
-            repeat={0}
-            style={{ fontSize: '1.2em' }}
-        />)
+    useEffect(() => {
+        if (currentPrompt) {
+            setCurrentPromptAnim((
+                <PromptQuestion sender={"me"} message={
+                    <TypeAnimation
+                        sequence={[
+                            currentPrompt, // Types 'One'
+                            () => {
+                                console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                console.log("current prompt", currentPrompt, promptNumber);
+                            }
+                        ]}
+                        wrapper="div"
+                        cursor={false}
+                        speed="60"
+                        repeat={0}
+                        style={{ fontSize: '1.2em' }}
+                    />
+                }/>
+            ));
+            console.log("dfasdfsdafs");
+            console.log(currentPrompt);
+        }
+    }, [currentPrompt])
+
+    const handleKeyPressed = (event) => {
+        if (event.key === 'Enter') {
+            handleSubmit(event);
+        }
+    }
 
     return (
         <div className="w-full h-full flex flex-col p-8">
             <div className="text-left mb-4">
-                <PromptQuestion sender={"me"} message={cp}/>
+                {currentPromptAnim}
             </div>
-            {startedAnswering && (
             <div className="flex flex-row space-x-4 w-full h-[90px]">
                 <div className="flex-grow">
                     <textarea
@@ -224,6 +239,7 @@ const Prompt = (props) => {
                         placeholder="Enter your response here!"
                         value={value}
                         onChange={handleChange}
+                        onKeyDown={handleKeyPressed}
                     />
                 </div>
                 <div className="h-full flex items-center justify-center">
@@ -236,7 +252,7 @@ const Prompt = (props) => {
                     </button>
                 </div>
             </div>
-            )}
+            
             <div className="flex-grow">
             </div>
             { (gamePromptAnsweringTime === 0 || (!props.game) || (props.game["promptStartTime"]===0)) ? 
