@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import "../Landing.css";
 import "../../../utilities.css";
 import { useState } from "react";
-import SortedPlayerList from "../../modules/SortedPlayerList";
+import SortedPlayerList from "../../modules/SortedPlayerList.js";
 import "./VotingResults.css";
 import { TypeAnimation } from 'react-type-animation';
-import PromptResponse from "../../modules/PromptResponse";
-import PromptQuestion from "../../modules/PromptQuestion";
+import PromptResponse2 from "../../modules/PromptResponse2.js";
+import PromptQuestion from "../../modules/PromptQuestion.js";
 
 const VotingResults2 = (props) => {
     const [hasFinishedPrompt0, setHasFinishedPrompt0] = useState(false);
@@ -42,7 +42,7 @@ const VotingResults2 = (props) => {
 
             <div className="flex flex-row justify-between px-20">
                 <div className="flex flex-col">
-                    <PromptResponse message={prompt['response_0_answer']} dir="left"/>
+                    <PromptResponse2 message={prompt['response_0_answer']} author={prompt['response_0_person_name']} dir="left"/>
                         {prompt["response_0_vote_names"].map((player) => {
                     return (<TypeAnimation
                     sequence={player}
@@ -54,7 +54,7 @@ const VotingResults2 = (props) => {
                     })} 
                 </div>
                 <div className="flex flex-col">
-                    <PromptResponse message={prompt['response_1_answer']} dir="right"/>
+                    <PromptResponse2 message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
                     {prompt["response_1_vote_names"].map((player) => {
                     return (<TypeAnimation
                     sequence={player}
@@ -67,7 +67,7 @@ const VotingResults2 = (props) => {
                 </div>
             </div>
             
-            <button className="votingResults-button"
+            <button className="votingResults-button align-center"
             onClick = {props.handleDoneVoting}>
                 Continue to next round!
             </button>
