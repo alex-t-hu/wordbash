@@ -29,7 +29,7 @@ function getOrCreateUser(user) {
       games_played: 0,
       games_won: 0,
       high_score: 0,
-      friends_list: [],
+      avatar: "https://images.emojiterra.com/google/android-11/512px/1f43c.png"
     });
 
     return newUser.save();
