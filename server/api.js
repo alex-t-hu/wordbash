@@ -170,7 +170,7 @@ router.post("/submitVote", (req, res) => {
   // playerID, gameID, promptID, response
   if (req.user) {
     if(req.body.gameID){
-      Game.submitVote(req.user._id, req.body.gameID, req.body.promptID, req.body.timedOut, req.body.response);
+      Game.submitVote(req.user._id, req.body.gameID, req.body.timedOut, req.body.response);
 //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     }
   }

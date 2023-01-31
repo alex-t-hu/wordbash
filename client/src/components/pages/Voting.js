@@ -20,7 +20,7 @@ const Voting = (props) => {
     
     const [promptNumber, setPromptNumber] = useState(-1); // 0, 1, or 2 (done)
     const [voted, setVoted] = useState(false); // true if the user has voted on the CURRENT prompt
-    const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
+    // const [allVoted, setAllVoted] = useState(false); // true if ALL USERS have voted on the CURRENT prompt
     
 
     /**
@@ -66,7 +66,7 @@ const Voting = (props) => {
         if (props.setGame) {
             props.setGame(data);
         //   console.log("l;kasdjf;lkasdf", data['votingResults']);
-            setAllVoted(data['votingResults']);
+            // setAllVoted(data['votingResults']);
         };
         });
     }
@@ -81,7 +81,7 @@ const Voting = (props) => {
                 if (props.setGame) {
                 props.setGame(data);
                 // console.log("blah", data['votingResults']);
-                setAllVoted(data['votingResults']); 
+                // setAllVoted(data['votingResults']); 
                 };
             });
         }};
@@ -124,10 +124,10 @@ const Voting = (props) => {
     /**
      * Update allVoted if game["votingResults"] has changed
      */
-    useEffect(() => {
-        // console.log("Bobo");
-        setAllVoted(props.game["votingResults"]);
-    }, [props.game]);
+    // useEffect(() => {
+    //     // console.log("Bobo");
+    //     setAllVoted(props.game["votingResults"]);
+    // }, [props.game]);
 
     
     /**
@@ -149,7 +149,6 @@ const Voting = (props) => {
         event.preventDefault();
         post("/api/submitVote", {
             gameID: props.gameID,
-            promptID: promptNumber,
             timedOut: false,
             response: 0,
         }).then(
@@ -160,7 +159,6 @@ const Voting = (props) => {
         event.preventDefault();
         post("/api/submitVote", {
             gameID: props.gameID,
-            promptID: promptNumber,
             timedOut: false,
             response: 1,
         }).then(
@@ -170,10 +168,11 @@ const Voting = (props) => {
     const handleVoteTimeout = () => {
         post("/api/submitVote", {
             gameID: props.gameID,
-            promptID: promptNumber, 
             timedOut: true,
             response: 0,
-        });
+        }).then(
+            setVoted(true)
+        )
     };
     const handleDoneVoting = (event) => {
         console.log("Hello");
@@ -183,25 +182,24 @@ const Voting = (props) => {
             }
         ).then(() => {
             setVoted(false);
-            setAllVoted(false);
+            // setAllVoted(false);
         });
     };
 
     if (!props.userId) {
         return (<div>Please Log in</div>);
     }
-    if(allVoted){
-        return (<div>
-            <VotingResults
-                handleDoneVoting = {handleDoneVoting}
-                handleVoteTimeout = {handleVoteTimeout}
-                continueToNextPrompt = {props.continueToNextVoting}
-                prompt = {props.game["prompts"][promptNumber]}
-                userId = {props.userId}
-                />
-            </div>);
-    }
     if(voted){
+        if(props.game["votingResults"]){
+            return (<div>
+                <VotingResults
+                    handleDoneVoting = {handleDoneVoting}
+                    continueToNextPrompt = {props.continueToNextVoting}
+                    prompt = {props.game["prompts"][promptNumber]}
+                    userId = {props.userId}
+                    />
+                </div>);
+        }
         return (<div>You have voted! Please wait for other players to vote.</div>);
     }
     return (

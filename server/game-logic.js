@@ -245,7 +245,6 @@ const startGame = (gameID, temperature, numRounds) => {
                 response_1_vote_names: [],
                 response_0_vote: [],
                 response_1_vote: [],
-                numNoVote: 0,
                 votingStartTime: 0
             }
         }
@@ -321,15 +320,22 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
 
 }
 
-const submitVote = (id, gameID, promptID, timedOut, response) => {
+const submitVote = (id, gameID, timedOut, response) => {
     playerID = IDtoPlayerID(id, gameID);
     playerName = playerIDtoPlayerName(playerID, gameID);
+
+    promptID = gameState[gameID]["votingRound"];
 
     // Check if player has already voted.
     // I want the playerID not the like google ID.
     if (timedOut) {
         console.log("Player " + playerID + " timed out. Submitting no vote.");
-        gameState[gameID]["prompts"][promptID]["numNoVote"] += 1;
+        
+        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        updateScore(gameID);
+        gameState[gameID]["votingResults"] = true;
+
+
     } else {
         console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
         if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
@@ -352,15 +358,11 @@ const submitVote = (id, gameID, promptID, timedOut, response) => {
    console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
    console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
     // Check if all votes are in for the current prompt.
-    if(gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_0_vote"].length
-    + gameState[gameID]["prompts"][
-        gameState[gameID]["votingRound"]
-    ]["response_1_vote"].length + gameState[gameID]["prompts"][gameState[gameID]["votingRound"]]["numNoVote"]
+    if(gameState[gameID]["prompts"][promptID]["response_0_vote"].length
+    + gameState[gameID]["prompts"][promptID]["response_1_vote"].length
     >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
         
-        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        console.log("Voting round " + promptID + " finished!");
         updateScore(gameID);
         gameState[gameID]["votingResults"] = true;
         // Don't update voting round yet!!
@@ -419,8 +421,6 @@ const uploadResults = (gameID) => {
             user.save();
         });
     }
-    socketManager.gameJustChanged(gameState[gameID]);
-
 }
 
 
