@@ -7,8 +7,11 @@ import "./Profile.css";
 const Profile = (props) => {
   const [user, setUser] = useState();
 
-  const [value , setValue] = useState(""); // the current value of the input box
+  const [value , setValue] = useState(""); // the current value of the name
+  const [value2, setValue2] = useState(""); // the current value of the image url
   const [editing, setEditing] = useState(false); // whether or not we are editing the name
+  const [editing2, setEditing2] = useState(false); // whether or not we are editing the name
+
 
   useEffect(() => {
     document.title = "Profile Page";
@@ -34,8 +37,24 @@ const Profile = (props) => {
         name: value
       });
       setEditing(false);
-      
   }
+
+  
+    // called whenever the user types in the input box
+    const handleChange2 = (event) => {
+      console.log(event);
+      setValue2(event.target.value);
+  };
+
+  // called when the user hits "Submit"
+  const handleSubmit2 = (event) => {
+      event.preventDefault();
+      post("/api/updateUserAvatar", {
+        avatar: value2
+      });
+      setEditing2(false);
+  }
+
 
 
 
@@ -47,7 +66,9 @@ const Profile = (props) => {
       <div
         className="Profile-avatarContainer"
       >
-        <div className="Profile-avatar" />
+        <div className="Profile-avatar" >
+          <img src={user.avatar} alt="Profile" />
+        </div>
       </div>
       {(editing ? (
       <div>
@@ -67,6 +88,29 @@ const Profile = (props) => {
         <h1 className="Profile-name u-textCenter">{value}</h1>
         
         <button className="Profile-editButton u-pointer" onClick={() => setEditing(true)}>
+          Edit Username
+        </button>
+
+      </div>
+      ))}
+      {(editing2 ? (
+      <div>
+        <input type="text"
+          placeholder={value2}
+          onChange={handleChange2}
+          // placeholder={value}
+        />
+        
+        <button className="Profile-editButton u-pointer" onClick={handleSubmit2}>
+          Edit Profile Image
+        </button>
+        </div>
+        ) : (
+      <div>
+        
+        {/* <h1 className="Profile-name u-textCenter">{value2}</h1> */}
+        
+        <button className="Profile-editButton u-pointer" onClick={() => setEditing2(true)}>
           Edit
         </button>
 
@@ -81,12 +125,12 @@ const Profile = (props) => {
             <h4 className="Profile-subTitle">High score {user.high_score}</h4>
           </div>
         </div>
-        <div className="Profile-subContainer u-textCenter">
+        {/* <div className="Profile-subContainer u-textCenter">
           <h4 className="Profile-subTitle">Friend user</h4>
           <div className="Profile-subContainer u-textCenter">
             <h4 className="Profile-subTitle"></h4>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

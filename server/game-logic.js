@@ -60,6 +60,7 @@ const gameState = {}
             players: {
                 player_id:{ (a number from 0 to N-1)
                     name (actual name)
+                    avatar (actual avatar)
                     id (actual hex id)
                     score
                 }
@@ -160,7 +161,7 @@ const deletePlayerFromGame = (playerID, gameID) => {
 }
 
 /** Adds a player to the game state */
-const spawnPlayer = (id, name, gameID) => {
+const spawnPlayer = (id, name, avatar, gameID) => {
     if(!gameState[gameID]) {
         // ur bad
         console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
@@ -189,7 +190,8 @@ const spawnPlayer = (id, name, gameID) => {
         gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
             score : 0,
-            name : name
+            name : name,
+            avatar : avatar
         };
 
         gameState[gameID]["num_Players"] += 1;
@@ -340,8 +342,19 @@ const submitVote = (id, gameID, timedOut, response) => {
         console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
         if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
             gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
-            console.log("You have already voted for this prompt!");
-            return;
+            if (gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) && response===1) {
+                gameState[gameID]["prompts"][promptID]["response_0_vote"].splice(gameState[gameID]["prompts"][promptID]["response_0_vote"].indexOf(playerID), 1);
+                gameState[gameID]["prompts"][promptID]["response_0_vote_names"].splice(gameState[gameID]["prompts"][promptID]["response_0_vote_names"].indexOf(playerID), 1);
+                console.log("Player " + playerID + " changed vote from 0 to 1");
+            } else if (gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)) {
+                gameState[gameID]["prompts"][promptID]["response_1_vote"].splice(gameState[gameID]["prompts"][promptID]["response_1_vote"].indexOf(playerID), 1);
+                gameState[gameID]["prompts"][promptID]["response_1_vote_names"].splice(gameState[gameID]["prompts"][promptID]["response_1_vote_names"].indexOf(playerID), 1);
+                console.log("Player " + playerID + " changed vote from 1 to 0");
+            } else {
+                console.log("badbad, submitVote failed");
+                console.log("You have already voted for this prompt!");
+                return;
+            }
         }
 
         if(response === 0){

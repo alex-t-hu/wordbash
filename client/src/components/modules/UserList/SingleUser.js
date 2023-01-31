@@ -14,19 +14,28 @@ import "./SingleUser.css";
 const SingleUser = (props) => {
   // console.log(props.user);
   // console.log(props.index);
-  return (props.index != 0) ? (
-    <div
-      className={`SingleUser-container u-pointer`}
-    >
-      {props.user}
+  return (
+  <div
+  className={`SingleUser-container u-pointer`}
+>
+  <div className = "grid grid-cols-3 items-center">
+  {/* <div className = "flex flex-row items-center "> */}
+      
+    <div className = "flex-grow">
+              <img className ="h-[32px] w-[32px] rounded-full" src={props.avatar} 
+          />
+              </div>
+
+      <p className = "flex-grow font-bold">{props.user}</p>
+      { props.index == 0 && <div className = "flex-grow"><img className ="h-[32px] w-[32px] rounded-full" src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f451.png"/>
+      </div>}
+      
+
+
+      {/* </div> */}
     </div>
-  ) : (
-    <div
-      className={`SingleUser-container u-pointer`}
-    >
-      {props.user} (host)
-    </div>
-  );
+</div>
+);
 }
 
 export default SingleUser;
