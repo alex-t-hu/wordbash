@@ -10,6 +10,7 @@ import Ingame from "./Ingame.js";
 import Chatbook from "./Chatbook.js";
 import Background from "../modules/Background.js"
 import Background2 from "../modules/Background2.js"
+const randomColor = require("randomcolor");
 
 import Collapsible from 'react-collapsible';
 
@@ -25,7 +26,10 @@ import { navigate } from "@reach/router";
 const Game = (props) => {
   // console.log("GAMEEE",props.userId);
   // console.log(props.gameID);
-
+  const [color1, setColor1] = useState(randomColor());
+  const [color2, setColor2] = useState(randomColor());
+  const [color3, setColor3] = useState(randomColor());
+  const [color4, setColor4] = useState(randomColor());
   const [dims, setDims] = useState([200, 200]);
 
   const [game, setGame] = useState({});
@@ -74,7 +78,8 @@ const Game = (props) => {
             <Chatbook userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
           </div>
         </div>
-        <Background2 className="-z-20" direction={"y"} colorX={["#ffddb4","#fcd0d0"]} colorY={["#ffddb4","#fcd0d0"]}/>
+        {/* <Background2 className="-z-20" direction={"y"} colorX={["#ffddb4","#fcd0d0"]} colorY={["#ffddb4","#fcd0d0"]}/> */}
+        <Background2 className="-z-20" direction={"y"} colorX={[color1,color2]} colorY={[color3,color4]}/>
       </div>
     </>
   );

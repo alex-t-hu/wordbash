@@ -18,10 +18,10 @@ const Ingame = (props) => {
   const [currentRound, setCurrentRound] = useState(0);
   return (  
     <div className="w-full h-full flex flex-row">
-      <div className="w-[25%] h-full">
+      <div className="w-[30%] h-full">
         <SidebarUserList className="" users={props.game["players"]}/>
       </div>
-      <Router className="h-full w-[75%]">
+      <Router className="h-full w-[70%]">
           <Prompt path="prompt" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
           <Voting path="voting" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>
           <Round path="round" userId={props.userId} gameID ={props.gameID} game = {props.game} setGame = {props.setGame} currentRound = {currentRound} setCurrentRound = {setCurrentRound}/>

@@ -927,6 +927,10 @@ video {
   width: full;
 }
 
+.w-\[70\%\]{
+  width: 70%;
+}
+
 .flex-none{
   flex: none;
 }
