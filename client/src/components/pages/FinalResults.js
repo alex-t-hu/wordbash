@@ -30,7 +30,9 @@ const FinalResults = (props) => {
 
     const onSubmit = ()=> {
         if(props.userId && props.gameID){
-            navigate(`/game/${props.gameID}/lobby`);
+            post("/api/rejoinGame", {gameID: props.gameID}).then((data) => {
+                navigate(`/game/${props.gameID}/lobby`);
+            });
         }
     }
     return (

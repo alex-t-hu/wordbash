@@ -29,7 +29,7 @@ const gameState = {}
             votingFinished: a boolean // This describes whether we are done voting on ALL prompts.
             terminated: a boolean   // This describes whether the game
                                     // has been terminated due to a player leaving.
-
+            returnToLobby: a list of which player's HEX IDs have returned to the lobby. Use Hex IDs to allow for players to potentially leave.
 
             votingResults: a boolean // This is the important one.
             // It gets toggled to true when all responses are in.
@@ -112,7 +112,8 @@ const createGame = (gameID) => {
         votingResults: false,
         votingRound: 0,
         players: [],
-        prompts: []
+        prompts: [],
+        returnToLobby: []
     }
     console.log("Created game " + gameID);
     socketManager.gameJustChanged(gameState[gameID], "createGame");
@@ -195,6 +196,7 @@ const spawnPlayer = (id, name, avatar, gameID) => {
         };
 
         gameState[gameID]["num_Players"] += 1;
+        gameState[gameID]["returnToLobby"].push(id); // Hex ID.
 
     }
     console.log(gameState[gameID]);
@@ -215,6 +217,7 @@ const startGame = (gameID, temperature, numRounds) => {
     gameState[gameID]["votingFinished"] = false;
     gameState[gameID]["votingResults"] = false;
     gameState[gameID]["votingRound"] = 0;
+    gameState[gameID]["returnToLobby"] = [];
 
     if (gameState[gameID]["started"]) {
         console.log("Game " + gameID + " has already started.");
@@ -389,7 +392,7 @@ const doneVoting = (gameID) => {
         if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
             gameState[gameID]["votingFinished"] = true;
             gameState[gameID]["started"] = false;
-            uploadResults(gameID);
+            concludeGame(gameID);
         }
         socketManager.gameJustChanged(gameState[gameID], "doneVoting");
     }else{
@@ -397,7 +400,7 @@ const doneVoting = (gameID) => {
     }
 }
 
-const uploadResults = (gameID) => {
+const concludeGame = (gameID) => {
     // Find the player with the highest score.
     let maxScore = 0;
     let maxScorePlayer = -1;
@@ -427,6 +430,16 @@ const uploadResults = (gameID) => {
         });
     }
 }
+
+const rejoinGame = (playerID, gameID) => {
+    if(gameState[gameID]){
+        gameState[gameID]["returnToLobby"].push(playerID); // Yay a player is returning to the lobby!
+    }else{
+        console.log("rejoinGame called on a game that doesn't exist.");
+    }
+    socketManager.gameJustChanged(gameState[gameID], "rejoinGame");
+}
+
 
 
 
@@ -471,6 +484,7 @@ module.exports = {
     getGame,
     createGame,
     startGame,
+    rejoinGame,
     submitResponse,
     submitVote,
     gameExists,

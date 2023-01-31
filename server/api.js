@@ -237,6 +237,20 @@ router.get("/game", (req, res) => {
   }
 });
 
+
+router.post("/rejoinGame", (req, res) => {
+  if (req.user) {
+    if(req.body.gameID){
+      Game.rejoinGame(req.user._id, req.body.gameID);
+      console.log("Rejoined game");
+      console.log(Game.gameState[req.body.gameID]);
+  }else{
+    console.log("user not logged in");
+  }
+  res.send({});
+}});
+
+
 /**
  * -------------------- Chat route --------------------
  */

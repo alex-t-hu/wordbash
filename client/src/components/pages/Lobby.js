@@ -16,6 +16,7 @@ const Lobby = (props) => {
 
   const [numPlayers, setNumPlayers] = useState(0); // Used to ensure numPlayers updates...
   const[Players, setPlayers] = useState([]); // Used to ensure Players updates...
+  const [rejoin, setRejoin] = useState(false); // Used to ensure Rejoin updates...
 
   const [errorMessage, setErrorMessage] = useState("");
   const [hostPlayerId, setHostPlayerId] = useState("");
@@ -64,6 +65,12 @@ const Lobby = (props) => {
       setNumPlayers(props.game.num_Players);
     }
   }, [props.game.num_Players]);
+
+  useEffect(() => {
+    if(props.game && props.game["returnToLobby"]){
+      setRejoin(props.game["returnToLobby"]);
+    }
+  }, [props.game["returnToLobby"]]);
 
   useEffect(() => {
     if(props.game && props.game.players){
@@ -166,6 +173,7 @@ const Lobby = (props) => {
             <UserList
               userId={props.userId}
               users={Players}
+              returned = {rejoin}
             />
           </div>
         </div>
