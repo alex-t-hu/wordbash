@@ -56,7 +56,7 @@ const LoginPage = (props) => {
                 style={{ fontSize: '2em' }}
             />
         </div>
-        <div className="flex flex-col justify-center items-center w-1/4 my-8 rounded-3xl bg-gray-50">
+        <div className="flex flex-col justify-center items-center w-1/4 my-8 rounded-3xl ">
             {/* <h1 className="text-white w-full text-center text-xl p-2 bg-teal-500 rounded-t-3xl">
                 Log In
             </h1> */}
