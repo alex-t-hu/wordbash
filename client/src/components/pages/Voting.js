@@ -173,9 +173,7 @@ const Voting = (props) => {
             promptID: promptNumber, 
             timedOut: true,
             response: 0,
-        }).then(() => {
-            setVoted(true);
-        }); 
+        });
     };
     const handleDoneVoting = (event) => {
         console.log("Hello");
