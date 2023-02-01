@@ -42,7 +42,7 @@ const FinalUserList = (props) => {
   if(Object.keys(playerList).length > 0){
     return (
       <div className="w-full flex flex-col text-center bg-gray-50">
-        <div className="w-full bg-gray-100 rounded-t-xl py-2 text-xl font-bold">
+        <div className="w-full bg-gray-100 rounded-t-xl py-2 text-9xl font-bold">
           <h1>Final Results</h1>
         </div>
         <div className="p-2 flex-grow">
