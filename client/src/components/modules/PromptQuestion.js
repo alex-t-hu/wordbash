@@ -4,7 +4,7 @@ import "../../utilities.css";
 
 const PromptQuestion = (props) => {
   return (
-    <div class="flex w-full justify-center mb-4 w-[60%] text-center">
+    <div class="flex w-full justify-center py-4 mb-4 w-[60%] text-center">
       <div className={`flex-1 bg-[#000000] text-white p-2 px-6 rounded-lg mb-2 relative text-[2rem]`}>
           <div>{props.message}</div>
           {props.dir!=="none" && 

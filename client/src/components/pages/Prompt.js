@@ -7,6 +7,7 @@ import {socket} from "../../client-socket.js";
 import { navigate } from "@reach/router";
 import OurTimer from "../modules/OurTimer.js";
 import PromptQuestion from "../modules/PromptQuestion.js"
+import Waiting from "./Waiting";
 
 import { TypeAnimation } from 'react-type-animation';
 import Typed from "react-typed"
@@ -127,7 +128,7 @@ const Prompt = (props) => {
     // called whenever the user types in the input box
     const handleChange = (event) => {
         console.log(event);
-        setValue(event.target.value);
+        setValue(event.target.value.substring(0,70)); // limit to 100 characters
     };
 
     // called when the user hits "Submit"
@@ -201,11 +202,7 @@ const Prompt = (props) => {
         //     return <div>Everyone's finished answering</div>
         // }
         return (
-            <div className="Prompt-container">
-                <div className="Prompt-prompt">
-                    <h1>Waiting for other players to finish...</h1>
-                </div>
-            </div>
+            <Waiting message={"Waiting for other players to finish..."} />
         );
     }
 

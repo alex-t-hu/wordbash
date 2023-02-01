@@ -244,6 +244,8 @@ const startGame = (gameID, temperature, numRounds) => {
                 response_1_answer: "",
                 response_0_person_name: gameState[gameID]["players"][i %  gameState[gameID]["num_Players"]]["name"],
                 response_1_person_name: gameState[gameID]["players"][(i + 1) %  gameState[gameID]["num_Players"]]["name"],
+                response_0_avatar: gameState[gameID]["players"][i %  gameState[gameID]["num_Players"]]["avatar"],
+                response_1_avatar: gameState[gameID]["players"][(i + 1) %  gameState[gameID]["num_Players"]]["avatar"],
                 response_0_person_id: "",
                 response_1_person_id: "",
                 response_0_vote_names: [],

@@ -4,14 +4,20 @@ const getPromptSubset = async (temperature, n) => {
     const prompts = await Prompt.find({temperature: temperature});
     const numPrompts = prompts.length;
 
+
     console.log("Generating Prompts for temperature " + temperature + " with " + n + " prompts.");
 
     console.log("numPrompts is " + numPrompts);
+    
+    // console.log(prompts);
 
     const nums = new Set();
     while(nums.size !== n) {
         nums.add(Math.floor(Math.random() * numPrompts));
     }
+
+    console.log(nums);
+
     let result = [];
 
     for(const i of prompts){
