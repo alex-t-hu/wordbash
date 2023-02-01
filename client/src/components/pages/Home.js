@@ -16,7 +16,7 @@ import "../../utilities.css";
 const Home = (props) => {
   return (
     // <>
-      <div className="h-full">
+      <div className="h-full flex flex-col">
         <div className="z-20">
             <NavBar
                 handleLogin={props.handleLogin}
@@ -25,7 +25,7 @@ const Home = (props) => {
                 className="z-40"
             />
         </div>
-        <div className="z-10 h-full">
+        <div className="z-10 flex-grow">
             <Router className = "h-full">
               {/*  gameID ={props.gameID} setGameID = {props.setGameID} */}
                 <Landing path="/" userId={props.userId} handleLogin = {props.handleLogin}/> 
