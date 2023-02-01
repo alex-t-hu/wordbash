@@ -183,7 +183,7 @@ const Voting = (props) => {
         return (<div>Please Log in</div>);
     }
     if(allVoted){
-        return (<div className="h-full">
+        return (<div className="h-full p-8">
             {/* <VotingResults
                 handleDoneVoting = {handleDoneVoting}
                 continueToNextPrompt = {props.continueToNextVoting}
@@ -202,7 +202,7 @@ const Voting = (props) => {
     }
     
     return (
-        <div className="h-full">
+        <div className="h-full p-8">
             <VotingSelection
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}
