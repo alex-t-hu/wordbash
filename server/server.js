@@ -121,15 +121,15 @@ const logAllPrompts = () => {
   });
 };
 
-const deleteAllPrompts = () => {
-  Prompt.deleteMany({}, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Successfully deleted all prompts");
-    }
-  });
-};
+// const deleteAllPrompts = () => {
+//   Prompt.deleteMany({}, (err) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Successfully deleted all prompts");
+//     }
+//   });
+// };
 
 
 // /**
@@ -155,27 +155,32 @@ const deleteAllPrompts = () => {
  * Alternatively, you can use this code to input the real prompts from text files.
  */
 
-// const Data = require("./data.json");
+const Data = require("./data.json");
 
-// deleteAllPrompts();
 
-// for(let i = 5; i < 21; i++) {
-//   for(let j = 0; j < Data.Data[i].length; j++) {
-//     const prompt = new Prompt({
-//       prompt: Data.Data[i][j],
-//       temperature: i,
-//       index: j,
-//     });
-//     prompt.save().then(
-//       (result) => {
-//         console.log("Saved prompt: " + result);
+// const loadPrompts = () => {
+//   Prompt.deleteMany({}, (err) => {
+//     console.log("Successfully deleted all prompts");
+        
+//     for(let i = 5; i < 21; i++) {
+//       for(let j = 0; j < Data.Data[i].length; j++) {
+//         const prompt = new Prompt({
+//           prompt: Data.Data[i][j],
+//           temperature: i,
+//           index: j,
+//         });
+//         prompt.save().then(
+//           (result) => {
+//             console.log("Saved prompt: " + result);
+//             logAllPrompts();
+//           }
+//         )
 //       }
-//     )
-//   }
+//     }
+//   });
 // }
 
-
-
+// loadPrompts();
 
 logAllPrompts();
 
