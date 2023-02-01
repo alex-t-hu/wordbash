@@ -95,7 +95,7 @@ const Prompt = (props) => {
         if (currentPrompt) {
             setCurrentPromptAnim((
                 <PromptQuestion sender={"me"} dir={"none"} message={
-                    currentPrompt
+                    `Prompt ${promptNumber + 1}/${props.game.numPrompts}: ${currentPrompt}`
                 }/>
             ));
             // console.log"dfasdfsdafs");

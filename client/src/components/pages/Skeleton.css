@@ -968,6 +968,10 @@ video {
   grid-template-columns: 20% 10% 40% 10% 20%;
 }
 
+.grid-cols-\[30px_auto_50px_60px\]{
+  grid-template-columns: 30px auto 50px 60px;
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -1397,6 +1401,11 @@ video {
   line-height: 1;
 }
 
+.text-7xl{
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
 .font-semibold{
   font-weight: 600;
 }
@@ -1452,6 +1461,11 @@ video {
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.text-emerald-600{
+  --tw-text-opacity: 1;
+  color: rgb(5 150 105 / var(--tw-text-opacity));
 }
 
 .underline{

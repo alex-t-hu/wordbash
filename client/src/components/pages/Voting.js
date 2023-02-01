@@ -203,6 +203,7 @@ const Voting = (props) => {
         /> */}
             <VotingResults2
                 handleDoneVoting = {handleDoneVoting}
+                players = {props.game["players"]}
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}
                 currentResponse1 = {currentResponse1}

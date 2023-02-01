@@ -51,10 +51,10 @@ const SidebarUserList = (props) => {
 
   if(Object.keys(playerList).length > 0){
     return (
-      <div className="w-full h-full flex flex-col text-center bg-opacity-30 bg-gray-50 rounded-xl">
-        <div className="w-full bg-gray-100 rounded-t-xl py-2">
-          <h1>Leaderboard</h1>
-        </div>
+      <div className="bg-white w-full h-full flex flex-col text-center bg-gray-50 rounded-xl">
+        <h1 className="w-full text-center bg-[#615756] text-white text-2xl font-bold py-2 rounded-t-xl">
+            Leaderboard
+        </h1>
         <div className="p-2 flex-grow">
           {Object.keys(playerList)
             .map((key, i) => (

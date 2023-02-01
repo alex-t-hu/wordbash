@@ -35,23 +35,23 @@ const Help2 = (props) => {
           <h1 className="w-full text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">First time?</h1>
             <div className="w-full flex flex-col space-y-4 items-center">
                 <p className="w-11/12 text-center text-gray-700">
-                Wordbash is a party game about crazy AI generated prompts and hilarious human-written responses.
+                Wordbash is a party game revolving around crazy AI-generated prompts and hilarious human-written responses.
                 </p>
                 
                 <p className="w-11/12 text-center text-gray-700">
-                Gameplay is pretty simple. First, get together all your friends in a lobby by sending them the join code!
-                Adjust the game settings depending on how wacky you want the bot to be and how much time your friends have.
+                You can get started very easily! First, invite your friends to a lobby by sending them a join code.
+                Then, adjust the game settings depending on how wacky you want the AI's prompts to be and how many prompts each player answers.
                 </p>
                 <p className="w-11/12 text-center text-gray-700">
 
-                Then, each player will be presented their own unique AI-generate prompts!
-                Each player should answer with the funniest responses they can come up with.
-                Players have limit time to respond, so think quickly!
+                Bash your head coming up with the funniest responses to these various AI-generated prompts!
+                Each prompt that you answer will also be answered by a random friend. Players have limited time to respond, so wordbash quickly!
                 </p>
                 <p className="w-11/12 text-center text-gray-700">
 
-                The voting phase of the game then begins. Players should pick whichever reponse they think is the funniest,
-                and the responders will accumulate points!
+                After everyone is done writing their responses, the voting phase of the game commences. For each prompt, everyone votes on the response
+                they like more, and these votes award the players who wrote the responses up to 1000 points. If you beat your opponent in votes, you gain 100 points; 
+                furthermore, if you win all the votes, you get a knockout worth an extra 1000 points!
                 </p>
                 <p className="w-11/12 text-center text-gray-700">
 
