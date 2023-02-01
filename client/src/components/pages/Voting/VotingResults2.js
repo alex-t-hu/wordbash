@@ -36,11 +36,11 @@ const VotingResults2 = (props) => {
             </div>
 
             <div className="flex flex-row w-full">
-                <div className="w-[50%] p-[5%] flex flex-row w-full align-items justify-between">
+                <div className="w-[50%] py-[5%] px-[2%] flex flex-row w-full align-items justify-between">
                     <div className ="w-[30%] aspect-auto flex flex-col h-full align-items justify-around">
-                        <img src = {prompt['response_0_avatar']} />
+                        <img className = "w-[50%]" src = {prompt['response_0_avatar']} />
                         <div className="bg-amber-300 rounded-2xl p-1 flex flex-row w-full align-items justify-around">
-                        <h1 className="text-center text-4xl">{prompt['response_0_person_name']}</h1>
+                        <h1 className="text-center text-2xl">{prompt['response_0_person_name']}</h1>
                         </div>
                     </div>
                     <div className = "w-[60%]" >
@@ -48,16 +48,16 @@ const VotingResults2 = (props) => {
                     </div>
                     
                 </div>
-                <div className="w-[50%] p-[5%] flex flex-row w-full align-items justify-between">
+                <div className="w-[50%] py-[5%] px-[2%] flex flex-row w-full align-items justify-between">
                     <div className = "w-[60%]" >
-                        <PromptResponse className = "w-[80%]" hoverable={false} message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
+                        <PromptResponse hoverable={false} message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
                     </div>
 
 
                     <div className ="w-[30%] aspect-auto flex flex-col h-full align-items justify-around">
-                        <img src = {prompt['response_1_avatar']} />
+                        <img className = "w-[50%]" src = {prompt['response_1_avatar']} />
                         <div className="bg-amber-300 rounded-2xl p-1 flex flex-row w-full align-items justify-around">
-                        <h1 className="text-center text-4xl">{prompt['response_1_person_name']}</h1>
+                        <h1 className="text-center text-2xl">{prompt['response_1_person_name']}</h1>
                         </div>
 
                         </div>
