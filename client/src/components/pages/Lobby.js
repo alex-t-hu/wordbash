@@ -166,7 +166,7 @@ const Lobby = (props) => {
       {/*Player list and game code*/}
       <div className="h-[50%] w-full flex flex-row divide-x space-x-4 justify-center">
         <div className="w-full bg-gray-50 flex flex-col rounded-xl">
-          <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
+          <div className="text-center bg-[#615756] text-white font-bold py-2 text-3xl rounded-t-xl">
             <h3>Players ({numPlayers})</h3>
           </div>
 
@@ -179,8 +179,8 @@ const Lobby = (props) => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-xl pb-4">
-          <h1 className="w-full text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">Game Settings</h1>
+        <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-2xl pb-4">
+          <h1 className="w-full text-center bg-[#615756] text-white text-2xl font-bold py-2 rounded-t-xl">Game Settings</h1>
           <div className="w-full">
             <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
           </div>
@@ -193,7 +193,7 @@ const Lobby = (props) => {
       </div>
 
       <div className="flex flex-col space-y-2 w-full mt-4">
-        <button className={props.userId === hostPlayerId ? `w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`
+        <button className={props.userId === hostPlayerId ? `w-full bg-white hover:bg-gray-100 text-3xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`
         : `w-full bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
                disabled= {props.userId !== hostPlayerId}
         // TOOD: add a check to make sure there are at least 3 players
