@@ -128,7 +128,7 @@ const Prompt = (props) => {
     // called whenever the user types in the input box
     const handleChange = (event) => {
         console.log(event);
-        setValue(event.target.value);
+        setValue(event.target.value.substring(0,70)); // limit to 100 characters
     };
 
     // called when the user hits "Submit"
