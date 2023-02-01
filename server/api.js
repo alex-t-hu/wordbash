@@ -167,6 +167,16 @@ router.post("/despawn", (req, res) => {
   res.send({});
 });
 
+router.post("/destroy", (req, res) => {
+  if (req.user) {
+      Game.removePlayer(req.body._id); // Removes from all games
+  } else {
+    console.log('inside 0');
+  }
+  res.send({});
+  
+});
+
 // Corresponds to submitResponse in game-logic.js
 router.post("/submitResponse", (req, res) => {
   // playerID, gameID, promptID, response

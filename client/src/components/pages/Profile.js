@@ -3,6 +3,7 @@ import { get, post } from "../../utilities"
 import Background2 from "../modules/Background2.js"
 import "../../utilities.css";
 import "./Profile.css";
+import ProfileSelector from "../modules/ProfileSelector.js"
 
 const Profile = (props) => {
     const [user, setUser] = useState();

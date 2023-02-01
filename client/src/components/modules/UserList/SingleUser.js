@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import {get, post} from "../../../utilities"
+
 import "./SingleUser.css";
 
 /**
@@ -14,27 +16,42 @@ import "./SingleUser.css";
 const SingleUser = (props) => {
   // console.log(props.user);
   // console.log(props.index);
+
+  const handleKickPlayer = (event) => {
+    post("/api/destroy", {user: props.userId}).then((g) => {
+      console.log("Player kicked.");
+      navigate("/");
+    });
+  }
+
   return (
-  <div
-  className={`SingleUser-container u-pointer`}
->
-  <div className = "grid grid-cols-3 items-center">
-  {/* <div className = "flex flex-row items-center "> */}
+  <div className={`SingleUser-container ${props.modifiable && "hover:bg-red-100"}`} >
+    <div className = "grid grid-cols-[20%_10%_40%_10%_20%] items-center">
       
-    <div className = "flex-grow">
-              <img className ="h-[32px] w-[32px] rounded-full" src={props.avatar} 
-          />
-              </div>
-
-      {props.returned ? (<p className = "flex-grow font-bold">{props.user}</p>) : (<p className = "flex-grow text-red-600">{props.user}</p>)}
-      { props.index == 0 && <div className = "flex-grow"><img className ="h-[32px] w-[32px] rounded-full" src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f451.png"/>
-      </div>}
+      <div className = "">
+        <img className ="h-[32px] w-[32px] rounded-full" src={props.avatar} />
+      </div>
       
+      <div>
 
+      </div>
 
-      {/* </div> */}
+      {props.returned ? (
+        <p className = "flex-grow font-bold">{props.user}</p>
+      ) : (
+        <p className = "flex-grow text-red-600">{props.user}</p>
+      )}
+
+      {props.isYou ? "(You)" : <div></div>}
+        
+      { props.index == 0 ? 
+        <div className = "flex justify-end">
+          <img className ="h-[32px] w-[32px] rounded-full" src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f451.png"/>
+        </div> : <div></div>
+      }
+          
     </div>
-</div>
+  </div>
 );
 }
 
