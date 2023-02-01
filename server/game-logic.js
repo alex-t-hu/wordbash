@@ -147,8 +147,10 @@ const deletePlayerFromGame = (playerID, gameID) => {
     console.log("blah");
     console.log(playerID);
     console.log(IDtoPlayerID(playerID._id, gameID));
+    gameState[gameID]["returnToLobby"].splice(IDtoPlayerID(playerID._id, gameID), 1);
     gameState[gameID]["players"].splice(IDtoPlayerID(playerID._id, gameID), 1);
     gameState[gameID]["num_Players"] -= 1;
+    
 
     // TODO: More graceful handling of player removal?
     console.log("Player " + playerID + " has been removed from game " + gameID);
