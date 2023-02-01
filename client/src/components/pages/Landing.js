@@ -111,6 +111,12 @@ const Landing = (props) => {
   const handleHelpButtonPressed = (event) => {
     event.preventDefault();
   };
+
+  const toInputUppercase = e => {
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
+
+  
   //bg-[url('../../../../bubbles.gif')]
   if (!props.userId) {
     return (
@@ -118,9 +124,8 @@ const Landing = (props) => {
     );
   }
   return (
-     
+    
     <div className="flex w-full h-full justify-center align-center">
-      {
       <div className="Landing-blah">
         {errorMessage && 
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-up" role="alert">
@@ -131,8 +136,11 @@ const Landing = (props) => {
           </div>
         }
         
-        <div className="relative Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-[#EEEEEE]">
-        <Help2 setHelpVisible={setHelpVisible} helpVisible={helpVisible}/>
+        <div className="relative Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-white">
+          <Help2 setHelpVisible={setHelpVisible} helpVisible={helpVisible}/>
+          <h1 className="w-full text-center bg-[#615756] text-white text-2xl font-bold py-2 rounded-t-xl">
+            Welcome!
+          </h1>
           <div className="flex flex-row m-8">
             <input
               id="myInput"
@@ -140,8 +148,10 @@ const Landing = (props) => {
               placeholder="Enter Room Code"
               value={value}
               onChange={handleChange}
-              className="w-full border border-gray-400 rounded px-4 py-2"
+              className="w-full border border-gray-400 rounded px-4 py-2 text-center font-bold text-xl"
               onKeyDown={handleKeyPressed}
+              onInput={toInputUppercase}
+              maxLength="4"
             />
             <button 
               className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
@@ -154,11 +164,11 @@ const Landing = (props) => {
           </div>
           
           <div>
-            <h1 className="text-center">or</h1>
+            <h1 className="text-center text-lg">or</h1>
           </div>
 
           <div className="m-8">
-            <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
+            <button className="w-full text-2xl bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
 
             onClick = {handleSubmitCreate}>
               CREATE ROOM
@@ -166,7 +176,6 @@ const Landing = (props) => {
           </div>
         </div>
       </div>
-      }
       <Background2 className="-z-20" direction={"y"} colorX={["#dbedff","#accbff"]} colorY={["#dbedff","#accbff"]}/>
     </div>
   );

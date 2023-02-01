@@ -4,6 +4,7 @@ import Background2 from "../modules/Background2.js"
 import "../../utilities.css";
 import "./Profile.css";
 import ProfileSelector from "../modules/ProfileSelector.js"
+import { navigate } from "@reach/router";
 
 const AVATARS = [
     "/Crab.png",
@@ -13,7 +14,7 @@ const AVATARS = [
     "/Pig.png",
     "/Rooster.png",
     "/Tiger.png",
-    "/Wolf.png"]
+    "/Wolf.png"]; 
 
 const Profile = (props) => {
     const [user, setUser] = useState();
@@ -33,6 +34,7 @@ const Profile = (props) => {
                 setValue(userObj.name);
             }
         );
+        props.setInProfile(true);
     }, []);
 
 
@@ -97,13 +99,11 @@ const Profile = (props) => {
     };
 
 
-
-
     if (!user) {
         return (<div> Loading! </div>);
     }
     return (
-            <div className="flex flex-row w-full h-full p-[5%]">
+            <div className="relative flex flex-row w-full h-full p-[5%]">
                 <div className = "w-[50%] flex flex-col justify-center text-center">
 
                     {/* {invalidAvatar ? <div className="u-textCenter">Invalid Avatar</div> : <div>Valid avatar</div>} */}

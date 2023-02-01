@@ -6,14 +6,14 @@
 
 .Landing-blah {
     position: absolute;
-    width: 300px;
+    width: 400px;
     z-index: 100;
     bottom: 40%;
 }
 
 .Landing-optionContainer{
     
-    width: 300px;
+    width: 400px;
     z-index: 100;
 }
 
