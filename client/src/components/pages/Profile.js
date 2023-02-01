@@ -22,22 +22,19 @@ const Profile = (props) => {
     const [editing, setEditing] = useState(false); // whether or not we are editing the name
     const [editing2, setEditing2] = useState(false); // whether or not we are editing the name
     const [selecting, setSelecting] = useState(true);
-    const [avatar, setAvatar] = useState();
-
+;
+    const [originalAvatar, setOriginalAvatar] = useState();
+    const [invalidAvatar, setInvalidAvatar] = useState(false);
     useEffect(() => {
         document.title = "Profile Page";
         get(`/api/user`, { userid: props.userId }).then(
             (userObj) => {
                 setUser(userObj);
                 setValue(userObj.name);
-                setValue2(userObj.avatar);
             }
         );
     }, []);
 
-    useEffect(() => {
-        setAvatar()
-    }, [value2])
 
       // called whenever the user types in the input box
     const handleChange = (event) => {
@@ -64,12 +61,39 @@ const Profile = (props) => {
     // called when the user hits "Submit"
     const handleSubmit2 = (event) => {
         event.preventDefault();
-        post("/api/updateUserAvatar", {
-            avatar: value2
-        });
-        setEditing2(false);
-        setSelecting(false);
+        setOriginalAvatar(user.avatar);
+        setInvalidAvatar(false);
+        // const callback = (e) => {
+        //     e.target.onError = null;
+        //     e.target.src = "/Crab.png";
+        //     console.log("invalid avatar");
+        //     setInvalidAvatar(true);
+        // };
+        // const img = render(<img src={value2} onError={callback}></img>);
+        console.log("userId ", props.userId);
+        if (!invalidAvatar) {
+            post("/api/updateUserAvatar", {
+                avatar: value2
+            }).then((userObj) => {
+                setUser(userObj.user);
+                setEditing2(false);
+                setSelecting(false);
+            });
+        }
     }
+    const handleError = (e) => {
+        e.target.onError = null;
+        e.target.src = originalAvatar;
+        console.log("invalid avatar detected!");
+        setInvalidAvatar(true);
+        post("/api/updateUserAvatar", {
+            avatar: originalAvatar
+        }).then((userObj) => {
+            setUser(userObj.user);
+            setEditing2(false);
+            setSelecting(false);
+        }); 
+    };
 
 
 
@@ -80,8 +104,9 @@ const Profile = (props) => {
     return (
             <div className="flex flex-row w-full h-full">
                 <div className = "w-[50%] flex flex-col justify-around">
+                    {invalidAvatar ? <div className="u-textCenter">Invalid Avatar</div> : <div>Valid avatar</div>}
                     <div className="h-[50%] flex flex-col">
-                        <img className={`Profile-avatar ${selecting ? "h-[50%]" : "h-full"} aspect-auto`} src={user.avatar} alt="Profile" />
+                        <img className={`Profile-avatar ${selecting ? "h-[50%]" : "h-full"} aspect-auto`} src={user.avatar} alt="Profile" onError={handleError}/>
                         {selecting && 
                             <div className="h-[50%]">
                                 <ProfileSelector items={AVATARS} setSelecting={setSelecting} setValue2={setValue2}/>

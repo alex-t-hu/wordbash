@@ -73,12 +73,14 @@ router.post("/updateUserAvatar", (req, res) => {
     // Update the user in the MongoDB database
     User.findById(req.user._id).then((user) => {
       user.avatar = req.body.avatar;
-      user.save()
+      user.save();
+      req.user.avatar = req.body.avatar;
+      socketManager.editUser(req.user);
+      res.send({user: req.user});
     });
-    req.user.avatar = req.body.avatar;
-    socketManager.editUser(req.user);
-  }
-  res.send({});
+    
+  } else {
+  res.send({});}
 });
 
 
