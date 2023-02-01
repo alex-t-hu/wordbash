@@ -191,11 +191,11 @@ const Lobby = (props) => {
         </div>
 
       </div>
-
+      {props.userId === hostPlayerId ?
+      (
       <div className="flex flex-col space-y-2 w-full mt-4">
-        <button className={props.userId === hostPlayerId ? `w-full bg-white hover:bg-gray-100 text-3xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`
-        : `w-full bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
-               disabled= {props.userId !== hostPlayerId}
+        
+        <button className={ `w-full bg-white hover:bg-gray-100 text-3xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`}
         // TOOD: add a check to make sure there are at least 3 players
         onClick = {handleSubmit}>
           START GAME
@@ -210,6 +210,18 @@ const Lobby = (props) => {
           </div>
         }
       </div>
+      ) : (
+        
+      <div className="flex flex-col space-y-2 w-full mt-4">
+        
+      <button className={`w-full bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
+             disabled={true}>
+        Wait for your host to start the game!
+      </button>
+
+    </div>
+      )
+      }
       
     </div>
   );

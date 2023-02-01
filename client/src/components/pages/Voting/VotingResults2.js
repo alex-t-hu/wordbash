@@ -10,18 +10,11 @@ import PromptResponse from "../../modules/PromptResponse.js";
 import PromptQuestion from "../../modules/PromptQuestion.js";
 
 const VotingResults2 = (props) => {
-    const [hasFinishedPrompt0, setHasFinishedPrompt0] = useState(false);
-    const [hasFinishedPrompt1, setHasFinishedPrompt1] = useState(false);
-    const [hasFinishedName0, setHasFinishedName0] = useState(false);
-    const [hasFinishedName1, setHasFinishedName1] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [prompt, currentPrompt] = useState(props.prompt)
-    // players = {props.game.players}
-    // promptText = {currentPrompt}
-    // currentResponse0 = {currentResponse0}
-    // playersWhoVoted0 = {props.game["prompts"][props.game.votingRound]["response_0_vote"]}
-    // currentResponse1 = {currentResponse1}
-    // playersWhoVoted1 = {props.game["prompts"][props.game.votingRound]["response_1_vote"]}
+
+
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             setCurrentIndex(currentIndex + 1);
@@ -34,6 +27,8 @@ const VotingResults2 = (props) => {
     if (!props.prompt || !prompt) {
         return <div>Prompt information not found</div>;
     }
+
+
     return (
         <div className="flex flex-col h-full w-full justify-between">
             <div className="flex justify-center text-5xl text-center">
@@ -129,15 +124,31 @@ const VotingResults2 = (props) => {
 
             
             <div className="flex-grow"></div>
-            <div className="w-full flex justify-center my-[40px]">
-                <button className="w-[50%] bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
-                        onClick = {props.handleDoneVoting}>
-                    Continue to next round!
-                </button>               
-            </div>
+
+            {props.isHost ?
+                (
+                <div className="flex flex-col space-y-2 w-full mt-4">
+                    
+                    <button className={ `w-full bg-white hover:bg-gray-100 text-3xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`}
+                    // TOOD: add a check to make sure there are at least 3 players
+                    onClick = {props.handleDoneVoting}>
+                    Continue!
+                    </button>
+                </div>
+                ) : (
+                    
+                <div className="flex flex-col space-y-2 w-full mt-4">
+                    
+                <button className={`w-full bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
+                        disabled={true}>
+                            Waiting for host to continue...
+                </button>
+
+                </div>
+                )
+                }
         </div>
     );
-    
 
 };
 

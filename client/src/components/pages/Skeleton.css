@@ -706,11 +706,6 @@ video {
   margin-bottom: 0.5rem;
 }
 
-.my-\[40px\]{
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
 .mb-4{
   margin-bottom: 1rem;
 }
@@ -1089,10 +1084,6 @@ video {
 
 .border{
   border-width: 1px;
-}
-
-.border-4{
-  border-width: 4px;
 }
 
 .border-red-400{
