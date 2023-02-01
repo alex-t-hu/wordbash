@@ -481,6 +481,9 @@ const rejoinGame = (playerID, gameID) => {
 
 const updateScore = (gameID) => {
     // Update score for the current voting round.
+    console.log("Before update score, round ", gameState[gameID]["votingRound"]);
+    console.log("gameState: ", gameState[gameID]);
+    console.log("players", gameState[gameID]["players"]);
     const numPlayers = gameState[gameID]["num_Players"];
     let rd = gameState[gameID]["votingRound"];
 
@@ -508,12 +511,12 @@ const updateScore = (gameID) => {
 
         // If one player got 0 votes, the other player gets 2000 points.
         if(vote0 == 0){
-            score0 = 2000;
-            score1 = 0;
-            gameState[gameID]["players"][rd % numPlayers]["knockouts"] += 1;
-        }else if(vote1 == 0){
             score0 = 0;
             score1 = 2000;
+            gameState[gameID]["players"][rd % numPlayers]["knockouts"] += 1;
+        }else if(vote1 == 0){
+            score0 = 2000;
+            score1 = 0;
             gameState[gameID]["players"][(rd + 1) % numPlayers]["knockouts"] += 1;
         }
     }
@@ -524,6 +527,9 @@ const updateScore = (gameID) => {
     // Update scoreIncrease for the current voting round.
     gameState[gameID]["players"][rd % numPlayers]["scoreIncrease"] = score0;
     gameState[gameID]["players"][(rd + 1) % numPlayers]["scoreIncrease"] = score1;
+    console.log("After update score, round ", gameState[gameID]["votingRound"]);
+    console.log("gameState: ", gameState[gameID]);
+    console.log("players", gameState[gameID]["players"]); 
 }
 
 

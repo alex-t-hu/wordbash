@@ -13,7 +13,7 @@ const AVATARS = [
     "/Pig.png",
     "/Rooster.png",
     "/Tiger.png",
-    "/Wolf.png"]
+    "/Wolf.png"]; 
 
 const Profile = (props) => {
     const [user, setUser] = useState();
