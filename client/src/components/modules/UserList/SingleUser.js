@@ -17,15 +17,8 @@ const SingleUser = (props) => {
   // console.log(props.user);
   // console.log(props.index);
 
-  const handleKickPlayer = (event) => {
-    post("/api/destroy", {user: props.userId}).then((g) => {
-      console.log("Player kicked.");
-      navigate("/");
-    });
-  }
-
   return (
-  <div className={`SingleUser-container ${props.modifiable && "hover:bg-red-100"}`} >
+  <div className={`SingleUser-container`} >
     <div className = "grid grid-cols-[20%_10%_40%_10%_20%] items-center">
       
       <div className = "">
