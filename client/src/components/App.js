@@ -18,6 +18,7 @@ import { navigate } from "@reach/router";
  * Define the "App" component
  */
 const App = () => {
+  document.title = "Wordbash";
   const [userId, setUserId] = useState("");
   // const [gameID, setGameID] = useState("");
   

@@ -25,9 +25,11 @@ const Lobby = (props) => {
   /**
    * This effect is run when the component mounts.
    */
-
   useEffect(() => {
-    document.title = "Lobby";
+    document.title = "Wordbash";
+  }, []);
+  
+  useEffect(() => {
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);

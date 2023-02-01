@@ -68,9 +68,7 @@ const Chatbook = (props) => {
   //   }
   // }, [props.gameID]);
 
-  useEffect(() => {
-    document.title = "Chatbook";
-  }, []);
+  
 
   // Update Game Chat when game is created
   useEffect(() => {
