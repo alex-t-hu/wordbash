@@ -18,6 +18,8 @@ const SidebarUserList = (props) => {
   //   console.log("userState", props.users);
   // }, [props.users]);
   const [playerList, setPlayerList] = useState([]);
+
+  const [allZero, setAllZero] = useState(true);
     // const getName = (id) => {
     //     let name;
     //     get("/api/user", {userid: id}).then((userObj) => {name=userObj.name});
@@ -33,6 +35,14 @@ const SidebarUserList = (props) => {
             sortedPlayers.sort((a, b) => {return b[1]['score']-a[1]['score']});
             setPlayerList(sortedPlayers);
             console.log(sortedPlayers);
+
+            setAllZero(true);
+            sortedPlayers.forEach((player) => {
+                if (player[1]['scoreIncrease'] !== 0) {
+                    setAllZero(false);
+                }
+            });
+            console.log("allZero", allZero);
         }
         
     }, [props.users]); // see game-logic.js for the structure of game
@@ -54,6 +64,8 @@ const SidebarUserList = (props) => {
                 user={playerList[key][1].name}
                 avatar={playerList[key][1].avatar}
                 score={playerList[key][1].score}
+                scoreIncrease = {playerList[key][1].scoreIncrease}
+                allZero = {allZero}
                 // active={user === props.active}
               />
             ))}

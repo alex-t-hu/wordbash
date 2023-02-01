@@ -18,14 +18,14 @@ function verify(token) {
 }
 
 const AVATARS = [
-  "Crab.png",
-  "Dog.png",
-  "Frog.png",
-  "Ladybug.png",
-  "Pig.png",
-  "Rooster.png",
-  "Tiger.png",
-  "Wolf.png"]
+  "/Crab.png",
+  "/Dog.png",
+  "/Frog.png",
+  "/Ladybug.png",
+  "/Pig.png",
+  "/Rooster.png",
+  "/Tiger.png",
+  "/Wolf.png"]
 
 // gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
@@ -39,6 +39,7 @@ function getOrCreateUser(user) {
       games_played: 0,
       games_won: 0,
       high_score: 0,
+      knockouts: 0,
       avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)]
     });
 

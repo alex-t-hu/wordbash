@@ -65,6 +65,8 @@ const gameState = {}
                     avatar (actual avatar)
                     id (actual hex id)
                     score
+                    scoreIncrease (the score increase for this round)
+                    knockouts (number of 2000s)
                 }
                 
             }
@@ -193,8 +195,10 @@ const spawnPlayer = (id, name, avatar, gameID) => {
         gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
             score : 0,
+            scoreIncrease : 0,
             name : name,
-            avatar : avatar
+            avatar : avatar,
+            knockouts : 0
         };
 
         gameState[gameID]["num_Players"] += 1;
@@ -411,6 +415,13 @@ const doneVoting = (gameID) => {
             gameState[gameID]["started"] = false;
             concludeGame(gameID);
         }
+
+            
+        // Reset all scoreincrease
+        for(let i = 0; i < gameState[gameID]["num_Players"]; i++){
+            gameState[gameID]["players"][i]["scoreIncrease"] = 0;
+        }
+
         socketManager.gameJustChanged(gameState[gameID], "doneVoting");
     }else{
         console.log("doneVoting called when votingResults is false.");
@@ -433,6 +444,7 @@ const concludeGame = (gameID) => {
         let player = gameState[gameID]["players"][i];
         let score = player["score"];
         let id = player["id"];
+        let knockouts = player["knockouts"];
         
         // Update the user in the MongoDB database
         User.findById(id).then((user) => {
@@ -443,6 +455,11 @@ const concludeGame = (gameID) => {
             if(i === maxScorePlayer){
                 user.games_won += 1;
             }
+            if(user.knockouts === undefined){
+                user.knockouts = 0;
+            }
+            user.knockouts += knockouts;
+
             user.save();
         });
     }
@@ -464,13 +481,47 @@ const updateScore = (gameID) => {
     // Update score for the current voting round.
     const numPlayers = gameState[gameID]["num_Players"];
     let rd = gameState[gameID]["votingRound"];
-    gameState[gameID]["players"][rd % numPlayers]["score"] += gameState[gameID]["prompts"][rd]["response_0_vote"].length * SCORE_MULTIPLIER;
 
+    let vote0 = gameState[gameID]["prompts"][rd]["response_0_vote"].length;
+    let vote1 = gameState[gameID]["prompts"][rd]["response_1_vote"].length;
 
-    gameState[gameID]["players"][
-        (rd + 1) % numPlayers
-    ]["score"] += gameState[gameID]["prompts"][rd]["response_1_vote"].length * SCORE_MULTIPLIER;
+    let score0 = 0;
+    let score1 = 0;
 
+    if(vote0 == vote1){
+        // Tie. Both players get 500 points.
+        score0 = 500;
+        score1 = 500;
+    }else{
+        // Players get points proportional to the number of votes they got.
+        score0 = Math.floor(vote0 / (vote0 + vote1) * 1000);
+        score1 = Math.floor(vote1 / (vote0 + vote1) * 1000);
+
+        // The winner gets a 100 point bonus.
+        if(vote0 > vote1){
+            score0 += 100;
+        }else{
+            score1 += 100;
+        }
+
+        // If one player got 0 votes, the other player gets 2000 points.
+        if(vote0 == 0){
+            score0 = 2000;
+            score1 = 0;
+            gameState[gameID]["players"][rd % numPlayers]["knockouts"] += 1;
+        }else if(vote1 == 0){
+            score0 = 0;
+            score1 = 2000;
+            gameState[gameID]["players"][(rd + 1) % numPlayers]["knockouts"] += 1;
+        }
+    }
+
+    gameState[gameID]["players"][rd % numPlayers]["score"] += score0;
+    gameState[gameID]["players"][(rd + 1) % numPlayers]["score"] += score1;
+
+    // Update scoreIncrease for the current voting round.
+    gameState[gameID]["players"][rd % numPlayers]["scoreIncrease"] = score0;
+    gameState[gameID]["players"][(rd + 1) % numPlayers]["scoreIncrease"] = score1;
 }
 
 

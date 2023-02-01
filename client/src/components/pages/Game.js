@@ -49,7 +49,7 @@ const Game = (props) => {
 
   return (
     <>
-      <div className="h-screen flex flex-col">
+      <div className="h-full flex flex-col">
         <div>
           <GameBar userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
         </div>

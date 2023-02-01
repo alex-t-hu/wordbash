@@ -60,7 +60,7 @@ const App = () => {
   return (
     <>
       <div className="App-container h-screen">
-        <Router>
+        <Router className="h-full">
           <Home path="/*" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}/>
           {/*  gameID={gameID} setGameID={setGameID}/> */}
           <Game path="/game/:gameID/*" userId={userId} />
