@@ -28,7 +28,7 @@ const PromptResponse = (props) => {
             /> */}
             <p className="break-words text-[1.5rem] text-center">{props.message}</p>
             {props.dir!=="none" && 
-            <div className={`z-4 ${props.selected ? "bg-blue-400" : "bg-white"} absolute ${props.dir==="left" ? "left" : "right"}-0 top-1/2 transform ${props.dir==="left" ? "-translate-x-1/2" : "translate-x-1/2"} rotate-45 w-3 h-3`}></div>}
+            <div className={`z-4 ${props.selected ? "bg-blue-400" : "bg-white"} absolute ${props.dir==="left" ? "left" : "right"}-0 top-[10px] transform ${props.dir==="left" ? "-translate-x-1/2" : "translate-x-1/2"} rotate-45 w-3 h-3`}></div>}
         </div>
       </div>
     </button>

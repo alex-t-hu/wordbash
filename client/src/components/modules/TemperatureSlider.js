@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+import { get, post } from "../../utilities";
 
 const TemperatureSlider = (props) => {
 
 
     const [mouseOver, setMouseOver] = useState(false);
-
-
+    const [value, setValue] = useState(5);
+    
     const temperatureOptions = [
     "0", // 0
     "1", // 1
@@ -34,7 +35,8 @@ const TemperatureSlider = (props) => {
 
     const onChange = (event) => {
         if(props.setTemperature){
-            props.setTemperature(event.target.value);
+            let newtemp = event.target.value;
+            props.setTemperature(newtemp);
         }
     };
 
@@ -60,14 +62,19 @@ const TemperatureSlider = (props) => {
                     className={`slider`}
                     id="myRange"
                     onChange={onChange}
+                    disabled={props.disabled}
                     // onMouseUp={onMouseUp} // only if such effect is desired
 
-                    type="range" min="5" max="20" value={props.temperature}/>
-                    <h1 className="">{temperatureOptions[props.temperature]}</h1>
+                    type="range" min="5" max="20" 
+                    value={props.disabled ? 5 : props.temperature}
+                    />
+                    <h1 className="">{!props.disabled && temperatureOptions[props.temperature]}</h1>
                     
                     {mouseOver && <h1>
-                        The temperature of the game determines how much randomness the language model will use.
-                        Much like LSD, increasing the temperature will increase the model's creativity, but also its incoherence.
+                        {
+                        props.disabled ? "Only the host can change game settings." : `The temperature of the game determines how much randomness the language model will use.
+                        Increasing the temperature will increase the AI's creativity, but also its incoherence!
+                        `}
                     </h1>}
                 </div>
             </div>

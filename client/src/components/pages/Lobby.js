@@ -72,6 +72,7 @@ const Lobby = (props) => {
   useEffect(() => {
     if(props.game && props.game["returnToLobby"]){
       setRejoin(props.game["returnToLobby"]);
+      console.log("props.game[reurntolobby ]", props.game["returnToLobby"]);
     }
   }, [props.game["returnToLobby"]]);
 
@@ -116,7 +117,7 @@ const Lobby = (props) => {
     
     if (numPlayers < 2) {
       setErrorMessage("Cannot start game without at least two players.");
-    } else if (numPlayers !== rejoin.length) {
+    } else if (numPlayers > rejoin.length) {
       setErrorMessage("Waiting for " + (numPlayers - rejoin.length) + " player" + (((numPlayers - rejoin.length) !== 1) ? "s" : "") + " to return to the lobby!");
     } else {
       post("/api/startGame", {
@@ -189,11 +190,11 @@ const Lobby = (props) => {
           </div>
 
           <div className="w-full">
-            <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
+            <TemperatureSlider disabled={props.userId !== hostPlayerId} temperature={temperature} setTemperature={setTemperature} />
           </div>
           
           <div className="w-full">
-            <RoundSlider numRounds = {numRounds} setNumRounds = {setNumRounds} numPlayers = {props.game.num_Players}/>
+            <RoundSlider disabled={props.userId !== hostPlayerId} numRounds = {numRounds} setNumRounds = {setNumRounds} numPlayers = {props.game.num_Players}/>
           </div>
         </div>
 

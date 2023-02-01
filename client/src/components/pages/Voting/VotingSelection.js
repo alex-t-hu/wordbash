@@ -25,7 +25,7 @@ const VotingSelection = (props) => {
             </div>
 
             <div className="flex flex-row w-full">
-                <div className="w-[50%] p-[5%]">
+                <div className="w-[50%] py-[5%] pr-[2%]">
                     {props.currentResponse0 && 
                         <PromptResponse hoverable={true}
                                         selected={props.votingSelection===0}
@@ -35,7 +35,7 @@ const VotingSelection = (props) => {
                         />
                     }
                 </div>
-                <div className="w-[50%] p-[5%]">
+                <div className="w-[50%] py-[5%] pl-[2%]">
                     {props.currentResponse1 && 
                         <PromptResponse hoverable={true}
                                         selected={props.votingSelection===1}

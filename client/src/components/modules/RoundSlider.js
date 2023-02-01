@@ -58,11 +58,14 @@ const RoundSlider = (props) => {
                         className={`slider`}
                         id="myRange"
                         onChange={onChange}
+                        disabled={props.disabled}
                         // onMouseUp={onMouseUp} // only if such effect is desired
-                        type="range" min="1" max="5" value={props.numRounds}/>
-                        
-                        <h1 className="">{props.numRounds * 2} prompts</h1>
-                        {mouseOver && <h1 className="">{recommendedRounds[props.numPlayers]}</h1>}
+                        type="range" min="1" max="5"
+                        value={props.disabled ? 1 : props.numRounds}
+                        />
+                        {!props.disabled && 
+                        (<h1 className="">{props.numRounds * 2} prompts</h1>) }
+                        {mouseOver && <h1 className="">{props.disabled ? "Only the host can change game settings." : recommendedRounds[props.numPlayers]}</h1>}
                     </div>
             </div>
         </div>

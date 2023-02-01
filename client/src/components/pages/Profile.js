@@ -21,7 +21,7 @@ const Profile = (props) => {
     const [value2, setValue2] = useState(""); // the current value of the image url
     const [editing, setEditing] = useState(false); // whether or not we are editing the name
     const [editing2, setEditing2] = useState(false); // whether or not we are editing the name
-    const [selecting, setSelecting] = useState(true);
+    const [selecting, setSelecting] = useState(false);
     const [avatar, setAvatar] = useState();
 
     useEffect(() => {

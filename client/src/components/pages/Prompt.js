@@ -213,7 +213,7 @@ const Prompt = (props) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col p-8">
+        <div className="w-full h-full flex flex-col p-4">
             <div className="text-left w-full flex justify-center mb-4">
                 {currentPromptAnim}
             </div>

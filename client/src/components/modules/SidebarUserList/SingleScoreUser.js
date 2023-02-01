@@ -25,20 +25,20 @@ const SingleScoreUser = (props) => {
   if(props.allZero){
     return (
     
-      <div className={`grid grid-cols-[50px_auto_50px] gap-4 my-2`}>
-      <h1 className="text-center">{(props.index + 1) + endings[Math.min(props.index, 3)]}</h1>
-      <h1 className="text-left in-line overflow-x-hidden text-ellipsis">{props.user}</h1>
-      <h1 className="text-center">{props.score}</h1>
-    </div>
+      <div className={`grid grid-cols-[30px_auto_50px] gap-2 my-2`}>
+        <h1 className="text-center">{(props.index + 1) + endings[Math.min(props.index, 3)]}</h1>
+        <h1 className="text-center font-bold in-line overflow-x-hidden text-ellipsis">{props.user}</h1>
+        <h1 className="text-center">{props.score}</h1>
+      </div>
     )
   }else{
     return (
-      <div className={`grid grid-cols-[50px_auto_50px_100px] gap-4 my-2`}>
-      <h1 className="text-center">{(props.index + 1) + endings[Math.min(props.index, 3)]}</h1>
-      <h1 className="text-left in-line overflow-x-hidden text-ellipsis">{props.user}</h1>
-      <h1 className="text-center">{props.score}</h1>
-      <h1 className="text-center text-emerald-500	">{props.scoreIncrease !== 0 && `( + ${props.scoreIncrease} )`}</h1>
-    </div>
+      <div className={`grid grid-cols-[30px_auto_50px_50px] gap-2 my-2`}>
+        <h1 className="text-center">{(props.index + 1) + endings[Math.min(props.index, 3)]}</h1>
+        <h1 className="text-center font-bold in-line overflow-x-hidden text-ellipsis">{props.user}</h1>
+        <h1 className="text-center">{props.score}</h1>
+        <h1 className="text-center text-emerald-500 font-bold	">{props.scoreIncrease !== 0 && `(+${props.scoreIncrease})`}</h1>
+      </div>
     )
 
   }
