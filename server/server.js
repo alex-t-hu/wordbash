@@ -89,8 +89,8 @@ app.use((err, req, res, next) => {
   const status = err.status || 500;
   if (status === 500) {
     // 500 means Internal Server Error
-    console.log("The server errored when processing a request!");
-    console.log(err);
+    // console.log"The server errored when processing a request!");
+    // console.logerr);
   }
 
   res.status(status);
@@ -106,7 +106,7 @@ const server = http.Server(app);
 socketManager.init(server);
 
 server.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
+  // console.log`Server running on port: ${port}`);
 });
 
 // // Temporary code to test the server
@@ -117,16 +117,16 @@ const PromptLoader = require("./prompt-loader");
 
 const logAllPrompts = () => {
   Prompt.find({}, (err, prompts) => {
-      console.log(prompts.length);
+      // console.logprompts.length);
   });
 };
 
 // const deleteAllPrompts = () => {
 //   Prompt.deleteMany({}, (err) => {
 //     if (err) {
-//       console.log(err);
+//       // console.logerr);
 //     } else {
-//       console.log("Successfully deleted all prompts");
+//       // console.log"Successfully deleted all prompts");
 //     }
 //   });
 // };
@@ -160,7 +160,7 @@ const logAllPrompts = () => {
 
 // const loadPrompts = () => {
 //   Prompt.deleteMany({}, (err) => {
-//     console.log("Successfully deleted all prompts");
+//     // console.log"Successfully deleted all prompts");
         
 //     for(let i = 5; i < 21; i++) {
 //       for(let j = 0; j < Data.Data[i].length; j++) {
@@ -171,7 +171,7 @@ const logAllPrompts = () => {
 //         });
 //         prompt.save().then(
 //           (result) => {
-//             console.log("Saved prompt: " + result);
+//             // console.log"Saved prompt: " + result);
 //             logAllPrompts();
 //           }
 //         )
@@ -186,6 +186,6 @@ logAllPrompts();
 
 // PromptLoader.getPromptSubset(10, 5).then(
 //   (result) => {
-//     console.log("Badonk" + result);
+//     // console.log"Badonk" + result);
 //   }
 // )

@@ -13,8 +13,8 @@ import "../../utilities.css";
  * Define the "App" component
  */
 const Round = (props) => {
-  // console.log("GAMEEE",props.userId);
-  // console.log(props.gameID);
+  // // console.log"GAMEEE",props.userId);
+  // // console.logprops.gameID);
   const [finishedDisplaying, setFinishedDisplaying] = useState(false);
   useEffect( () => {
     const timeOut = setTimeout(() => {

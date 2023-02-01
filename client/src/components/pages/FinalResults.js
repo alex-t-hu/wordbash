@@ -20,13 +20,13 @@ const FinalResults = (props) => {
     useEffect(() => {
         if(props.userId && props.gameID){
             get("/api/game", {gameID: props.gameID}).then((data) => {
-                // console.log("data", data);
+                // // console.log"data", data);
                 if (props.setGame) {
                     props.setGame(data);
                 };
             });
         }
-        console.log("game is ", props.game);
+        // console.log"game is ", props.game);
     });
 
     const onSubmit = ()=> {

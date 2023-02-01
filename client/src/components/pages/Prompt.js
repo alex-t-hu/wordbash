@@ -56,12 +56,12 @@ const Prompt = (props) => {
   
   useEffect(() => {
     if(props.userId && props.gameID){
-        console.log("blah");
+        // console.log"blah");
       get("/api/game", {gameID: props.gameID}).then((data) => {
-        // console.log("data", data);
+        // // console.log"data", data);
         if (props.setGame) {
           props.setGame(data);
-        //   console.log("l;kasdjf;lkasdf", data['promptsFinished']);
+        //   // console.log"l;kasdjf;lkasdf", data['promptsFinished']);
           setAllFinishedAnswering(data['promptsFinished']);
           if (!hasSetPromptAnsweringTime) { // !hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
             setHasSetPromptAnsweringTime(true);
@@ -74,8 +74,8 @@ const Prompt = (props) => {
   },[props.userId, props.gameID, props.setGame]);
     useEffect(() => {
         const callback = (stuff) => {
-            console.log("gah");
-            console.log(props.userId, "GAH!", props.gameID);
+            // console.log"gah");
+            // console.logprops.userId, "GAH!", props.gameID);
             if(props.userId && props.gameID){
                 props.setGame(stuff.game);
                 setAllFinishedAnswering(stuff.game['promptsFinished']);
@@ -98,8 +98,8 @@ const Prompt = (props) => {
                     currentPrompt
                 }/>
             ));
-            console.log("dfasdfsdafs");
-            console.log(currentPrompt);
+            // console.log"dfasdfsdafs");
+            // console.logcurrentPrompt);
         }
     }, [currentPrompt])
     
@@ -112,7 +112,7 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        console.log("prompt just timed out somehow!!!!");  
+        // console.log"prompt just timed out somehow!!!!");  
         post("/api/submitResponse", {
             gameID: props.gameID,
             // playerIdx: playerIdx,
@@ -127,7 +127,7 @@ const Prompt = (props) => {
 
     // called whenever the user types in the input box
     const handleChange = (event) => {
-        console.log(event);
+        // console.logevent);
         setValue(event.target.value.substring(0,70)); // limit to 100 characters
     };
 
@@ -143,7 +143,7 @@ const Prompt = (props) => {
             }
         }
         let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
-        console.log("user just CLICKKEDDSSDFDSF SUBMIT YEYEYEYE FUCK"); 
+        // console.log"user just CLICKKEDDSSDFDSF SUBMIT YEYEYEYE FUCK"); 
         post("/api/submitResponse", {
             gameID: props.gameID,
             // playerIdx: playerIdx,
@@ -169,9 +169,9 @@ const Prompt = (props) => {
             let promptIdx = promptNumbertoIdx(promptNumber, playerIdx);
 
             if (promptIdx < props.game["numPrompts"]) {
-                // console.log("promptNumber", promptNumber);
-                // console.log("playerIdx", playerIdx);
-                // console.log("promptNumbertoIdx", promptNumbertoIdx(promptNumber, playerIdx));
+                // // console.log"promptNumber", promptNumber);
+                // // console.log"playerIdx", playerIdx);
+                // // console.log"promptNumbertoIdx", promptNumbertoIdx(promptNumber, playerIdx));
                 setCurrentPrompt(props.game["prompts"][
                     promptNumbertoIdx(promptNumber, playerIdx)
                 ]["content"]);

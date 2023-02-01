@@ -26,7 +26,7 @@ const AnimatedNamesList = (props) => {
             {
                 promptNames.map((player) => {
                         // setTimeout(() => {
-                        //     console.log("Hello");
+                        //     // console.log"Hello");
                         // }, 1000).then( ()=> {
                         //     return <div>{player}</div>;
                         // })

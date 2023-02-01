@@ -63,7 +63,7 @@ const Voting = (props) => {
     // useEffect(() => {
     //     if(props.userId && props.gameID){
     //     get("/api/game", {gameID: props.gameID}).then((data) => {
-    //         // console.log("data", data);
+    //         // // console.log"data", data);
     //         if (props.setGame) {
     //             props.setGame(data);
     //         };
@@ -72,12 +72,12 @@ const Voting = (props) => {
     // });
     useEffect(() => {
     if(props.userId && props.gameID){
-        console.log("blah voting");
+        // console.log"blah voting");
         get("/api/game", {gameID: props.gameID}).then((data) => {
-        // console.log("data", data);
+        // // console.log"data", data);
         if (props.setGame) {
             props.setGame(data);
-        //   console.log("l;kasdjf;lkasdf", data['votingResults']);
+        //   // console.log"l;kasdjf;lkasdf", data['votingResults']);
             setAllVoted(data['votingResults']);
         };
         });
@@ -85,14 +85,14 @@ const Voting = (props) => {
     },[props.userId, props.gameID, props.setGame]);
     useEffect(() => {
         const callback = (stuff) => {
-            console.log("gah voting");
+            // console.log"gah voting");
             if(props.userId && props.gameID){
-                console.log("did it get insid ehre");
+                // console.log"did it get insid ehre");
             get("/api/game", {gameID: props.gameID}).then((data) => {
-                // console.log("data", data);
+                // // console.log"data", data);
                 if (props.setGame) {
                 props.setGame(data);
-                // console.log("blah", data['votingResults']);
+                // // console.log"blah", data['votingResults']);
                 setAllVoted(data['votingResults']); 
                 };
             });
@@ -178,7 +178,7 @@ const Voting = (props) => {
         )
     };
     const handleDoneVoting = (event) => {
-        console.log("Hello");
+        // console.log"Hello");
         event.preventDefault();
         post("/api/doneVoting", {
                 gameID: props.gameID,

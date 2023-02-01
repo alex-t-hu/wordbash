@@ -119,7 +119,7 @@ const createGame = (gameID) => {
         prompts: [],
         returnToLobby: []
     }
-    console.log("Created game " + gameID);
+    // console.log"Created game " + gameID);
     socketManager.gameJustChanged(gameState[gameID], "createGame");
 
     return gameID;
@@ -141,28 +141,28 @@ const removePlayer = (playerID) => {
 
 const deletePlayerFromGame = (playerID, gameID) => {
     if(!gameState[gameID]) {
-        console.log("Game " + gameID + " does not exist. (I'm inside deletePlayerFromGame)");
+        // console.log"Game " + gameID + " does not exist. (I'm inside deletePlayerFromGame)");
         return;
     }
-    console.log("blah");
-    console.log(playerID);
-    console.log(IDtoPlayerID(playerID._id, gameID));
+    // console.log"blah");
+    // console.logplayerID);
+    // console.logIDtoPlayerID(playerID._id, gameID));
     gameState[gameID]["returnToLobby"].splice(IDtoPlayerID(playerID._id, gameID), 1);
     gameState[gameID]["players"].splice(IDtoPlayerID(playerID._id, gameID), 1);
     gameState[gameID]["num_Players"] -= 1;
     
 
     // TODO: More graceful handling of player removal?
-    console.log("Player " + playerID + " has been removed from game " + gameID);
+    // console.log"Player " + playerID + " has been removed from game " + gameID);
     // gameState[gameID]["terminated"] = true;
-    // console.log("Game " + gameID + " has been terminated.");
+    // // console.log"Game " + gameID + " has been terminated.");
 
     // TODO: Currently we ignore this for debug purposes.
     if(gameState[gameID]["num_Players"] <= 0){
-        console.log("Game " + gameID + " now has no players. It will be deleted.");
+        // console.log"Game " + gameID + " now has no players. It will be deleted.");
         delete gameState[gameID];
     }
-    console.log(gameState[gameID]);
+    // console.loggameState[gameID]);
     socketManager.gameJustChanged(gameState[gameID], "deletePlayerFromGame");
 
 }
@@ -171,19 +171,19 @@ const deletePlayerFromGame = (playerID, gameID) => {
 const spawnPlayer = (id, name, avatar, gameID) => {
     if(!gameState[gameID]) {
         // ur bad
-        console.log("Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
+        // console.log"Game " + gameID + " does not exist. (I'm inside spawnPlayer)");
     }else{
 
         // Check if a player is in any game. If they are, remove them.
         for(let game in gameState) {
             for(let i = 0; i < gameState[game]["num_Players"]; i++) {
                 if(gameState[game]["players"][i]["id"] === id) {
-                    console.log("Player " + id + " is already in game " + game);
+                    // console.log"Player " + id + " is already in game " + game);
                     if(game === gameID){
-                        console.log("They are already in the game they are trying to join. Nothing will happen.");
+                        // console.log"They are already in the game they are trying to join. Nothing will happen.");
                         return;
                     }else{
-                        console.log("They are in a different game. However, we are not handling this yet.");
+                        // console.log"They are in a different game. However, we are not handling this yet.");
                         // deletePlayerFromGame(i, game);
                     }
                 }
@@ -192,7 +192,7 @@ const spawnPlayer = (id, name, avatar, gameID) => {
         
         
         
-        console.log("Spawning player " + id + " in game " + gameID);
+        // console.log"Spawning player " + id + " in game " + gameID);
         
         gameState[gameID]["players"][gameState[gameID]["num_Players"]] = {
             id: id,
@@ -207,7 +207,7 @@ const spawnPlayer = (id, name, avatar, gameID) => {
         gameState[gameID]["returnToLobby"].push(id); // Hex ID.
 
     }
-    console.log(gameState[gameID]);
+    // console.loggameState[gameID]);
     socketManager.gameJustChanged(gameState[gameID], "spawnPlayer");
 
 };
@@ -216,7 +216,7 @@ const spawnPlayer = (id, name, avatar, gameID) => {
 const startGame = (gameID, temperature, numRounds) => {
     // // Check if the game has at least 3 players.
     // if(gameState[gameID]["num_Players"] < 3) {
-    //     console.log("Game " + gameID + " does not have enough players to start.");
+    //     // console.log"Game " + gameID + " does not have enough players to start.");
     //     return;
     // }
 
@@ -228,7 +228,7 @@ const startGame = (gameID, temperature, numRounds) => {
     gameState[gameID]["returnToLobby"] = [];
 
     if (gameState[gameID]["started"]) {
-        console.log("Game " + gameID + " has already started.");
+        // console.log"Game " + gameID + " has already started.");
         return;
     }
 
@@ -242,9 +242,9 @@ const startGame = (gameID, temperature, numRounds) => {
     gameState[gameID]["temperature"] = temperature;
     // Generate Prompts
     // TODO
-    console.log("Generating prompts..." + gameState[gameID]["numPrompts"]);
+    // console.log"Generating prompts..." + gameState[gameID]["numPrompts"]);
     PromptLoader.getPromptSubset(temperature, gameState[gameID]["numPrompts"]).then((subset) => {
-        console.log("Subset: " + subset);
+        // console.log"Subset: " + subset);
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
             gameState[gameID]["prompts"][i] = {
                 content: subset[i],
@@ -266,9 +266,9 @@ const startGame = (gameID, temperature, numRounds) => {
          
         gameState[gameID]["currentPrompt"] = 0;
         gameState[gameID]["promptStartTime"] = Date.now();
-        console.log("Starting game for real " + gameID);
-        console.log("start time is ", gameState[gameID]["promptStartTime"]);
-        console.log("Starting game " + gameID);
+        // console.log"Starting game for real " + gameID);
+        // console.log"start time is ", gameState[gameID]["promptStartTime"]);
+        // console.log"Starting game " + gameID);
 
 
         socketManager.gameJustChanged(gameState[gameID], "startGame");
@@ -282,11 +282,11 @@ const startGame = (gameID, temperature, numRounds) => {
 
 const submitResponse = (id, gameID, promptID, timedOut, response) => {
     // keke update promptNumber stored for the playerIdx to be 1 more than previously
-    console.log("just submitted response");
+    // console.log"just submitted response");
     const playerIdx = IDtoPlayerID(id, gameID);
     const numPlayers = gameState[gameID]["num_Players"];
     if(gameState[gameID]["promptsFinished"]) {
-        console.log("this shouldn't be happening. game-logic.js, still submitting responses after all responses have been submitted.");
+        // console.log"this shouldn't be happening. game-logic.js, still submitting responses after all responses have been submitted.");
     }
     // const numPrompts = gameState[gameID]["numPrompts"];
     let allResponsesIn = true;
@@ -296,13 +296,13 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
         }else if((promptID + 1) % numPlayers === playerIdx){
             gameState[gameID]["prompts"][promptID]["response_1_answer"] = response;
         }else{
-            console.log("You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
+            // console.log"You can't answer this prompt! ( prompt " + promptID + " player " + playerIdx + " )");
         }
         // Check if all responses are in 
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) { // keke promptIdx / numPlayers
-            console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
+            // console.log"Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
             if(gameState[gameID]["prompts"][i]["response_0_answer"] === "" || gameState[gameID]["prompts"][i]["response_1_answer"] === ""){
-                console.log("in game-logic/submitResponse, found that not timed out and all response are not in yet");
+                // console.log"in game-logic/submitResponse, found that not timed out and all response are not in yet");
     
                 allResponsesIn = false;
             }
@@ -310,9 +310,9 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     } else {
         
         // Check if all responses are in
-        console.log("checking and replacing all empty responses with (blank) after timing out prompt. in game-logic.js.")
+        // console.log"checking and replacing all empty responses with (blank) after timing out prompt. in game-logic.js.")
         for(let i = 0; i < gameState[gameID]["numPrompts"]; i++) {
-            console.log("Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
+            // console.log"Checking prompt " + i + " responses: " + gameState[gameID]["prompts"][i]["response_0_answer"] + "|||" + gameState[gameID]["prompts"][i]["response_1_answer"]);
                     if (gameState[gameID]["prompts"][i]["response_0_answer"] === "") {
                         gameState[gameID]["prompts"][i]["response_0_answer"] = "(blank)"; // change hre if want to do smth funny for timeout
     
@@ -325,7 +325,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
     
     if(allResponsesIn || timedOut){
         if (!gameState[gameID]["promptsFinished"]) {
-            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX All responses in for game " + gameID);
+            // console.log"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX All responses in for game " + gameID);
             // need to find the start time of the current round
         }
         gameState[gameID]["promptsFinished"] = true;
@@ -344,15 +344,15 @@ const submitVote = (id, gameID, timedOut, response) => {
     // Check if player has already voted.
     // I want the playerID not the like google ID.
     if (timedOut) {
-        console.log("Player " + playerID + " timed out. Submitting no vote.");
+        // console.log"Player " + playerID + " timed out. Submitting no vote.");
         
-        console.log("Voting round " + gameState[gameID]["votingRound"] + " finished!");
+        // console.log"Voting round " + gameState[gameID]["votingRound"] + " finished!");
         updateScore(gameID);
         gameState[gameID]["votingResults"] = true;
 
 
     } else {
-        console.log("Player " + playerID + " is voting for prompt " + promptID + " response " + response);
+        // console.log"Player " + playerID + " is voting for prompt " + promptID + " response " + response);
         // if(gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID) ||
         //     gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)){
         if (gameState[gameID]["prompts"][promptID]["response_0_vote"].includes(playerID)) {
@@ -360,7 +360,7 @@ const submitVote = (id, gameID, timedOut, response) => {
 
             gameState[gameID]["prompts"][promptID]["response_0_vote"].splice(idx, 1);
             gameState[gameID]["prompts"][promptID]["response_0_vote_names"].splice(idx, 1);
-            console.log("Player " + playerID + " already voted for 0, so we will remove it.");
+            // console.log"Player " + playerID + " already voted for 0, so we will remove it.");
         }
         if (gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)) {
             let idx = gameState[gameID]["prompts"][promptID]["response_1_vote"].indexOf(playerID)
@@ -368,7 +368,7 @@ const submitVote = (id, gameID, timedOut, response) => {
             gameState[gameID]["prompts"][promptID]["response_1_vote"].splice(idx, 1);
             gameState[gameID]["prompts"][promptID]["response_1_vote_names"].splice(idx, 1);
 
-            console.log("Player " + playerID + " already voted for 1, so we will remove it.");
+            // console.log"Player " + playerID + " already voted for 1, so we will remove it.");
         }
         // }
 
@@ -379,18 +379,18 @@ const submitVote = (id, gameID, timedOut, response) => {
             gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
             gameState[gameID]["prompts"][promptID]["response_1_vote_names"].push(playerName);
         }else{
-            console.log("You can't vote for this response! ( response " + response + " )");
+            // console.log"You can't vote for this response! ( response " + response + " )");
         }
     }
     
-//    console.log("BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
-//    console.log("BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
+//    // console.log"BWWAHA1 ", gameState[gameID]["prompts"][promptID]["response_0_vote"]);
+//    // console.log"BWWAHA2 ", gameState[gameID]["prompts"][promptID]["response_1_vote"]); 
     // Check if all votes are in for the current prompt.
     if(gameState[gameID]["prompts"][promptID]["response_0_vote"].length
     + gameState[gameID]["prompts"][promptID]["response_1_vote"].length
     >= gameState[gameID]["num_Players"]){ // TODO: for testing purposes. Later, change to >= blah - 2
         
-        console.log("Voting round " + promptID + " finished!");
+        // console.log"Voting round " + promptID + " finished!");
         updateScore(gameID);
         gameState[gameID]["votingResults"] = true;
         // Don't update voting round yet!!
@@ -410,7 +410,7 @@ const doneVoting = (gameID) => {
         if (promptIdx < gameState[gameID]["numPrompts"]) {
             gameState[gameID]["prompts"][promptIdx]["votingStartTime"] = Date.now();
         }
-        console.log("We are done voting.");
+        // console.log"We are done voting.");
         
         if(gameState[gameID]["votingRound"] >= gameState[gameID]["numPrompts"]){
             gameState[gameID]["votingFinished"] = true;
@@ -426,7 +426,7 @@ const doneVoting = (gameID) => {
 
         socketManager.gameJustChanged(gameState[gameID], "doneVoting");
     }else{
-        console.log("doneVoting called when votingResults is false.");
+        // console.log"doneVoting called when votingResults is false.");
     }
 }
 
@@ -471,7 +471,7 @@ const rejoinGame = (playerID, gameID) => {
     if(gameState[gameID]){
         gameState[gameID]["returnToLobby"].push(playerID); // Yay a player is returning to the lobby!
     }else{
-        console.log("rejoinGame called on a game that doesn't exist.");
+        // console.log"rejoinGame called on a game that doesn't exist.");
     }
     socketManager.gameJustChanged(gameState[gameID], "rejoinGame");
 }
@@ -481,9 +481,9 @@ const rejoinGame = (playerID, gameID) => {
 
 const updateScore = (gameID) => {
     // Update score for the current voting round.
-    console.log("Before update score, round ", gameState[gameID]["votingRound"]);
-    console.log("gameState: ", gameState[gameID]);
-    console.log("players", gameState[gameID]["players"]);
+    // console.log"Before update score, round ", gameState[gameID]["votingRound"]);
+    // console.log"gameState: ", gameState[gameID]);
+    // console.log"players", gameState[gameID]["players"]);
     const numPlayers = gameState[gameID]["num_Players"];
     let rd = gameState[gameID]["votingRound"];
 
@@ -527,9 +527,9 @@ const updateScore = (gameID) => {
     // Update scoreIncrease for the current voting round.
     gameState[gameID]["players"][rd % numPlayers]["scoreIncrease"] = score0;
     gameState[gameID]["players"][(rd + 1) % numPlayers]["scoreIncrease"] = score1;
-    console.log("After update score, round ", gameState[gameID]["votingRound"]);
-    console.log("gameState: ", gameState[gameID]);
-    console.log("players", gameState[gameID]["players"]); 
+    // console.log"After update score, round ", gameState[gameID]["votingRound"]);
+    // console.log"gameState: ", gameState[gameID]);
+    // console.log"players", gameState[gameID]["players"]); 
 }
 
 
@@ -537,7 +537,7 @@ const updateScore = (gameID) => {
 const getGame = (gameID) => {
     if(!(gameID in gameState)) {
         // ur bad
-        console.log("Game " + gameID + " does not exist. (Inside getGame)");
+        // console.log"Game " + gameID + " does not exist. (Inside getGame)");
         return {};
     }else{
         return gameState[gameID];

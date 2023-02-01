@@ -27,7 +27,7 @@ const Landing = (props) => {
 
   // called whenever the user types in the new post input box
   const handleChange = (event) => {
-    console.log(event);
+    // console.logevent);
     setValue(event.target.value);
     // props.setGameID(event.target.value);
   };
@@ -55,16 +55,16 @@ const Landing = (props) => {
     } else {
       // Spawn then redirect to lobby.
       get("/api/gameExists", {gameID: value.toUpperCase()}).then((game) => {
-        console.log("Game is: ", game.gameExists);
+        // console.log"Game is: ", game.gameExists);
         if(!game.gameExists){
-          console.log("Game does not exist (inside Landing.js)");
+          // console.log"Game does not exist (inside Landing.js)");
           setErrorMessage("Enter a valid room code.");
           setValue("");
         }else{
-          console.log("Game exists (inside Landing.js)");
+          // console.log"Game exists (inside Landing.js)");
           // props.setGameID(value.toUpperCase());
           post("/api/spawn", {gameID: value.toUpperCase()}).then((g) => {
-            console.log("Spawned");
+            // console.log"Spawned");
             navigate(`/game/${value.toUpperCase()}/lobby`);
           });
         }
@@ -83,21 +83,21 @@ const Landing = (props) => {
 
     // Create room with random code and spawn in
     let randomCode = makeid(4);
-    console.log(randomCode);
+    // console.lograndomCode);
 
     get("/api/gameExists", {gameID: randomCode}).then((game) => {
       if(!game.gameExists){
         // props.setGameID(randomCode);
-        console.log("Game does not exist (inside Landing.js)");
+        // console.log"Game does not exist (inside Landing.js)");
         post("/api/createGame", {gameID: randomCode, userID: props.userId}).then((g) => {
-          console.log("Game created because ");
+          // console.log"Game created because ");
           post("/api/spawn", {gameID: randomCode}).then((g) => {
-            console.log("Spawned");
+            // console.log"Spawned");
             navigate(`/game/${randomCode}/lobby`);
           });
         });
       } else {
-        console.log("oops");
+        // console.log"oops");
         handleSubmitCreate(event);
       }
     });

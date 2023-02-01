@@ -33,14 +33,14 @@ const Lobby = (props) => {
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);
-        console.log("active users", data.activeUsers);
+        // console.log"active users", data.activeUsers);
       };
     });
   }, []);
 
   useEffect(() => {
     const callback = (stuff) => {
-        console.log("gah");
+        // console.log"gah");
         props.setGame(stuff.game);
     };
     socket.on("gameUpdate", callback);
@@ -55,7 +55,7 @@ const Lobby = (props) => {
         if(data.players[props.userId] === undefined){
           post("/api/spawn", {gameID: props.gameID});
         }
-        // console.log("data", data);
+        // // console.log"data", data);
         if (props.setGame) {
           props.setGame(data);
         };
@@ -72,7 +72,7 @@ const Lobby = (props) => {
   useEffect(() => {
     if(props.game && props.game["returnToLobby"]){
       setRejoin(props.game["returnToLobby"]);
-      console.log("props.game[reurntolobby ]", props.game["returnToLobby"]);
+      // console.log"props.game[reurntolobby ]", props.game["returnToLobby"]);
     }
   }, [props.game["returnToLobby"]]);
 
@@ -95,11 +95,11 @@ const Lobby = (props) => {
   }, []);
   
   useEffect(() => {
-    console.log('activeUsers', activeUsers);
+    // console.log'activeUsers', activeUsers);
   }, [activeUsers]);
 
   useEffect(() => {
-    console.log('userID effect: userID is', props.userId);
+    // console.log'userID effect: userID is', props.userId);
     if (props.userId) {
       get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
     }
@@ -107,7 +107,7 @@ const Lobby = (props) => {
 
 
   useEffect(() => {
-    console.log('user effect: user is', user);
+    // console.log'user effect: user is', user);
   }, [user]);
 
   
@@ -125,7 +125,7 @@ const Lobby = (props) => {
         temperature: temperature,
         numRounds: numRounds,
       }).then((g) => {
-        console.log("Game created ");
+        // console.log"Game created ");
 
       });
     }    
@@ -152,7 +152,7 @@ const Lobby = (props) => {
     return <div>Please Log in</div>;
   }
   // else{
-  //   console.log("props.userId", props.userId)
+  //   // console.log"props.userId", props.userId)
   // }
   if( !props.gameID ){
     return <div>Please Create a Game</div>;

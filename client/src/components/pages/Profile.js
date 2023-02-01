@@ -40,7 +40,7 @@ const Profile = (props) => {
 
       // called whenever the user types in the input box
     const handleChange = (event) => {
-        console.log(event);
+        // console.logevent);
         setValue(event.target.value);
     };
 
@@ -56,7 +56,7 @@ const Profile = (props) => {
     
     // called whenever the user types in the input box
     const handleChange2 = (event) => {
-        console.log(event);
+        // console.logevent);
         setValue2(event.target.value);
     };
 
@@ -68,11 +68,11 @@ const Profile = (props) => {
         // const callback = (e) => {
         //     e.target.onError = null;
         //     e.target.src = "/Crab.png";
-        //     console.log("invalid avatar");
+        //     // console.log"invalid avatar");
         //     setInvalidAvatar(true);
         // };
         // const img = render(<img src={value2} onError={callback}></img>);
-        console.log("userId ", props.userId);
+        // console.log"userId ", props.userId);
         if (!invalidAvatar) {
             post("/api/updateUserAvatar", {
                 avatar: value2
@@ -87,7 +87,7 @@ const Profile = (props) => {
     const handleError = (e) => {
         e.target.onError = null;
         e.target.src = originalAvatar;
-        console.log("invalid avatar detected!");
+        // console.log"invalid avatar detected!");
         setInvalidAvatar(true);
         post("/api/updateUserAvatar", {
             avatar: originalAvatar

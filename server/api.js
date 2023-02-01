@@ -51,9 +51,9 @@ router.get("/user", (req, res) => {
 });
 
 router.post("/updateUserName", (req, res) => {
-  console.log("Bork mf")
+  // console.log"Bork mf")
   if (req.user) {
-    console.log("updating user " + req.user._id+ " name to " + req.body.name)
+    // console.log"updating user " + req.user._id+ " name to " + req.body.name)
     // Update the user in the MongoDB database
     User.findById(req.user._id).then((user) => {
       user.name = req.body.name;
@@ -67,9 +67,9 @@ router.post("/updateUserName", (req, res) => {
 
 
 router.post("/updateUserAvatar", (req, res) => {
-  console.log("Bork mf")
+  // console.log"Bork mf")
   if (req.user) {
-    console.log("updating user " + req.user._id+ " avatar to " + req.body.avatar)
+    // console.log"updating user " + req.user._id+ " avatar to " + req.body.avatar)
     // Update the user in the MongoDB database
     User.findById(req.user._id).then((user) => {
       user.avatar = req.body.avatar;
@@ -109,13 +109,13 @@ router.post("/createGame", (req, res) => {
 //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
 
 
-      console.log("created new Game with gameID: " + req.body.gameID);
-      console.log(Game.gameState);
+      // console.log"created new Game with gameID: " + req.body.gameID);
+      // console.logGame.gameState);
     }else{
-      console.log("no gameID provided");
+      // console.log"no gameID provided");
     }
   }else{
-    console.log("user not logged in");
+    // console.log"user not logged in");
   }
   res.send({});
 });
@@ -124,13 +124,13 @@ router.post("/startGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID && req.body.temperature && req.body.numRounds){
       Game.startGame(req.body.gameID, req.body.temperature, req.body.numRounds);
-      console.log("started game");
-      console.log(Game.gameState);
+      // console.log"started game");
+      // console.logGame.gameState);
     }else{
-      console.log("huh something borked.");
+      // console.log"huh something borked.");
     }
   }else{
-    console.log("user not logged in");
+    // console.log"user not logged in");
   }
   res.send({});
 });
@@ -138,19 +138,19 @@ router.post("/startGame", (req, res) => {
 router.post("/spawn", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      console.log(req.user);
+      // console.logreq.user);
       
       Game.spawnPlayer(req.user._id, req.user.name, req.user.avatar, req.body.gameID);
-        console.log("Spawned player. Here are the players:");
-        console.log(Game.gameState[req.body.gameID]["players"]);
+        // console.log"Spawned player. Here are the players:");
+        // console.logGame.gameState[req.body.gameID]["players"]);
   //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
 
 
     }else{
-      console.log("no gameID provided");
+      // console.log"no gameID provided");
     }
   }else{
-    console.log("user not logged in");
+    // console.log"user not logged in");
   }
   res.send({});
 });
@@ -161,10 +161,10 @@ router.post("/despawn", (req, res) => {
       Game.deletePlayerFromGame(req.user, req.body.gameID); // Removes from specific game
 //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     } else {
-      console.log('inside 1');
+      // console.log'inside 1');
     }
   } else {
-    console.log('inside 0');
+    // console.log'inside 0');
   }
   res.send({});
 });
@@ -173,7 +173,7 @@ router.post("/destroy", (req, res) => {
   if (req.user) {
       Game.removePlayer(req.body._id); // Removes from all games
   } else {
-    console.log('inside 0');
+    // console.log'inside 0');
   }
   res.send({});
   
@@ -209,23 +209,23 @@ router.post("/submitVote", (req, res) => {
 router.post("/doneVoting", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
-      // console.log("We are done voting inside api.");
+      // // console.log"We are done voting inside api.");
 
       Game.doneVoting(req.body.gameID);
 //       socketManager.gameJustChanged(Game.getGame(req.body.gameID));
     }
   //   else{
-  //     console.log("Problem 1.");
+  //     // console.log"Problem 1.");
   //   }
   // }else{
-  //   console.log("Problem 2.");
+  //   // console.log"Problem 2.");
   }
   res.send({});
 });
 
 
 router.get("/gameExists", (req, res) => {
-  // console.log(req.query);
+  // // console.logreq.query);
   if (req.query.gameID) {
     if(Game.gameExists(req.query.gameID)){
       res.send({gameExists: true});}
@@ -239,12 +239,12 @@ router.get("/gameExists", (req, res) => {
 
 
 router.get("/game", (req, res) => {
-  // console.log(req.query);
+  // // console.logreq.query);
   if (req.query.gameID) {
-    // console.log("Yay!")
+    // // console.log"Yay!")
     res.send(Game.getGame(req.query.gameID));
   } else {
-    console.log("No gameID provided");
+    // console.log"No gameID provided");
     res.send({});
   }
 });
@@ -254,10 +254,10 @@ router.post("/rejoinGame", (req, res) => {
   if (req.user) {
     if(req.body.gameID){
       Game.rejoinGame(req.user._id, req.body.gameID);
-      console.log("Rejoined game");
-      console.log(Game.gameState[req.body.gameID]);
+      // console.log"Rejoined game");
+      // console.logGame.gameState[req.body.gameID]);
   }else{
-    console.log("user not logged in");
+    // console.log"user not logged in");
   }
   res.send({});
 }});
@@ -283,7 +283,7 @@ router.get("/chat", (req, res) => {
 });
 
 router.post("/message", auth.ensureLoggedIn, (req, res) => {
-  console.log(`Received a chat message from ${req.user.name}: ${req.body.content} in game ${req.body.recipient}`);
+  // console.log`Received a chat message from ${req.user.name}: ${req.body.content} in game ${req.body.recipient}`);
 
   // insert this message into the database
   const message = new Message({
@@ -314,7 +314,7 @@ router.post("/message", auth.ensureLoggedIn, (req, res) => {
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
-  console.log(`API route not found: ${req.method} ${req.url}`);
+  // console.log`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ msg: "API route not found" });
 });
 

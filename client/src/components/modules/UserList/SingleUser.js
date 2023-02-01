@@ -14,8 +14,8 @@ import "./SingleUser.css";
  * @param {boolean} active
  */
 const SingleUser = (props) => {
-  // console.log(props.user);
-  // console.log(props.index);
+  // // console.logprops.user);
+  // // console.logprops.index);
 
   return (
   <div className={`SingleUser-container`} >

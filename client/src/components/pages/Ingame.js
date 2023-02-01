@@ -13,8 +13,8 @@ import "../../utilities.css";
  * Define the "App" component
  */
 const Ingame = (props) => {
-  // console.log("GAMEEE",props.userId);
-  // console.log(props.gameID);
+  // // console.log"GAMEEE",props.userId);
+  // // console.logprops.gameID);
   const [currentRound, setCurrentRound] = useState(0);
   return (  
     <div className="w-full h-full flex flex-row">

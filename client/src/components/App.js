@@ -23,11 +23,11 @@ const App = () => {
   // const [gameID, setGameID] = useState("");
   
   // useEffect(() => {
-  //   console.log(`Game ID set in App! Game ID = ${gameID}`);
+  //   // console.log`Game ID set in App! Game ID = ${gameID}`);
   // }, [gameID]);
   
   // useEffect(() => {
-  //   console.log(`User ID set in App! User ID = ${userId}`);
+  //   // console.log`User ID set in App! User ID = ${userId}`);
   // }, [userId]);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const App = () => {
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
-    console.log(`Logged in as ${decodedCredential.name}`);
+    // console.log`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
@@ -51,7 +51,7 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logged out successfully!");
+    // console.log"Logged out successfully!");
     setUserId(null);
     post("/api/logout");
     navigate("/");

@@ -51,7 +51,7 @@ const Chatbook = (props) => {
   const loadMessageHistory = () => {
     if(props.gameID){
       get("/api/chat", { recipient_id: props.gameID }).then((messages) => {
-        console.log("loadMessages" + props.gameID);
+        // console.log"loadMessages" + props.gameID);
         setMessages(messages); 
         // setActiveChat({
         //   recipient: recipient,
@@ -72,10 +72,10 @@ const Chatbook = (props) => {
 
   // Update Game Chat when game is created
   useEffect(() => {
-    console.log("New gameID Detected:", props.gameID);
+    // console.log"New gameID Detected:", props.gameID);
     if(props.gameID){
       loadMessageHistory();
-      // console.log("new Chat Detected: gameID", props.gameID);
+      // // console.log"new Chat Detected: gameID", props.gameID);
       // setGameChat({
       //   _id: "GAME###" + props.gameID,
       //   name: "Universe " + props.gameID,
@@ -85,7 +85,7 @@ const Chatbook = (props) => {
 
 
   // useEffect(() => {
-  //   console.log("I'm loading the message history because the active User just changed.")
+  //   // console.log"I'm loading the message history because the active User just changed.")
   //   loadMessageHistory(activeChat.recipient);
   // }, [activeChat.recipient._id]);
 
@@ -97,24 +97,24 @@ const Chatbook = (props) => {
   //     // there's nothing to load. (Also prevents data races with socket event)
   //     if (props.userId) {
   //       if(GAME_CHAT === null){
-  //         console.log("GAME_CHAT is null");
+  //         // console.log"GAME_CHAT is null");
   //         setActiveUsers([ALL_CHAT].concat(data.activeUsers));
   //       } else {
-  //         console.log("GAME_CHAT is not null");
+  //         // console.log"GAME_CHAT is not null");
   //         setActiveUsers([ALL_CHAT, GAME_CHAT].concat(data.activeUsers));
   //       }
 
   //     };
-  //     console.log("activeUsers" + data);
+  //     // console.log"activeUsers" + data);
   //   });
   // }, [GAME_CHAT]);
 
   useEffect(() => {
     const addMessages = (data) => {
-      console.log("addMessages");
-      console.log(data);
+      // console.log"addMessages");
+      // console.logdata);
 
-      // console.log(
+      // // console.log
       //   "Recipient id is " + data.recipient._id + " and sender id is " + data.sender._id + "user id is " + props.userId + "active chat recipient id is " + activeChat.recipient._id
       // )
 
@@ -130,15 +130,15 @@ const Chatbook = (props) => {
 
       // If the message is for game chat
       if(props.gameID === null){
-        console.log("props.gameID is null");
+        // console.log"props.gameID is null");
       } else {
         if(data.recipient === props.gameID){
 
-          console.log("Messages was set because of socket to" + data.recipient)
+          // console.log"Messages was set because of socket to" + data.recipient)
           setMessages(prev => (prev.concat(data)));
 
         }else{
-          console.log("Messages was not set because of socket to" + data.recipient + " and props.gameID is " + props.gameID)
+          // console.log"Messages was not set because of socket to" + data.recipient + " and props.gameID is " + props.gameID)
         }
       }
 
@@ -165,29 +165,29 @@ const Chatbook = (props) => {
 
   // useEffect(() => {
   //   if(GAME_CHAT != null){
-  //     console.log("GAME_CHAT IS" + GAME_CHAT._id);
-  //     console.log("GAME_CHAT HAS" + GAME_CHAT.name);
+  //     // console.log"GAME_CHAT IS" + GAME_CHAT._id);
+  //     // console.log"GAME_CHAT HAS" + GAME_CHAT.name);
   //   }
   //   else{
-  //     console.log("GAME_CHAT IS NULL");
+  //     // console.log"GAME_CHAT IS NULL");
   //   }
   // }, [GAME_CHAT]);
 
 
   useEffect(() => {
-    console.log("messages" + messages);
+    // console.log"messages" + messages);
     for(let i = 0; i < messages.length; i++){
-      console.log(messages[i]);
+      // console.logmessages[i]);
     }
   }, [messages]);
 
   // useEffect(() => {
-  //   console.log("activeUsers" + activeUsers);
+  //   // console.log"activeUsers" + activeUsers);
   // }, [activeUsers]);
   
   // // const setActiveUser = (user) => {
   // //   if (user._id !== activeChat.recipient._id) {
-  // //     console.log("activeChat was set because of setActiveUser " + user._id)
+  // //     // console.log"activeChat was set because of setActiveUser " + user._id)
   // //     setActiveChat({
   // //       recipient: user,
   // //       messages: [],

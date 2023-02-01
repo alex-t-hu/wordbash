@@ -12,7 +12,7 @@ const TypeWriter = (props) => {
     useEffect(() => {
         
         const timeout = setTimeout(() => {
-            console.log("timeout");
+            // console.log"timeout");
             if (currentIndex >= props.text.length) {
                 return;
             }

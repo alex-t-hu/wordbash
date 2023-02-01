@@ -13,8 +13,8 @@ import "./SingleFinalUser.css";
  */
 
 const SingleFinalUser = (props) => {
-  // console.log(props.user);
-  // console.log(props.index);
+  // // console.logprops.user);
+  // // console.logprops.index);
 
   const endings = [
     'st',

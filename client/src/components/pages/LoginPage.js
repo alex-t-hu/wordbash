@@ -28,7 +28,7 @@ const LoginPage = (props) => {
                 sequence={[
                     'Welcome to', // Types 'One'
                     () => {
-                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                    // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                     }
                 ]}
                 wrapper="div"
@@ -47,7 +47,7 @@ const LoginPage = (props) => {
                     4000,
                     '',
                     () => {
-                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                    // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                     }
                 ]}
                 wrapper="div"
@@ -69,7 +69,7 @@ const LoginPage = (props) => {
                         )}
                         buttonText="Login"
                         onSuccess={props.handleLogin}
-                        onFailure={(err) => console.log(err)}
+                        onFailure={(err) =>  console.log(err)}
                         className="rounded-xl"
                     />
                 </GoogleOAuthProvider>

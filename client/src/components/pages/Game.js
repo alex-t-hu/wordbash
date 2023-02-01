@@ -24,8 +24,8 @@ import { navigate } from "@reach/router";
  * Define the "App" component
  */
 const Game = (props) => {
-  // console.log("GAMEEE",props.userId);
-  // console.log(props.gameID);
+  // // console.log"GAMEEE",props.userId);
+  // // console.logprops.gameID);
   const [color1, setColor1] = useState(randomColor());
   const [color2, setColor2] = useState(randomColor());
   const [color3, setColor3] = useState(randomColor());
@@ -37,7 +37,7 @@ const Game = (props) => {
     document.title = "Wordbash";
   }, []);
   useEffect(() => {
-    console.log("Inside Game.js, Game ID is"  + props.gameID);
+    // console.log"Inside Game.js, Game ID is"  + props.gameID);
   }, [props.gameID]);
 
   // On top layout

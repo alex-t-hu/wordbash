@@ -18,16 +18,16 @@ const OurTimer = (props) => {
     useEffect(() => {
         
         const interval = setTimeout(() => {
-            console.log("current time on the timer is ", currentSeconds);
+            // console.log"current time on the timer is ", currentSeconds);
             if(props.startTime === 0){ // Something's broken.
                 setCurrentSeconds( seconds);
             }else{
                 setCurrentSeconds( seconds - (Date.now()-props.startTime)/1000 );
             }
-            console.log("current time left !",currentSeconds);
+            // console.log"current time left !",currentSeconds);
             if (-0.5 <= currentSeconds && currentSeconds <= 0) {
                 props.handleTimeout();
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+                // console.log"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
             } else {
                 setStringMinutes( padNum( Math.floor(currentSeconds /60) ));
                 setStringSeconds( padNum( Math.floor(currentSeconds % 60)));

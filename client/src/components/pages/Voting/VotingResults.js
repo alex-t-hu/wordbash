@@ -35,7 +35,7 @@ const VotingResults = (props) => {
                             sequence={[
                                 currentPrompt['response_0_answer'],// Types 'One'
                                 () => {
-                                    console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                    // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                                     setHasFinishedPrompt0(true);
                                 }
                             ]}
@@ -51,7 +51,7 @@ const VotingResults = (props) => {
                         sequence={[
                             currentPrompt['response_0_person_name'],
                             () => {
-                                console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                                 setHasFinishedName0(true);
                             }
                         ]}
@@ -65,7 +65,7 @@ const VotingResults = (props) => {
                     {hasFinishedPrompt0 && hasFinishedPrompt1 && hasFinishedName0 && hasFinishedName1 &&
                         currentPrompt["response_0_vote_names"].map((player) => {
                                 // setTimeout(() => {
-                                //     console.log("Hello");
+                                //     // console.log"Hello");
                                 // }, 1000).then( ()=> {
                                 //     return <div>{player}</div>;
                                 // })
@@ -79,7 +79,7 @@ const VotingResults = (props) => {
                             sequence={[
                                 currentPrompt['response_1_answer'], // Types 'One'
                                 () => {
-                                console.log('Done typing!') // Place optional callbacks anywhere in the array
+                                // console.log'Done typing!') // Place optional callbacks anywhere in the array
                                     setHasFinishedPrompt1(true);
                                 }
                             ]}
@@ -95,7 +95,7 @@ const VotingResults = (props) => {
                         sequence={[
                             currentPrompt['response_1_person_name'],
                             () => {
-                                console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                                // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                                 setHasFinishedName1(true);
                             }
                         ]}

@@ -104,7 +104,7 @@ const NewStory = (props) => {
 const NewMessage = (props) => {
   const sendMessage = (value) => {
     const body = { recipient: props.recipient, content: value };
-    console.log("Sending message: ", body, " to ", props.recipient);
+    // console.log"Sending message: ", body, " to ", props.recipient);
     post("/api/message", body);
   };
 

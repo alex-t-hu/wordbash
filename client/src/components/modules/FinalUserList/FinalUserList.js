@@ -15,7 +15,7 @@ const FinalUserList = (props) => {
 
   // useEffect(() => {
   //   setUserState(props.users);
-  //   console.log("userState", props.users);
+  //   // console.log"userState", props.users);
   // }, [props.users]);
   const [playerList, setPlayerList] = useState([]);
     // const getName = (id) => {
@@ -25,14 +25,14 @@ const FinalUserList = (props) => {
     // };
     useEffect(() => {
         
-        console.log("Players ", props.users);
+        // console.log"Players ", props.users);
         if (props.users) {
             let sortedPlayers = Object.keys(props.users).map((key) => {
                 return [key, props.users[key]];
             });
             sortedPlayers.sort((a, b) => {return b[1]['score']-a[1]['score']});
             setPlayerList(sortedPlayers);
-            console.log(sortedPlayers);
+            // console.logsortedPlayers);
         }
         
     }, [props.users]); // see game-logic.js for the structure of game

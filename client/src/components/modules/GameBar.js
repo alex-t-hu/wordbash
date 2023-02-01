@@ -20,7 +20,7 @@ const GameBar = (props) => {
   const handleLeave = () => {
     if (props.gameID) {
       post("/api/despawn", {gameID: props.gameID}).then((g) => {
-        console.log("Player left.");
+        // console.log"Player left.");
         navigate("/");
       });
     }

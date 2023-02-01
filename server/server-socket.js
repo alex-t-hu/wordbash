@@ -8,12 +8,12 @@ const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
 const gameJustChanged = (game, from) => {
-  console.log("gameJustChanged from "+ from);
+  // console.log"gameJustChanged from "+ from);
   if (game && game.players) {
     const sockets = game.players.map((player) => getSocketFromUserID(player.id));
     sockets.forEach((socket) => {
       if (socket) {
-        console.log("emitting gameUpdate pF = ", game["promptsFinished"], "vRo = ", game["votingRound"], "vRe = ", game["votingResults"]);
+        // console.log"emitting gameUpdate pF = ", game["promptsFinished"], "vRo = ", game["votingRound"], "vRe = ", game["votingResults"]);
         socket.emit("gameUpdate", { game: game });
       }
     });
@@ -38,9 +38,9 @@ const addUser = (user, socket) => {
 
 const editUser = (user) => {
   const oldSocket = userToSocketMap[user._id];
-  console.log("editUser", user);
+  // console.log"editUser", user);
   if (oldSocket) {
-    console.log("oldSocket");
+    // console.log"oldSocket");
     socketToUserMap[oldSocket.id] = user;
     io.emit("activeUsers", { activeUsers: getAllConnectedUsers() });
   }
@@ -61,7 +61,7 @@ module.exports = {
     io = require("socket.io")(http);
 
     io.on("connection", (socket) => {
-      console.log(`socket has connected ${socket.id}`);
+      // console.log`socket has connected ${socket.id}`);
       socket.on("disconnect", (reason) => {
         const user = getUserFromSocketID(socket.id);
         removeUser(user, socket);

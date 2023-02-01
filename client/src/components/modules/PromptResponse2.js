@@ -12,7 +12,7 @@ const PromptResponse = (props) => {
               sequence={[
                 props.message,// Types 'One'
                   () => {
-                      console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                      // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                   }
               ]}
               wrapper="div"
@@ -30,7 +30,7 @@ const PromptResponse = (props) => {
               sequence={[
                 props.author,// Types 'One'
                   () => {
-                      console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                      // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                   }
               ]}
               wrapper="div"

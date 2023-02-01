@@ -28,7 +28,7 @@ const FloatingWord = (props) => {
                     1000, // Waits 1s
                     '',
                     () => {
-                        console.log('Done typing!'); // Place optional callbacks anywhere in the array
+                        // console.log'Done typing!'); // Place optional callbacks anywhere in the array
                         setRandomPosition();
                         
                     }
