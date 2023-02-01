@@ -23,8 +23,10 @@ const NewPostInput = (props) => {
   // called when the user hits "Submit" for a new post
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.onSubmit && props.onSubmit(value);
-    setValue("");
+    if (value) {
+      props.onSubmit && props.onSubmit(value);
+      setValue("");
+    }
   };
 
   const handleKeyPressed = (event) => {
@@ -35,7 +37,7 @@ const NewPostInput = (props) => {
 
 
   return (
-    <div className="u-flex">
+    <div className="mx-2 flex flex-row ">
       <input
         type="text"
         placeholder={props.defaultText}
@@ -46,11 +48,11 @@ const NewPostInput = (props) => {
       />
       <button
         type="submit"
-        className="NewPostInput-button u-pointer"
-        value="Submit"
+        className="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded"
+        value="Send"
         onClick={handleSubmit}
       >
-        Submit
+        Send
       </button>
     </div>
   );

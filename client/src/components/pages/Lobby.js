@@ -162,12 +162,13 @@ const Lobby = (props) => {
     return <div>No Game</div>;
   }
   return (
-    <div className="h-full flex flex-col items-center mx-[0%] my-[0%] p-12">
+    <div className="h-full flex flex-col items-center p-12">
       {/*Player list and game code*/}
       <div className="h-[50%] w-full flex flex-row divide-x space-x-4 justify-center">
+
         <div className="w-full bg-gray-50 flex flex-col rounded-xl">
           <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
-            <h3>Players ({numPlayers})</h3>
+            <h1>Players ({numPlayers})</h1>
           </div>
 
           <div className="items-center m-4">
@@ -179,8 +180,11 @@ const Lobby = (props) => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col space-y-4 items-center rounded-xl pb-4">
-          <h1 className="w-full text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">Game Settings</h1>
+        <div className="w-full bg-gray-50 flex flex-col rounded-xl space-y-4">
+          <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
+            <h1>Game Settings</h1>
+          </div>
+
           <div className="w-full">
             <TemperatureSlider temperature={temperature} setTemperature={setTemperature} />
           </div>
