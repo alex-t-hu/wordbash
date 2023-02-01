@@ -5,12 +5,24 @@ import "../../utilities.css";
 import "./Profile.css";
 import ProfileSelector from "../modules/ProfileSelector.js"
 
+const AVATARS = [
+    "/Crab.png",
+    "/Dog.png",
+    "/Frog.png",
+    "/Ladybug.png",
+    "/Pig.png",
+    "/Rooster.png",
+    "/Tiger.png",
+    "/Wolf.png"]
+
 const Profile = (props) => {
     const [user, setUser] = useState();
     const [value , setValue] = useState(""); // the current value of the name
     const [value2, setValue2] = useState(""); // the current value of the image url
     const [editing, setEditing] = useState(false); // whether or not we are editing the name
     const [editing2, setEditing2] = useState(false); // whether or not we are editing the name
+    const [selecting, setSelecting] = useState(true);
+    const [avatar, setAvatar] = useState();
 
     useEffect(() => {
         document.title = "Profile Page";
@@ -18,9 +30,14 @@ const Profile = (props) => {
             (userObj) => {
                 setUser(userObj);
                 setValue(userObj.name);
+                setValue2(userObj.avatar);
             }
         );
     }, []);
+
+    useEffect(() => {
+        setAvatar()
+    }, [value2])
 
       // called whenever the user types in the input box
     const handleChange = (event) => {
@@ -38,10 +55,10 @@ const Profile = (props) => {
     }
 
     
-        // called whenever the user types in the input box
-        const handleChange2 = (event) => {
-            console.log(event);
-            setValue2(event.target.value);
+    // called whenever the user types in the input box
+    const handleChange2 = (event) => {
+        console.log(event);
+        setValue2(event.target.value);
     };
 
     // called when the user hits "Submit"
@@ -51,6 +68,7 @@ const Profile = (props) => {
             avatar: value2
         });
         setEditing2(false);
+        setSelecting(false);
     }
 
 
@@ -62,10 +80,13 @@ const Profile = (props) => {
     return (
             <div className="flex flex-row w-full h-full">
                 <div className = "w-[50%] flex flex-col justify-around">
-                    <div
-                        className="Profile-avatarContainer h-[50%]"
-                    >
-                        <img className="Profile-avatar h-full aspect-auto" src={user.avatar} alt="Profile" />
+                    <div className="h-[50%] flex flex-col">
+                        <img className={`Profile-avatar ${selecting ? "h-[50%]" : "h-full"} aspect-auto`} src={user.avatar} alt="Profile" />
+                        {selecting && 
+                            <div className="h-[50%]">
+                                <ProfileSelector items={AVATARS} setSelecting={setSelecting} setValue2={setValue2}/>
+                            </div>
+                        }
                     </div>
                     <h1 className="Profile-name u-textCenter">
                         {editing ? (
@@ -98,7 +119,8 @@ const Profile = (props) => {
                     {(editing2 ? (
                         <div>
                             <input type="text"
-                                placeholder={value2}
+                                placeholder={"Type in an image url"}
+                                value={value2}
                                 onChange={handleChange2}
                             />
                         
@@ -112,7 +134,7 @@ const Profile = (props) => {
                         <div>
                             {"Edit Avatar   "}
 
-                            <button className="Profile-editButton u-pointer" onClick={() => setEditing2(true)}>
+                            <button className="Profile-editButton u-pointer" onClick={() => {setEditing2(true); setSelecting(true)}}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                 </svg>
