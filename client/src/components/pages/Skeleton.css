@@ -1209,6 +1209,10 @@ video {
   grid-template-columns: 20% 10% 40% 10% 20%;
 }
 
+.grid-cols-\[50px_auto_50px_100px\]{
+  grid-template-columns: 50px auto 50px 100px;
+}
+
 .grid-rows-\[50px_full_50px\]{
   grid-template-rows: 50px full 50px;
 }
@@ -1854,6 +1858,11 @@ video {
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.text-emerald-500{
+  --tw-text-opacity: 1;
+  color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 .underline{

@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   games_played: Number,
   games_won: Number,
   high_score: Number,
+  knockouts: Number,
   // friends_list: [mongoose.Schema.Types.ObjectId],
   avatar: String,
   // image_url

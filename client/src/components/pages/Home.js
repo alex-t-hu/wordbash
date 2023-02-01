@@ -15,7 +15,7 @@ import "../../utilities.css";
  */
 const Home = (props) => {
   return (
-    <>
+    // <>
       <div className="h-full">
         <div className="z-20">
             <NavBar
@@ -25,15 +25,15 @@ const Home = (props) => {
                 className="z-40"
             />
         </div>
-        <div className="z-10">
-            <Router>
+        <div className="z-10 h-full">
+            <Router className = "h-full">
               {/*  gameID ={props.gameID} setGameID = {props.setGameID} */}
                 <Landing path="/" userId={props.userId} handleLogin = {props.handleLogin}/> 
                 <Profile path="/profile/:userId" />
             </Router>
         </div>
       </div>
-    </>
+    // </>
   );
 };
 export default Home;
