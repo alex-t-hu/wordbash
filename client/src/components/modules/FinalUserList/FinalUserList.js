@@ -45,7 +45,7 @@ const FinalUserList = (props) => {
         <div className="w-full bg-gray-100 rounded-t-xl py-2 text-9xl font-bold">
           <h1>Final Results</h1>
         </div>
-        <div className="p-2 flex-grow">
+        <div className="p-2 flex-grow break-words">
           {Object.keys(playerList)
             .map((key, i) => (
               <SingleFinalUser
