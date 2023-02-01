@@ -11,15 +11,18 @@ import LoginPage from "./LoginPage.js"
 import Background from "../modules/Background.js"
 import Background2 from "../modules/Background2.js"
 import Help from "../modules/Help.js"
+import Help2 from "../modules/Help2.js"
+import styled from 'styled-components';
 
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
-
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 const Landing = (props) => {
 
   const [value, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [helpVisible, setHelpVisible] = useState(false);
   useEffect(() => {
     setValue("");
   }, []);
@@ -107,18 +110,25 @@ const Landing = (props) => {
       handleSubmitJoin(event);
     }
   }
-
+  const handleHelpButtonPressed = (event) => {
+    event.preventDefault();
+  };
   //bg-[url('../../../../bubbles.gif')]
-
+  const helpButton = (<button className="fixed top-0 right-0" onClick={setHelpVisible(true)}>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+    </svg>
+  </button>);
   if (!props.userId) {
     return (
       <LoginPage handleLogin={props.handleLogin}/>
     );
   }
   return (
+     
     <div className="flex w-full h-full justify-center align-center">
-
-      <Help />
+      {
+        helpVisible ? <Help2 setHelpVisible={setHelpVisible}/> :
       <div className="Landing-blah">
         {errorMessage && 
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-up" role="alert">
@@ -130,7 +140,7 @@ const Landing = (props) => {
         }
         <div className="Landing-optionContainer drop-shadow-2xl rounded-xl u-flexColumn bg-[#EEEEEE]">
           
-          
+          <helpButton className="fixed top-0 right-0"/>
           <div className="flex flex-row m-8">
             <input
               id="myInput"
@@ -164,10 +174,9 @@ const Landing = (props) => {
           </div>
         </div>
       </div>
-      {/* <ManyWords /> */}
+      }
       <Background2 className="-z-20" direction={"y"} colorX={["#dbedff","#accbff"]} colorY={["#dbedff","#accbff"]}/>
     </div>
-    
   );
 };
 

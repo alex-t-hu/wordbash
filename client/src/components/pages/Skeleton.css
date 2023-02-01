@@ -570,6 +570,10 @@ video {
   }
 }
 
+.fixed{
+  position: fixed;
+}
+
 .absolute{
   position: absolute;
 }
@@ -781,12 +785,8 @@ video {
   width: 120px;
 }
 
-.w-\[25\%\]{
-  width: 25%;
-}
-
-.w-\[75\%\]{
-  width: 75%;
+.w-\[70\%\]{
+  width: 70%;
 }
 
 .w-1\/4{
@@ -795,10 +795,6 @@ video {
 
 .w-\[32px\]{
   width: 32px;
-}
-
-.w-\[70\%\]{
-  width: 70%;
 }
 
 .flex-1{
