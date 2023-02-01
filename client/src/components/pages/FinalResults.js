@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 
 import "../../utilities.css";
 import { useState } from "react";
-import SortedPlayerList from "../modules/SortedPlayerList";
+// import SortedPlayerList from "../modules/SortedPlayerList";
+import FinalUserList from "../modules/FinalUserList/FinalUserList";
 import { get, post } from "../../utilities";
 
 import { navigate } from "@reach/router";
@@ -41,13 +42,15 @@ const FinalResults = (props) => {
             width={window.innerWidth}
             height={window.innerHeight}
         />
-        <div className="finalResults-container">
-            <div>Final Results</div>
-            {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} 
+        {/* <div className="finalResults-container"> */}
+            <div className="w-[100%] h-[100%]">
+                <FinalUserList className="" users={props.game["players"]}/>
+            </div>
+            {/* {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} 
             <button className=" u-flex-alignCenter" onClick = {onSubmit}>
                 Return to Lobby
-            </button>
-        </div>
+            </button> */}
+        {/* </div> */}
         </>
     );
     

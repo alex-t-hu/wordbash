@@ -682,6 +682,11 @@ video {
   margin-bottom: 40px;
 }
 
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .mb-4{
   margin-bottom: 1rem;
 }
@@ -738,12 +743,16 @@ video {
   height: 90px;
 }
 
+.h-\[30\%\]{
+  height: 30%;
+}
+
 .h-\[32px\]{
   height: 32px;
 }
 
-.h-\[30\%\]{
-  height: 30%;
+.h-\[100\%\]{
+  height: 100%;
 }
 
 .w-full{
@@ -782,10 +791,6 @@ video {
   width: 0.75rem;
 }
 
-.w-\[40\%\]{
-  width: 40%;
-}
-
 .w-\[120px\]{
   width: 120px;
 }
@@ -804,6 +809,10 @@ video {
 
 .w-\[50\%\]{
   width: 50%;
+}
+
+.w-\[100\%\]{
+  width: 100%;
 }
 
 .flex-1{
@@ -900,6 +909,10 @@ video {
 
 .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-row{
@@ -1115,12 +1128,12 @@ video {
   --tw-bg-opacity: 0.3;
 }
 
-.bg-\[url\(\'\.\.\/\.\.\/\.\.\/\.\.\/bubbles\.gif\'\)\]{
-  background-image: url('../../../../bubbles.gif');
-}
-
 .bg-gradient-to-r{
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.bg-\[url\(\'\.\.\/\.\.\/\.\.\/\.\.\/bubbles\.gif\'\)\]{
+  background-image: url('../../../../bubbles.gif');
 }
 
 .from-blue-400{
@@ -1168,6 +1181,11 @@ video {
   padding-right: 1rem;
 }
 
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -1186,11 +1204,6 @@ video {
 .px-20{
   padding-left: 5rem;
   padding-right: 5rem;
-}
-
-.py-4{
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .pb-4{
@@ -1254,12 +1267,21 @@ video {
   line-height: 1;
 }
 
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-semibold{
   font-weight: 600;
 }
 
 .font-bold{
   font-weight: 700;
+}
+
+.font-black{
+  font-weight: 900;
 }
 
 .leading-none{
@@ -1460,12 +1482,12 @@ form {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.hover\:cursor-not-allowed:hover{
-  cursor: not-allowed;
-}
-
 .hover\:cursor-auto:hover{
   cursor: auto;
+}
+
+.hover\:cursor-not-allowed:hover{
+  cursor: not-allowed;
 }
 
 .hover\:border:hover{
