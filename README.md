@@ -1,6 +1,6 @@
 # Wordbash
 
-## Initial setup
+## About
 
 Wordbash is a party game revolving around crazy AI-generated prompts and hilarious human-written responses.
                 
@@ -20,9 +20,7 @@ furthermore, if you win all the votes, you get a knockout worth an extra 1000 po
 
 At the end of the game, the player with the most points wins!
 
-## Downloading these files
-
-Tech Stack
+## Tech Stack
 - frontend
     - Tailwind CSS
     - Chatbook
