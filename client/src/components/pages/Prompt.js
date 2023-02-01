@@ -202,7 +202,7 @@ const Prompt = (props) => {
         //     return <div>Everyone's finished answering</div>
         // }
         return (
-            <Waiting message={"Waiting for other players to finish..."} />
+            <Waiting message={"Waiting for other players to finish..."} bigScreen={true} />
         );
     }
 

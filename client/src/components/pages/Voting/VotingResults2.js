@@ -36,7 +36,7 @@ const VotingResults2 = (props) => {
     }
     return (
         <div className="flex flex-col h-full w-full justify-between">
-            <div className="flex justify-center text-7xl text-center py-10 px-20">
+            <div className="flex justify-center text-5xl text-center">
                 <PromptQuestion message={prompt["content"]} dir={"none"}/>
             </div>
 
@@ -45,7 +45,7 @@ const VotingResults2 = (props) => {
                     <PromptResponse hoverable={false} message={prompt['response_0_answer']} author={prompt['response_0_person_name']} dir="left"/>
                     {prompt["response_0_vote_names"].map((player) => {
                         return (<TypeAnimation
-                            sequence={(player + " hi")}
+                            sequence={(player)}
                             wrapper="div"
                             cursor={false}
                             repeat={0}

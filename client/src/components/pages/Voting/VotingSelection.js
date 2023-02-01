@@ -20,7 +20,7 @@ const VotingSelection = (props) => {
     },[]);
     return (
         <div className="flex flex-col h-full w-full justify-between">
-            <div className="flex justify-center text-7xl text-center py-10 px-20">
+            <div className="flex justify-center text-5xl text-center">
                 <PromptQuestion message={props.currentPrompt} dir={"none"}/>
             </div>
 
@@ -46,16 +46,14 @@ const VotingSelection = (props) => {
                     }
                 </div>
             </div>
-            {props.hasVoted &&  
-            <div className="flex justify-center text-center py-10 px-20">
-                <p>
+            
+            <div className="flex-grow">
+                {props.hasVoted &&
                     <Waiting message={
-                        "Please wait for other players to vote. If you would like, you can change your response!"
-                    }></Waiting>
-                </p>
-            </div>}
-
-            <div className="flex-grow"></div>
+                        "Waiting for other players to vote.\n You can still change your vote!"
+                    } bigScreen={true}/>
+                }
+            </div>
 
             { (props.currentPrompt === "" || (!props.prompt)) ? <div>Loading ...</div> : <OurTimer startTime = {props.prompt["votingStartTime"]} seconds={300} handleTimeout={props.handleVoteTimeout} />}
         </div>
