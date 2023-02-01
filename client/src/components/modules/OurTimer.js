@@ -39,7 +39,7 @@ const OurTimer = (props) => {
     },[currentSeconds]);
     return (
         stringSeconds ? 
-        <div className="mx-1 p-2 text-9xl text-emerald-300 flex justify-center">
+        <div className={`bg-gray-50 bg-opacity-50 mx-1 p-2 text-7xl ${!(currentSeconds < 10 ) ? "text-emerald-600" : "text-red-500"} flex justify-center`}>
             <div className="font-mono leading-none">{stringMinutes}:{stringSeconds}</div>
         </div>
         : <div></div>

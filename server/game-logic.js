@@ -98,6 +98,10 @@ const playerIDtoPlayerName = (id, gameID) => {
     return gameState[gameID]["players"][id]['name'];
 }
 
+const playerIDtoPlayerAvatar = (id, gameID) => {
+    return gameState[gameID]["players"][id]['avatar'];
+}
+
 /*
 -------------------------------- Initialization --------------------------------
 */
@@ -257,7 +261,9 @@ const startGame = (gameID, temperature, numRounds) => {
                 response_0_person_id: "",
                 response_1_person_id: "",
                 response_0_vote_names: [],
+                response_0_vote_avatars: [],
                 response_1_vote_names: [],
+                response_1_vote_avatars: [],
                 response_0_vote: [],
                 response_1_vote: [],
                 votingStartTime: 0
@@ -338,6 +344,7 @@ const submitResponse = (id, gameID, promptID, timedOut, response) => {
 const submitVote = (id, gameID, timedOut, response) => {
     playerID = IDtoPlayerID(id, gameID);
     playerName = playerIDtoPlayerName(playerID, gameID);
+    playerAvatar = playerIDtoPlayerAvatar(playerID, gameID);
 
     promptID = gameState[gameID]["votingRound"];
 
@@ -360,6 +367,7 @@ const submitVote = (id, gameID, timedOut, response) => {
 
             gameState[gameID]["prompts"][promptID]["response_0_vote"].splice(idx, 1);
             gameState[gameID]["prompts"][promptID]["response_0_vote_names"].splice(idx, 1);
+            gameState[gameID]["prompts"][promptID]["response_0_vote_avatars"].splice(idx, 1);
             console.log("Player " + playerID + " already voted for 0, so we will remove it.");
         }
         if (gameState[gameID]["prompts"][promptID]["response_1_vote"].includes(playerID)) {
@@ -367,6 +375,7 @@ const submitVote = (id, gameID, timedOut, response) => {
 
             gameState[gameID]["prompts"][promptID]["response_1_vote"].splice(idx, 1);
             gameState[gameID]["prompts"][promptID]["response_1_vote_names"].splice(idx, 1);
+            gameState[gameID]["prompts"][promptID]["response_1_vote_avatars"].splice(idx, 1);
 
             console.log("Player " + playerID + " already voted for 1, so we will remove it.");
         }
@@ -375,9 +384,11 @@ const submitVote = (id, gameID, timedOut, response) => {
         if(response === 0){
             gameState[gameID]["prompts"][promptID]["response_0_vote"].push(playerID);
             gameState[gameID]["prompts"][promptID]["response_0_vote_names"].push(playerName);
+            gameState[gameID]["prompts"][promptID]["response_0_vote_avatars"].push(playerAvatar);
         }else if(response === 1){
             gameState[gameID]["prompts"][promptID]["response_1_vote"].push(playerID);
             gameState[gameID]["prompts"][promptID]["response_1_vote_names"].push(playerName);
+            gameState[gameID]["prompts"][promptID]["response_1_vote_avatars"].push(playerAvatar);
         }else{
             console.log("You can't vote for this response! ( response " + response + " )");
         }
