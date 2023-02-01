@@ -145,8 +145,6 @@ const Lobby = (props) => {
       navigate(`/game/${props.gameID}/prompt`);
     }
   }, [props.game]);
-
-
   
 
   if (!props.userId) {

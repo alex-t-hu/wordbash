@@ -1,7 +1,7 @@
 .SingleUser-container {
 
   border-radius: var(--s);
-  padding: var(--m) var(--l);
+  padding: var(--s) var(--m);
   margin-bottom: var(--s);
 }
 

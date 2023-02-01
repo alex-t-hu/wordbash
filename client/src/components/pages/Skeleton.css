@@ -872,6 +872,10 @@ video {
   height: 100%;
 }
 
+.h-8{
+  height: 2rem;
+}
+
 .w-full{
   width: 100%;
 }
@@ -1040,6 +1044,10 @@ video {
   width: 15%;
 }
 
+.w-8{
+  width: 2rem;
+}
+
 .flex-none{
   flex: none;
 }
@@ -1185,6 +1193,22 @@ video {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-5{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-\[15\%_15\%_40\%_15\%_15\%\]{
+  grid-template-columns: 15% 15% 40% 15% 15%;
+}
+
+.grid-cols-\[20\%_10\%_40\%_15\%_15\%\]{
+  grid-template-columns: 20% 10% 40% 15% 15%;
+}
+
+.grid-cols-\[20\%_10\%_40\%_10\%_20\%\]{
+  grid-template-columns: 20% 10% 40% 10% 20%;
+}
+
 .grid-rows-\[50px_full_50px\]{
   grid-template-rows: 50px full 50px;
 }
@@ -1301,6 +1325,12 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.25rem * var(--tw-space-x-reverse));
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]){
