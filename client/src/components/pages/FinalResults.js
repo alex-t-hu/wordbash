@@ -46,10 +46,10 @@ const FinalResults = (props) => {
             <div className="w-[100%] h-[100%]">
                 <FinalUserList className="" users={props.game["players"]}/>
             </div>
-            {/* {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} 
+            {/* {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} */}
             <button className=" u-flex-alignCenter" onClick = {onSubmit}>
                 Return to Lobby
-            </button> */}
+            </button> 
         {/* </div> */}
         </>
     );

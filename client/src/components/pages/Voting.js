@@ -44,6 +44,17 @@ const Voting = (props) => {
     const [currentResponse0 , setCurrentResponse0] = useState(""); // Reponse 0
     const [currentResponse1 , setCurrentResponse1] = useState(""); // Reponse 1
 
+    
+    const [hostPlayerId, setHostPlayerId] = useState("");
+    
+    useEffect(() => {
+        if(props.game && props.game.players){
+            setHostPlayerId(props.game.players[0].id);
+        }
+    }, [props.game.players]);
+
+
+
 
   /**
    * This effect is run every time any state variable changes.
@@ -195,6 +206,7 @@ const Voting = (props) => {
                 currentPrompt = {currentPrompt}
                 currentResponse0 = {currentResponse0}
                 currentResponse1 = {currentResponse1}
+                isHost = {props.userId === hostPlayerId}
                 userId = {props.userId}
                 prompt = {props.game["prompts"][promptNumber]}
             />

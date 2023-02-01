@@ -155,7 +155,7 @@ const logAllPrompts = () => {
  * Alternatively, you can use this code to input the real prompts from text files.
  */
 
-const Data = require("./data.json");
+// const Data = require("./data.json");
 
 
 // const loadPrompts = () => {

@@ -24,15 +24,15 @@ const SingleFinalUser = (props) => {
   ];
   return (
     <div
-    className={`SingleUser-container u-pointer`}
+    className={`SingleFinalUser-container u-pointer`}
   >
     <div className = "grid grid-cols-3 items-center font-bold	text-6xl">
     {/* <div className = "flex flex-row items-center "> */}
           <div className = "flex-grow">
-            <p className = "flex-grow text-center">{props.index + 1}{endings[props.index]}</p>
+            <p className = "flex-grow text-center">{props.index + 1}{endings[Math.min(props.index,3)]}</p>
           </div>
 
-       <div className = "flex flex-row items-center SingleUser-AvatarUser">
+       <div className = "flex flex-row items-center SingleFinalUser-AvatarUser">
 
               <div className = "flex-grow">
                         <img className ="h-[64px] w-[64px] rounded-full mx-auto" src={props.avatar} 

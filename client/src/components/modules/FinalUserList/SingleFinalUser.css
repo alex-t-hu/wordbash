@@ -1,19 +1,19 @@
-.SingleUser-container {
+.SingleFinalUser-container {
 
   border-radius: var(--s);
   padding: var(--m) var(--l);
   margin-bottom: var(--s);
 }
 
-.SingleUser-container:hover {
+.SingleFinalUser-container:hover {
   background: var(--blue);
 }
 
-.SingleUser-container--active {
+.SingleFinalUser-container--active {
   background: var(--grey);
 }
 
-.SingleUser-AvatarUser {
+.SingleFinalUser-AvatarUser {
   background: var(--darkgrey);
   border-radius: var(--m);
   padding: var(--m) var(--l);

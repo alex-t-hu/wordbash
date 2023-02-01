@@ -16,11 +16,13 @@ const UserList = (props) => {
       {Object.keys(props.users)
         .map((key, i) => (
           <SingleUser
+            userId={props.users[key].id}
             index={i}
             // setActiveUser={props.setActiveUser}
             user={props.users[key].name}
             avatar={props.users[key].avatar}
             returned = {props.returned.includes(props.users[key].id)}
+            modifiable= {props.modifiable}
             // active={user === props.active}
           />
         ))}

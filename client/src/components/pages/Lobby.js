@@ -25,9 +25,11 @@ const Lobby = (props) => {
   /**
    * This effect is run when the component mounts.
    */
-
   useEffect(() => {
-    document.title = "Lobby";
+    document.title = "Wordbash";
+  }, []);
+  
+  useEffect(() => {
     get("/api/activeUsers").then((data) => {
       if (props.userId) {
         setActiveUsers(data.activeUsers);
@@ -114,6 +116,8 @@ const Lobby = (props) => {
     
     if (numPlayers < 2) {
       setErrorMessage("Cannot start game without at least two players.");
+    } else if (numPlayers !== rejoin.length) {
+      setErrorMessage("Waiting for " + (numPlayers - rejoin.length) + " player" + (((numPlayers - rejoin.length) !== 1) ? "s" : "") + " to return to the lobby!");
     } else {
       post("/api/startGame", {
         gameID: props.gameID,
@@ -167,21 +171,22 @@ const Lobby = (props) => {
       <div className="h-[50%] w-full flex flex-row divide-x space-x-4 justify-center">
 
         <div className="w-full bg-gray-50 flex flex-col rounded-xl">
-          <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
+          <div className="text-center bg-[#615756] text-white font-bold py-2 text-2xl rounded-t-xl">
             <h1>Players ({numPlayers})</h1>
           </div>
 
-          <div className="items-center m-4">
+          <div className="shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3)] items-center m-4">
             <UserList
               userId={props.userId}
               users={Players}
               returned = {rejoin}
+              modifiable={props.userId === hostPlayerId}
             />
           </div>
         </div>
 
         <div className="w-full bg-gray-50 flex flex-col rounded-xl space-y-4">
-          <div className="text-center bg-[#615756] text-white font-bold py-2 rounded-t-xl">
+          <div className="text-center bg-[#615756] text-white text-2xl font-bold py-2 rounded-t-xl">
             <h1>Game Settings</h1>
           </div>
 
@@ -195,11 +200,11 @@ const Lobby = (props) => {
         </div>
 
       </div>
-
+      {props.userId === hostPlayerId ?
+      (
       <div className="flex flex-col space-y-2 w-full mt-4">
-        <button className={props.userId === hostPlayerId ? `w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`
-        : `w-full bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
-               disabled= {props.userId !== hostPlayerId}
+        
+        <button className={ `w-full bg-white hover:bg-gray-100 text-3xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300`}
         // TOOD: add a check to make sure there are at least 3 players
         onClick = {handleSubmit}>
           START GAME
@@ -209,11 +214,23 @@ const Lobby = (props) => {
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative animate-fade-in-down" role="alert">
             <span className="block sm:inline">{errorMessage}</span>
             <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg className="fill-current h-6 w-6 text-red-500" onClick={handleCloseError} role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+              <svg className="fill-current h-6 w-6 text-red-500" onClick={handleKickPlayer} role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
           </div>
         }
       </div>
+      ) : (
+        
+      <div className="flex flex-col space-y-2 w-full mt-4">
+        
+      <button className={`w-full bg-white text-gray-800 text-3xl font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:cursor-not-allowed opacity-50`}
+             disabled={true}>
+        Wait for the host to start the game!
+      </button>
+
+    </div>
+      )
+      }
       
     </div>
   );

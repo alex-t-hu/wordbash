@@ -33,7 +33,9 @@ const Game = (props) => {
   const [dims, setDims] = useState([200, 200]);
 
   const [game, setGame] = useState({});
-
+  useEffect(() => {
+    document.title = "Wordbash";
+  }, []);
   useEffect(() => {
     console.log("Inside Game.js, Game ID is"  + props.gameID);
   }, [props.gameID]);
