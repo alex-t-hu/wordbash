@@ -931,6 +931,10 @@ video {
   width: 70%;
 }
 
+.w-\[35\%\]{
+  width: 35%;
+}
+
 .flex-none{
   flex: none;
 }
@@ -941,6 +945,10 @@ video {
 
 .flex-grow{
   flex-grow: 1;
+}
+
+.grow-0{
+  flex-grow: 0;
 }
 
 .-translate-x-full{
@@ -1157,6 +1165,18 @@ video {
   margin-left: calc(20% * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-20 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(5rem * var(--tw-space-x-reverse));
+  margin-left: calc(5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-\[15\%\] > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(15% * var(--tw-space-x-reverse));
+  margin-left: calc(15% * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .divide-x > :not([hidden]) ~ :not([hidden]){
   --tw-divide-x-reverse: 0;
   border-right-width: calc(1px * var(--tw-divide-x-reverse));
@@ -1223,6 +1243,11 @@ video {
 .rounded-t-3xl{
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
+}
+
+.rounded-t-lg{
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
 .border{
@@ -1416,6 +1441,14 @@ video {
 
 .p-16{
   padding: 4rem;
+}
+
+.p-\[5\%\]{
+  padding: 5%;
+}
+
+.p-\[10px\]{
+  padding: 10px;
 }
 
 .py-2{

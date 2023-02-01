@@ -40,8 +40,8 @@ const VotingResults2 = (props) => {
                 <PromptQuestion message={prompt["content"]} dir={"none"}/>
             </div>
 
-            <div className="flex flex-row w-full space-x-[20%] px-20">
-                <div className="flex flex-col w-[50%]">
+            <div className="flex flex-row w-full">
+                <div className="w-[50%] p-[5%]">
                     <PromptResponse hoverable={false} message={prompt['response_0_answer']} author={prompt['response_0_person_name']} dir="left"/>
                     {prompt["response_0_vote_names"].map((player) => {
                         return (<TypeAnimation
@@ -54,7 +54,7 @@ const VotingResults2 = (props) => {
                         /> );
                     })} 
                 </div>
-                <div className="flex flex-col w-[50%]">
+                <div className="w-[50%] p-[5%]">
                     <PromptResponse hoverable={false} message={prompt['response_1_answer']} author={prompt['response_1_person_name']} dir="right"/>
                     {prompt["response_1_vote_names"].map((player) => {
                         return (<TypeAnimation
