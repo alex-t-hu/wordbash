@@ -23,14 +23,14 @@ At the end of the game, the player with the most points wins!
 ## Tech Stack
 - frontend
     - Tailwind CSS
-    - Chatbook
     - react-type-animation
     - react-randomcolor
     - react-horizontal-scrolling-menu
     - react-confetti
     - [https://codesandbox.io/s/website-frok-curr-89jopk?fbclid=IwAR0oi-Gk5MKRQ_ABTwk3wpW7DP8gDL2FNI54W0lw2XdZKoNXqMEKjlmMdek](https://codesandbox.io/s/website-frok-curr-89jopk?fbclid=IwAR0oi-Gk5MKRQ_ABTwk3wpW7DP8gDL2FNI54W0lw2XdZKoNXqMEKjlmMdek)
 - backend
-    - google auth
     - node.js/express
-    - openAI API
     - mongoDB
+    - openAI API
+    - socket.io
+    - google auth
