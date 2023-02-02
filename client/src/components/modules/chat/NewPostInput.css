@@ -5,12 +5,12 @@
   color: black
 }
 
-.NewPostInput-input {
+/* .NewPostInput-input {
   flex-grow: 1;
   border: var(--darkgrey) 1px solid;
-  border-radius: var(--xs) 0 0 var(--xs);
+  border-radius: var(--lg) 0 0 var(--lg);
   transition: box-shadow 0.1s;
-}
+} */
 
 .NewPostInput-input:focus-within {
   border-color: var(--primary--dim);

@@ -66,7 +66,7 @@ const Prompt = (props) => {
           if (!hasSetPromptAnsweringTime) { // !hasSetPromptAnsweringTime is stored for each round on the backend. round = promptNumber / 2
             setHasSetPromptAnsweringTime(true);
             // keke setGamePromptAnsweringTime(data['numPlayers'] * 20);
-            setGamePromptAnsweringTime(data['numPrompts'] * 20);
+            setGamePromptAnsweringTime(data['numRounds'] * 40);
           }
         };
       });
