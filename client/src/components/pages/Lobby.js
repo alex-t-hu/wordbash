@@ -115,8 +115,8 @@ const Lobby = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    if (numPlayers < 2) {
-      setErrorMessage("Cannot start game without at least two players.");
+    if (numPlayers < 3) {
+      setErrorMessage("Cannot start game without at least three players.");
     } else if (numPlayers > rejoin.length) {
       setErrorMessage("Waiting for " + (numPlayers - rejoin.length) + " player" + (((numPlayers - rejoin.length) !== 1) ? "s" : "") + " to return to the lobby!");
     } else {
@@ -167,14 +167,14 @@ const Lobby = (props) => {
   return (
     <div className="h-full flex flex-col items-center p-12">
       {/*Player list and game code*/}
-      <div className="h-[50%] w-full flex flex-row divide-x space-x-4 justify-center">
+      <div className="h-[80%] w-full flex flex-row divide-x space-x-4 justify-center">
 
         <div className="w-full bg-gray-50 flex flex-col rounded-xl">
           <div className="text-center bg-[#615756] text-white font-bold py-2 text-2xl rounded-t-xl">
             <h1>Players ({numPlayers})</h1>
           </div>
-
-          <div className="shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3)] items-center m-4">
+{/* Wait what, check the overflow. overflow-x-auto*/}
+          <div className="items-center m-4  overflow-auto">
             <UserList
               userId={props.userId}
               users={Players}
@@ -184,8 +184,8 @@ const Lobby = (props) => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col rounded-xl space-y-4">
-          <div className="text-center bg-[#615756] text-white text-2xl font-bold py-2 rounded-t-xl">
+        <div className="w-full bg-gray-50 flex flex-col rounded-xl space-y-4 overflow-hidden">
+          <div className="text-center bg-[#615756] text-white text-2xl font-bold py-2">
             <h1>Game Settings</h1>
           </div>
 

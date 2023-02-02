@@ -95,7 +95,7 @@ const Prompt = (props) => {
         if (currentPrompt) {
             setCurrentPromptAnim((
                 <PromptQuestion sender={"me"} dir={"none"} message={
-                    `Prompt ${promptNumber + 1}/${props.game.numPrompts}: ${currentPrompt}`
+                    `Prompt ${promptNumber + 1}/${props.game["numRounds"] * 2}: ${currentPrompt}`
                 }/>
             ));
             // console.log"dfasdfsdafs");

@@ -9,6 +9,10 @@
   background: var(--grey);
 }
 
+.SingleUser-container:hover {
+  background: var(--blue);
+}
+
 .SingleUser-AvatarUser {
   background: var(--darkgrey);
   border-radius: var(--m);

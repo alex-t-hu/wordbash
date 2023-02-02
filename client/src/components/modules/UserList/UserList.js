@@ -12,7 +12,7 @@ import "./SingleUser.css";
  */
 const UserList = (props) => {
   return (
-    <div className="w-full flex flex-col text-center bg-gray-50">
+    <div className="h-full w-full flex flex-col text-center bg-gray-50">
       {Object.keys(props.users)
         .map((key, i) => (
           <SingleUser

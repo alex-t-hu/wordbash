@@ -43,7 +43,7 @@ const FinalResults = (props) => {
             height={window.innerHeight}
         />
         <div className="finalResults-container">
-            <div className="w-[100%] h-[100%]">
+            <div className="w-[100%] h-[100%] overflow-auto">
                 <FinalUserList className="" users={props.game["players"]}/>
             </div>
             {/* {props.game && props.game["players"] ? <SortedPlayerList players={props.game["players"]}/> : <div>Loading...</div>} */}

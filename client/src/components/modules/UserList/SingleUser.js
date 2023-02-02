@@ -19,15 +19,15 @@ const SingleUser = (props) => {
 
   return (
   <div className={`SingleUser-container`} >
-    <div className = "grid grid-cols-[20%_10%_40%_10%_20%] items-center">
+    <div className = "grid grid-cols-[20%_40%_20%_20%] items-center text-4xl">
       
       <div className = "">
-        <img className ="h-[32px] w-[32px] rounded-full" src={props.avatar} />
+        <img className ="h-[100px] w-auto rounded-lg" src={props.avatar} />
       </div>
       
-      <div>
+      {/* <div>
 
-      </div>
+      </div> */}
 
       {props.returned ? (
         <p className = "flex-grow font-bold">{props.user}</p>
@@ -39,7 +39,7 @@ const SingleUser = (props) => {
         
       { props.index == 0 ? 
         <div className = "flex justify-end">
-          <img className ="h-[32px] w-[32px] rounded-full" src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f451.png"/>
+          <img className ="h-[100px] w-[100px]" src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f451.png"/>
         </div> : <div></div>
       }
           

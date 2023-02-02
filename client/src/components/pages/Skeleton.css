@@ -760,6 +760,10 @@ video {
   height: 100%;
 }
 
+.h-\[80\%\]{
+  height: 80%;
+}
+
 .h-\[50\%\]{
   height: 50%;
 }
@@ -778,6 +782,10 @@ video {
 
 .h-\[32px\]{
   height: 32px;
+}
+
+.h-\[100px\]{
+  height: 100px;
 }
 
 .w-full{
@@ -854,6 +862,14 @@ video {
 
 .w-\[32px\]{
   width: 32px;
+}
+
+.w-auto{
+  width: auto;
+}
+
+.w-\[100px\]{
+  width: 100px;
 }
 
 .w-\[65\%\]{
@@ -960,8 +976,8 @@ video {
   grid-template-columns: 30px auto 50px 60px;
 }
 
-.grid-cols-\[20\%_10\%_40\%_10\%_20\%\]{
-  grid-template-columns: 20% 10% 40% 10% 20%;
+.grid-cols-\[20\%_40\%_20\%_20\%\]{
+  grid-template-columns: 20% 40% 20% 20%;
 }
 
 .flex-row{
@@ -1044,6 +1060,14 @@ video {
 
 .overflow-auto{
   overflow: auto;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.overflow-x-auto{
+  overflow-x: auto;
 }
 
 .overflow-y-auto{

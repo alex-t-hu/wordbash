@@ -41,7 +41,7 @@ const SingleFinalUser = (props) => {
        <div className = {`flex flex-row space-x-4 justify-center items-center ${colors[Math.min(props.index,3)]} rounded-2xl py-2 px-4`}>
 
               <div className = "">
-                        <img className ="h-[64px] w-[64px] rounded-full mx-auto" src={props.avatar} 
+                        <img className ="h-[64px] w-[64px] rounded-lg mx-auto" src={props.avatar} 
                     />
               </div>
             <p className = " font-bold">{props.user}</p>

@@ -67,7 +67,7 @@ const VotingResults2 = (props) => {
             </div>
 
             <div className="flex flex-row w-full">
-                <div className="w-[50%] px-[5%] flex flex-col align-items justify-between overflow-auto">
+                <div className="w-[50%] px-[5%] flex flex-col align-items justify-between overflow-x-hidden overflow-y-auto">
                         {prompt["response_0_vote_names"].map((player, i) => {    
                             return (<div className="bg-silver-300 mx-2 rounded-2xl p-1 flex flex-row w-full align-items justify-center">
                             
@@ -91,7 +91,7 @@ const VotingResults2 = (props) => {
                 </div>
 
 
-                <div className="w-[50%] px-[5%] flex flex-col align-items justify-between overflow-auto">
+                <div className="w-[50%] px-[5%] flex flex-col align-items justify-between overflow-x-hidden overflow-y-auto">
                         {prompt["response_1_vote_names"].map((player, i) => {
                             return (
                                 <div className="bg-silver-300 rounded-2xl mx-2 p-1 flex flex-row w-full align-items justify-center">

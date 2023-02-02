@@ -306,6 +306,7 @@ router.post("/message", auth.ensureLoggedIn, (req, res) => {
   //     socketManager.getSocketFromUserID(req.body.recipient._id).emit("message", message);
   //   }
   // }
+  res.send({});
 });
 
 /**
