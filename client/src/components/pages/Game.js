@@ -53,7 +53,7 @@ const Game = (props) => {
         <div>
           <GameBar userId={props.userId} gameID={props.gameID} game={game} setGame={setGame}/>
         </div>
-        <div className="flex flex-row flex-grow overflow-y-scroll overflow-x-hidden">
+        <div className="flex flex-row flex-grow overflow-y-hidden overflow-x-hidden">
           <Router className="h-full w-full">
             <Lobby path="lobby" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>
             <FinalResults path="results" userId={props.userId} gameID ={props.gameID} game = {game} setGame = {setGame}/>

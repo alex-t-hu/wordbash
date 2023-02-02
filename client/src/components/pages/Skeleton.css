@@ -1078,6 +1078,22 @@ video {
   overflow-x: hidden;
 }
 
+.overflow-y-hidden{
+  overflow-y: hidden;
+}
+
+.overflow-x-clip{
+  overflow-x: clip;
+}
+
+.overflow-y-clip{
+  overflow-y: clip;
+}
+
+.overflow-x-scroll{
+  overflow-x: scroll;
+}
+
 .overflow-y-scroll{
   overflow-y: scroll;
 }
