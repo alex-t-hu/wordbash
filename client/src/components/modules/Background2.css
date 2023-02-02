@@ -1,3 +1,4 @@
+/* Borrowed from https://codesandbox.io/s/website-frok-curr-89jopk */
 .bgY {
     animation: slideY 3s ease-in-out infinite alternate;
     bottom: -50%;
