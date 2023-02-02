@@ -197,15 +197,6 @@ const Prompt = (props) => {
         return <div>Loading...</div>
     }
 
-    if (finishedAnswering) {
-        // if(props.game.promptsFinished){
-        //     return <div>Everyone's finished answering</div>
-        // }
-        return (
-            <Waiting message={"Waiting for other players to finish..."} bigScreen={true} />
-        );
-    }
-
     const handleKeyPressed = (event) => {
         if (event.key === 'Enter') {
             handleSubmit(event);
@@ -214,33 +205,37 @@ const Prompt = (props) => {
 
     return (
         <div className="w-full h-full flex flex-col p-4">
-            <div className="text-left w-full flex justify-center mb-4">
-                {currentPromptAnim}
-            </div>
-            <div className="flex flex-row space-x-4 w-full h-[90px]">
-                <div className="flex-grow">
-                    <textarea
-                        className="Prompt-textarea border rounded-xl p-2"
-                        type="text"
-                        placeholder="Enter your response here!"
-                        value={value}
-                        onChange={handleChange}
-                        onKeyDown={handleKeyPressed}
-                    />
+            {finishedAnswering ? 
+            <Waiting message={"Waiting for other players to finish..."} bigScreen={true} />
+            : 
+            <div className="flex flex-col items-center">
+                <div className="text-left w-full flex justify-center mb-4">
+                    {currentPromptAnim}
                 </div>
-                <div className="h-full flex items-center justify-center">
-                    <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold px-4 py-2 border border-gray-400 rounded shadow"
+                <div className="flex flex-row space-x-4 w-[90%] h-[90px]">
+                    <div className="flex-grow">
+                        <textarea
+                            className="Prompt-textarea border rounded-xl p-2"
+                            type="text"
+                            placeholder="Enter your response here!"
+                            value={value}
+                            onChange={handleChange}
+                            onKeyDown={handleKeyPressed}
+                        />
+                    </div>
+                </div>
+                <div className="my-4 w-full flex items-center justify-center">
+                    <button className="w-[90%] bg-white hover:bg-gray-100 text-2xl text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300"
                     type="submit"
                     value="Submit"
                     onClick = {handleSubmit}>
-                        Send
+                        SUBMIT
                         {/* {promptNumber == 1 ? "Submit" : "Next"} */}
                     </button>
                 </div>
-            </div>
-            
-            <div className="flex-grow">
-            </div>
+                
+            </div>}
+            <div className="flex-grow"></div>
             { (gamePromptAnsweringTime === 0 || (!props.game) || (props.game["promptStartTime"]===0)) ? 
                 (<div>Loading ...</div>) : 
                 (<div className="">

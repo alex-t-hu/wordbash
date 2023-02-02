@@ -198,7 +198,7 @@ const Chatbook = (props) => {
   
 
   if (!props.userId) {
-    return <div>Log in before using Chatbook</div>;
+    return <div></div>;
   }
   return (
     <div className="h-full flex flex-row bg-gray-50 bg-opacity-50 rounded-3xl">

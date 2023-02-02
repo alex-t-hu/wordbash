@@ -169,7 +169,7 @@ const Lobby = (props) => {
       {/*Player list and game code*/}
       <div className="h-[80%] w-full flex flex-row divide-x space-x-4 justify-center">
 
-        <div className="w-full bg-gray-50 flex flex-col rounded-xl">
+        <div className="w-[60%] bg-gray-50 flex flex-col rounded-xl">
           <div className="text-center bg-[#615756] text-white font-bold py-2 text-2xl rounded-t-xl">
             <h1>Players ({numPlayers})</h1>
           </div>
@@ -184,7 +184,7 @@ const Lobby = (props) => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col rounded-xl space-y-4 overflow-hidden">
+        <div className="w-[40%] bg-gray-50 flex flex-col rounded-xl space-y-4 overflow-hidden">
           <div className="text-center bg-[#615756] text-white text-2xl font-bold py-2">
             <h1>Game Settings</h1>
           </div>
