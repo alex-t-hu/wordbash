@@ -666,10 +666,6 @@ video {
   margin: 1rem;
 }
 
-.m-2{
-  margin: 0.5rem;
-}
-
 .mx-1{
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -792,6 +788,14 @@ video {
   height: 100px;
 }
 
+.h-\[80px\]{
+  height: 80px;
+}
+
+.h-\[60px\]{
+  height: 60px;
+}
+
 .w-full{
   width: 100%;
 }
@@ -878,6 +882,14 @@ video {
 
 .w-\[65\%\]{
   width: 65%;
+}
+
+.w-\[80px\]{
+  width: 80px;
+}
+
+.w-\[60px\]{
+  width: 60px;
 }
 
 .flex-1{
