@@ -15,9 +15,9 @@ const RoundSlider = (props) => {
     // We want games to last around 20 minutes.
     // Formula: 1200 / (90 + 65 * N) = R
     const recommendedRounds = [
-        "Find some friends!",
-        "Find some friends!",
-        "Find some friends!",
+        "",//"Find some friends!",
+        "",//"Find some friends!",
+        "",//"Find some friends!",
         "3 Players is enough to play! Suggested: 8 prompts.", // 1200 / (90 + 65 * 3) = 4
         "Suggested: 6 prompts.", // 1200 / (90 + 65 * 4) = 3
         "Suggested: 6 prompts.", // 1200 / (90 + 65 * 5) = 3 ish

@@ -355,7 +355,6 @@ const submitVote = (id, gameID, timedOut, response) => {
         
         // console.log"Voting round " + gameState[gameID]["votingRound"] + " finished!");
         updateScore(gameID);
-        gameState[gameID]["votingResults"] = true;
 
 
     } else {
@@ -403,7 +402,6 @@ const submitVote = (id, gameID, timedOut, response) => {
         
         // console.log"Voting round " + promptID + " finished!");
         updateScore(gameID);
-        gameState[gameID]["votingResults"] = true;
         // Don't update voting round yet!!
         // The voting round will get updated when the client sends a doneVoting message.
     }
@@ -491,6 +489,11 @@ const rejoinGame = (playerID, gameID) => {
 
 
 const updateScore = (gameID) => {
+    if(gameState[gameID]["votingResults"]){
+        console.log("updateScore called when votingResults is true.");
+        return;
+    }
+    gameState[gameID]["votingResults"] = true;
     // Update score for the current voting round.
     // console.log"Before update score, round ", gameState[gameID]["votingRound"]);
     // console.log"gameState: ", gameState[gameID]);
