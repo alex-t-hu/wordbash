@@ -20,7 +20,7 @@ const Help2 = (props) => {
         <div className={`absolute left-[-25%] top-0 w-[150%] h-full justify-center items-center ${props.helpVisible ? "z-[1]" : "z-[-1]"}`}>
            {!props.helpVisible ? 
             <div className=" flex flex-col justify-end w-0 left-8 bottom-8 items-center">
-                    <button className="absolute bottom-[-50%] right-[38%] bg-blue-500 hover:bg-blue-400 text-white rounded-xl font-semibold py-2 px-4 border border-gray-400 shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300" onClick={()=>{props.setHelpVisible(true)}}>
+                    <button className="absolute bottom-[-50%] right-[36%] bg-blue-500 hover:bg-blue-400 text-white rounded-xl font-semibold py-2 px-4 border border-gray-400 shadow transition ease-in-out delay-50 hover:scale-[1.05] hover:scale-130 duration-300" onClick={()=>{props.setHelpVisible(true)}}>
                         <div className="flex flex-row space-x-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
