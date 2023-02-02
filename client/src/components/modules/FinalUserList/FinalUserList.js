@@ -26,7 +26,7 @@ const FinalUserList = (props) => {
     useEffect(() => {
         
         // console.log"Players ", props.users);
-        if (props.users) {
+        if (props.users && playerList.length===0) {
             let sortedPlayers = Object.keys(props.users).map((key) => {
                 return [key, props.users[key]];
             });
