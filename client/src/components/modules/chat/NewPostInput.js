@@ -37,18 +37,18 @@ const NewPostInput = (props) => {
 
 
   return (
-    <div className="mx-2 flex flex-row ">
+    <div className="m-4 flex flex-row ">
       <input
         type="text"
         placeholder={props.defaultText}
         value={value}
         onChange={handleChange}
-        className="NewPostInput-input"
+        className="flex-grow bg-white font-bold hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded-lg"
         onKeyDown={handleKeyPressed}
       />
       <button
         type="submit"
-        className="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded"
+        className="bg-white font-bold hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded-lg"
         value="Send"
         onClick={handleSubmit}
       >
